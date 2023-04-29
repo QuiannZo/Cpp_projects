@@ -1,0 +1,42 @@
+Struct area {
+    matrix
+    zones_found
+    biggest_zone
+    biggest_row
+    biggest_col
+}
+
+// Prints a matrix
+print_matrix(matrix, rows, cols) {
+    cycle and print a matrix character by character
+}
+
+// Create initial matrix
+create_initial_matrix(rows, cols) {
+    scan input character by character and store in matrix
+    return matrix
+}
+
+// Evaluate initial matrix and return new one with refuge spots marked
+evaluate_matrix(matrix, rows, cols) {
+    init area variables to 0
+    zone_size = 0
+    cycle matrix until non marked '-' is found {
+        evaluate the zone connected to the '-' and mark evaluated cells 
+        if zone_size > biggest_zone
+        biggest_zone = zone_size
+        biggest_row and biggest_col saved as location of found '-'
+        zones_found++ 
+    }
+    once evaluation is done, return to biggest_row and biggest_col
+    evaluate the zone connected to that '-'
+    switch every '-' for an 'R'
+    return matrix
+}
+
+main() {
+    scan rows and cols from input
+    initial_matrix = create_initial_matrix(rows, cols)
+    new_matrix = evaluate_matrix(initial_matrix)
+    print_matrix(new_matrix, zones_found)
+}
