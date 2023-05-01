@@ -33,10 +33,10 @@ find_max_size(char status) {
 // Changes the status of a specific cell
 change_status(int biggest_size, char status, char new_status) {
     loop through rows and cols of area
-        if area[row][col] == status
+        if area[row][col]->status = status
             int size = zone_checker(row, col);
             if (size == biggest_size)
-                area[row][col] == new_status;
+                area[row][col]->status = new_status;
 }
 main() {
     ...
