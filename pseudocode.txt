@@ -1,28 +1,42 @@
-// Assuming input matrix has already been processed called area
-
 typedef struct Cell {
-    char status; // if cell is flooded, above sea level or is a refuge
-    bool checked; // true if cell has been checked (visited)
-    int zone_size; // to keep track of the zone size the cell belongs to
-} Cell;
+    char status;
+    bool* checked;
+}Cell;
+
+// Assuming input matrix has already been processed called area (Cell area[rows][cols])
+
 
 // Uses "depth-first search" recursive algorithm to visit and mark corresponding cells of a zone as checked if not already
 // This is so that when find_max_size runs, it doesn't call this function on already checked zones.
 // Keeps track of the size of the zone and returns it
-int mark_zones(int row, int col, bool checked) {
-    ...
+int zone_checker(int row, int col) {
+    if row and cell are out of bounds, or if character isn't a '-', or if area[row][col]->checked = true
+        return 0;
+    area[row][col]->checked = true;
+    zone_size = 1;
+    run mark zones again with every possible neighbor (up, right, down, left) and add its return to zone_size
 }
 
-// Loops through the area to find '-' that isn't checked, if found then uses mark_zones
-// Uses mark_zones' return value to compare to the biggest size found
+// Loops through the area to find '-' that isn't checked, if found then uses zone_checker
+// Uses zone_checker's return value to compare to the biggest size found
 // Returns the biggest zone size found
-find_max_size() {
-    ...
+find_max_size(char status) {
+    int biggest_size = 0;
+    loop through rows and cols of area
+        if status found and area[row][col] == false
+            int size = zone_checker(row, col)
+            if size > biggest_size
+                biggest_size = size
+    return biggest_size;
 }
 
 // Changes the status of a specific cell
-change_status(int max_zone_size, char status, char new_status) {
-    ...
+change_status(int biggest_size, char status, char new_status) {
+    loop through rows and cols of area
+        if area[row][col] == status
+            int size = zone_checker(row, col);
+            if (size == biggest_size)
+                area[row][col] == new_status;
 }
 main() {
     ...
