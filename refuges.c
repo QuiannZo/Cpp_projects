@@ -21,9 +21,17 @@ void delete_matrix(cell_t** matrix, int rows) {
 void print_matrix(cell_t** matrix, int rows, int cols) {
     for(int i = 0; i < rows; i++){
         for(int j = 0; j < cols; j++){
-            putchar(matrix[i][j].status);
+            putchar(matrix[i][j].new_status);
         }
         putchar('\n');
+    }
+}
+
+void cpy_status(cell_t** matrix, int rows, int cols){
+    for(int i = 0; i < rows; i++){
+        for(int j = 0; j < cols; j++){
+            matrix[i][j].new_status = matrix[i][j].status;
+        }
     }
 }
 
@@ -63,7 +71,7 @@ int find_max_size(cell_t** matrix, int rows, int cols, char status, int* safe_zo
 
 void reset_checked(cell_t** matrix, int rows, int cols) {
     for (int row = 0; row < rows; row++) {
-        for (int col = 0; col < cols; cols++) {
+        for (int col = 0; col < cols; col++) {
             matrix[row][col].checked = false;
         }
     }
@@ -71,14 +79,18 @@ void reset_checked(cell_t** matrix, int rows, int cols) {
 
 void change_status(cell_t** matrix, int rows, int cols, int biggest_size, char status, char new_status) {
     reset_checked(matrix, rows, cols);
+    if(matrix[0][1].checked == true){
+        printf("error\n");
+    }
     for (int row = 0; row < rows; row++) {
         for (int col = 0; col < cols; col++) {
             if (matrix[row][col].status == status) {
                 int size = zone_checker(matrix, row, col, rows, cols, status);
                 if (size == biggest_size) {
-                    matrix[row][col].status = new_status;
+                    matrix[row][col].new_status = new_status;
                 }
             }
+            reset_checked(matrix, rows, cols);
         }
     }
 }
