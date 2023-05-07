@@ -1,0 +1,6 @@
+# Ignore files and directories commonly excluded
+build/
+bin/
+
+# Ignore compiled binaries
+*.exe
