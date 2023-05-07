@@ -10,7 +10,7 @@ int main(void) {
     if(!(scanf("%d %d\n", &rows, &cols) == 2)){
         fprintf(stderr, "Could not read data.");
     }
-    Cell** matrix = (Cell**)create_matrix(rows, cols);
+    cell_t** matrix = (cell_t**)create_matrix(rows, cols);
     for(int i = 0; i < rows; i++){
         for(int j = 0; j < cols; j++){
             scanf("%c", &matrix[i][j].status);

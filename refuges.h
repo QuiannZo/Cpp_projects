@@ -1,10 +1,10 @@
 #include <stdbool.h>
 
-typedef struct Cell {
+typedef struct cell_t {
     char status;
     bool checked;
-}Cell;
+}cell_t;
 
-Cell** create_matrix(int rows, int cols);
-void delete_matrix(Cell** matrix, int rows);
-void print_matrix(Cell** matrix, int rows, int cols);
+cell_t** create_matrix(int rows, int cols);
+void delete_matrix(cell_t** matrix, int rows);
+void print_matrix(cell_t** matrix, int rows, int cols);
