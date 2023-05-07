@@ -18,9 +18,7 @@ void delete_matrix(cell_t** matrix, int rows) {
     free(matrix);
 }
 
-void print_matrix(cell_t** matrix, int rows, int cols, int safe_zone_count) {
-    printf("%d\n", safe_zone_count);
-    putchar('\n');
+void print_matrix(cell_t** matrix, int rows, int cols) {
     for(int i = 0; i < rows; i++){
         for(int j = 0; j < cols; j++){
             putchar(matrix[i][j].status);
@@ -33,11 +31,11 @@ int zone_checker(cell_t** matrix, int row, int col, int rows, int cols, char sta
     if (row < 0 || row >= rows || col < 0 || col >= cols) {
         return 0;
     }
-    if (matrix[row][col].status != '-') {
+    if (matrix[row][col].status != status || matrix[row][col].checked == true) {
         return 0;
     }
     int zone_size = 1;
-    matrix[row][col].status = status;
+    matrix[row][col].checked = true;
     zone_size += zone_checker(matrix, row + 1, col, rows, cols, status);
     zone_size += zone_checker(matrix, row - 1, col, rows, cols, status);
     zone_size += zone_checker(matrix, row, col + 1, rows, cols, status);
@@ -55,7 +53,7 @@ int find_max_size(cell_t** matrix, int rows, int cols, char status, int* safe_zo
                     biggest_size = size;
                     *safe_zone_count = 1;
                 } else if (size == biggest_size) {
-                    *safe_zone_count++;
+                    *safe_zone_count += 1;
                 }
             }
         }

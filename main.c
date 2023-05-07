@@ -32,6 +32,15 @@ int main(void) {
         }
         fclose(filep);
     }
-    print_matrix(matrix, rows, cols, 1);
+    int safe_zones = 0;
+    int max_size = find_max_size(matrix, rows, cols, '-', &safe_zones);
+    printf("Zone: %d\n", max_size);
+    if(max_size > 1){
+        change_status(matrix, rows, cols, max_size, '-', 'R');
+        printf("%d\n\n", safe_zones);
+    } else {
+        printf("0\n\n");
+    }
+    print_matrix(matrix, rows, cols);
     delete_matrix(matrix, rows);
 }
