@@ -3,6 +3,4 @@ typedef struct Cell {
     bool checked;
 }Cell;
 
-Cell** create_matrix(int rows, int cols){
-    
-}
+Cell** create_matrix(int rows, int cols);
