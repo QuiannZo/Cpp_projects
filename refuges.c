@@ -18,7 +18,9 @@ void delete_matrix(cell_t** matrix, int rows) {
     free(matrix);
 }
 
-void print_matrix(cell_t** matrix, int rows, int cols) {
+void print_matrix(cell_t** matrix, int rows, int cols, int safe_zone_count) {
+    printf("%d\n", safe_zone_count);
+    putchar('\n');
     for(int i = 0; i < rows; i++){
         for(int j = 0; j < cols; j++){
             putchar(matrix[i][j].status);

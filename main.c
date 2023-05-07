@@ -11,12 +11,27 @@ int main(void) {
         fprintf(stderr, "Could not read data.");
     }
     cell_t** matrix = (cell_t**)create_matrix(rows, cols);
-    for(int i = 0; i < rows; i++){
-        for(int j = 0; j < cols; j++){
-            scanf("%c", &matrix[i][j].status);
+    // Read data.
+    FILE* filep;
+    filep = fopen("input0.txt", "-r");
+    if(filep == NULL){
+        // Reads std input.
+        for(int i = 0; i < rows; i++){
+            for(int j = 0; j < cols; j++){
+                scanf("%c", &matrix[i][j].status);
+            }
+            getc(stdin);
         }
-        getc(stdin);
+    } else {
+        // Reads file.
+        for(int i = 0; i < rows; i++){
+            for(int j = 0; j < cols; j++){
+                fscanf(filep,"%c", &matrix[i][j].status);
+            }
+            getc(stdin);
+        }
+        fclose(filep);
     }
-    print_matrix(matrix, rows, cols);
+    print_matrix(matrix, rows, cols, 1);
     delete_matrix(matrix, rows);
 }
