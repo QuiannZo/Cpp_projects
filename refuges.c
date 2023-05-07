@@ -53,6 +53,9 @@ int find_max_size(cell_t** matrix, int rows, int cols, char status, int* safe_zo
                 int size = zone_checker(matrix, row, col, rows, cols, status);
                 if (size > biggest_size) {
                     biggest_size = size;
+                    *safe_zone_count = 1;
+                } else if (size == biggest_size) {
+                    *safe_zone_count++;
                 }
             }
         }
