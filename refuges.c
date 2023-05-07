@@ -3,9 +3,27 @@
 
 #include "refuges.h"
 
-cell_t** create_matrix(int rows, int cols){
-    
+Cell** create_matrix(int rows, int cols){
+    Cell** matrix = malloc(rows * sizeof(Cell*));
+    for(int i = 0; i < rows; i++){
+        matrix[i] = malloc(cols * sizeof(Cell));
+    }
+    return matrix;
 }
+
+void delete_matrix(Cell** matrix, int rows){
+    for(int i = 0; i < rows; i++){
+        free(matrix[i]);
+    }
+    free(matrix);
+}
+
+void print_matrix(Cell** matrix, int rows, int cols){
+    for(int i = 0; i < rows; i++){
+        for(int j = 0; j < cols; j++){
+            putchar(matrix[i][j].status);
+        }
+        putchar('\n');
 
 // Uses "depth-first search" recursive algorithm to visit and mark corresponding cells of a zone as checked if not already
 // This is so that when find_max_size runs, it doesn't call this function on already checked zones.

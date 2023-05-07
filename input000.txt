@@ -1,7 +1,0 @@
-5 8
-
-XXX-XXXX
-XX--XXXX
--XXXXX--
--XXX----
-XXXXXX--
