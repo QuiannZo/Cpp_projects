@@ -32,9 +32,9 @@ int main(void) {
         }
         fclose(filep);
     }
+    cpy_status(matrix, rows, cols);
     int safe_zones = 0;
     int max_size = find_max_size(matrix, rows, cols, '-', &safe_zones);
-    printf("Zone: %d\n", max_size);
     if(max_size > 1){
         change_status(matrix, rows, cols, max_size, '-', 'R');
         printf("%d\n\n", safe_zones);
