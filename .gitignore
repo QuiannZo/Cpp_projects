@@ -6,5 +6,5 @@ bin/
 .vscode/
 
 # Ignore compiled binaries
-*.exe // Windows
-*.out // Linux
+*.exe
+*.out
