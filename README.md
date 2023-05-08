@@ -34,4 +34,4 @@ Output files will be generated on testcases/
 * **exp_outputs:** expected outputs for each input on testcases/
 * **include:** header files
 * **src:** source files
-* **testcases** provided test cases
+* **testcases:** provided test cases
