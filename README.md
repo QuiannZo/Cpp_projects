@@ -1,7 +1,7 @@
-For usage with files:
-    - Text file:
-        ./program -f filename.txt
-    - Binary file:
-        ./program -b filename.bin
+## For usage with provided files:
+    Text file:
+        ./program -f ./testcases/filename.txt
+    Binary file:
+        ./program -b ./testcases/filename.bin
 
-If you wish to use provided testcases, follow the above instructions but type ./testcases/filename.type instead.
+Output files will be generated on testcases/
