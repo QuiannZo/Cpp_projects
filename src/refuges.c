@@ -104,6 +104,10 @@ void read_matrix(FILE* argument, cell_t** matrix, int rows, int cols) {
                 printf("invalid data\n");
                 exit(EXIT_FAILURE);
             }
+            if (character != '-' || character != 'X') {
+                printf("invalid data\n");
+                exit(EXIT_FAILURE);
+            }
             matrix[row][col].status = character;
         }
         int newline = getc(argument);
