@@ -79,9 +79,6 @@ void reset_checked(cell_t** matrix, int rows, int cols) {
 
 void change_status(cell_t** matrix, int rows, int cols, int biggest_size, char status, char new_status) {
     reset_checked(matrix, rows, cols);
-    if(matrix[0][1].checked == true){
-        printf("error\n");
-    }
     for (int row = 0; row < rows; row++) {
         for (int col = 0; col < cols; col++) {
             if (matrix[row][col].status == status) {
@@ -91,6 +88,28 @@ void change_status(cell_t** matrix, int rows, int cols, int biggest_size, char s
                 }
             }
             reset_checked(matrix, rows, cols);
+        }
+    }
+}
+
+void read_matrix(FILE* argument, cell_t** matrix, int rows, int cols) {
+    for (int row = 0; row < rows; row++) {
+        for (int col = 0; col < cols; col++) {
+            int character = getc(argument);
+            if (character == EOF) {
+                printf("invalid data\n");
+                exit(EXIT_FAILURE);
+            }
+            if (character == '\n') {
+                printf("invalid data\n");
+                exit(EXIT_FAILURE);
+            }
+            matrix[row][col].status = character;
+        }
+        int newline = getc(argument);
+        if (newline != '\n' && newline != EOF) {
+            printf("invalid data\n");
+            exit(EXIT_FAILURE);
         }
     }
 }
