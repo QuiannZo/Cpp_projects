@@ -27,7 +27,7 @@ void print_matrix(cell_t** matrix, int rows, int cols) {
     }
 }
 
-void cpy_status(cell_t** matrix, int rows, int cols){
+void copy_status(cell_t** matrix, int rows, int cols){
     for(int i = 0; i < rows; i++){
         for(int j = 0; j < cols; j++){
             matrix[i][j].new_status = matrix[i][j].status;
@@ -104,7 +104,7 @@ void read_matrix(FILE* argument, cell_t** matrix, int rows, int cols) {
                 printf("invalid data\n");
                 exit(EXIT_FAILURE);
             }
-            if (character != '-' || character != 'X') {
+            if (character != '-' && character != 'X') {
                 printf("invalid data\n");
                 exit(EXIT_FAILURE);
             }
@@ -116,4 +116,28 @@ void read_matrix(FILE* argument, cell_t** matrix, int rows, int cols) {
             exit(EXIT_FAILURE);
         }
     }
+}
+
+void print_file_matrix(cell_t** matrix, int rows, int cols, int safe_zones, char* filename) {
+    FILE* output = fopen(filename, "w");
+    fprintf(output, "%d\n", safe_zones);
+    if (output == NULL) {
+        fprintf(stderr, "Error: Could not open output file for writing\n");
+        exit(EXIT_FAILURE);
+    }
+    for (int row = 0; row < rows; row++) {
+        for (int col = 0; col < cols; col++) {
+            fprintf(output, "%c", matrix[row][col].new_status);
+        }
+        fprintf(output, "\n");
+    }
+    fclose(output);
+}
+
+int update_matrix(cell_t** matrix, int rows, int cols) {
+    copy_status(matrix, rows, cols);
+    int safe_zones = 0;
+    int max_size = find_max_size(matrix, rows, cols, '-', &safe_zones);
+    change_status(matrix, rows, cols, max_size, '-', 'R');
+    return safe_zones;
 }
