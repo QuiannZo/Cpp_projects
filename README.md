@@ -9,7 +9,7 @@
 
 Output files will be generated on testcases/
 
-## For usage with stdin
+## For usage with stdin:
     ./program rows cols matrix
 
 ## Example:
