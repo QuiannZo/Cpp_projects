@@ -14,7 +14,7 @@ int main(int argc, char* argv[]) {
     char* outputfilename;
     cell_t** matrix;
     // If argument count in terminal > 1, use filename provided to open file
-    if (argc > 1) {
+    if (argc == 3) {
         // If file is a text file
         if (strcmp(argv[1], "-f") == 0) {
             filename = argv[2];
@@ -72,7 +72,7 @@ int main(int argc, char* argv[]) {
             return EXIT_FAILURE;
         }
         
-    } else { // Else use stdin for input
+    } else if (argc == 1) { // Else use stdin for input
         printf("Please enter the number of rows and columns followed by the matrix\n");
         scanf("%d %d\n", &rows, &cols);
         matrix = create_matrix(rows, cols);
@@ -80,6 +80,10 @@ int main(int argc, char* argv[]) {
         safe_zones = update_matrix(matrix, rows, cols);
         printf("%d\n", safe_zones);
         print_matrix(matrix, rows, cols);
+    }
+    else {
+        printf("Invalid command-line arguments\n");
+        return EXIT_FAILURE;
     }
     delete_matrix(matrix, rows);
 }

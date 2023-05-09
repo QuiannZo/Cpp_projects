@@ -10,7 +10,7 @@
 Output files will be generated on testcases/
 
 ## For usage with stdin:
-    ./program rows cols matrix
+    ./program
 
 ## Example:
 ### Input
