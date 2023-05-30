@@ -16,7 +16,16 @@ public:
     int getY();
     void setX(int x);
     void setY(int y);
+    // Moves piece to another specified spot
     virtual void move(int newX, int newY) = 0;
+    // Checks if given new position is valid
+    bool isValidPos(int x, int y, int boardSizeOnX, int boardSizeOnY);
+    // Checks if a piece can be captured on given coordinates
+    bool isCapturable(int newX, int newY, Piece* board[MAX_BOARDSIZE][MAX_BOARDSIZE], bool isWhite);
+    // Gets the character from a specified piece, depending if its black or white
+    virtual char getPieceType() const = 0;
+    // Displays the piece type on the terminal (Using getPieceType)
+    void displayPiece();
 };
 
 class King : public Piece {
