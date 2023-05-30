@@ -8,7 +8,6 @@ int main(int argc, char* argv[]) {
     if (argc > 1 && std::string(argv[1]) == "-v") {
         verbose = true;
     }
-    return EXIT_SUCCESS;
 
     // Get board size
     int boardSizeOnX, boardSizeOnY;
@@ -80,6 +79,29 @@ int main(int argc, char* argv[]) {
                     piece->move(board, boardSizeOnX, boardSizeOnY);
                 }
             }
+        }      
+    }
+
+    // Display final board after simulation
+    for (int i = 0; i < boardSizeOnX; i++) {
+        for (int j = 0; j < boardSizeOnY; j++) {
+            Piece* piece = board[i][j];
+            if (piece != nullptr) {
+                piece->displayPiece();
+            } else {
+                std::cout << "-";
+            }
+        }
+        std::cout << std::endl;
+    }
+    std::cout << std::endl;
+
+    // Free memory
+    for (int i = 0; i < boardSizeOnX; i++) {
+        for (int j = 0; j < boardSizeOnY; j++) {
+            delete board[i][j];
         }
     }
+
+    return EXIT_SUCCESS;
 }
