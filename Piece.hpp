@@ -23,7 +23,7 @@ public:
     // Checks if a piece can be captured on given coordinates
     bool isCapturable(int newX, int newY, Piece* board[MAX_BOARDSIZE][MAX_BOARDSIZE], bool isWhite);
     // Gets the character from a specified piece, depending if its black or white
-    virtual char getPieceType() const = 0;
+    virtual char getPieceType() = 0;
     // Displays the piece type on the terminal (Using getPieceType)
     void displayPiece();
 };
@@ -32,34 +32,40 @@ class King : public Piece {
 public:
     King(int x, int y, bool isWhite);
     void move(int newX, int newY) override;
+    char getPieceType() override;
 };
 
 class Queen : public Piece {
 public:
     Queen(int x, int y, bool isWhite);
     void move(int newX, int newY) override;
+    char getPieceType() override;
 };
 
 class Rook : public Piece {
 public:
     Rook(int x, int y, bool isWhite);
     void move(int newX, int newY) override;
+    char getPieceType() override;
 };
 
 class Knight : public Piece {
 public:
     Knight(int x, int y, bool isWhite);
     void move(int newX, int newY) override;
+    char getPieceType() override;
 };
 
 class Bishop : public Piece {
 public:
     Bishop(int x, int y,bool isWhite);
     void move(int newX, int newY) override;
+    char getPieceType() override;
 };
 
 class Pawn : public Piece {
 public:
     Pawn(int x, int y, bool isWhite);
     void move(int newX, int newY) override;
+    char getPieceType() override;
 };
