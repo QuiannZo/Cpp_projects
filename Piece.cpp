@@ -2,11 +2,7 @@
 
 #include "Piece.hpp"
 
-Piece::Piece(int x, int y) {
-    this->x = x;
-    this->y = y;
-    moved = false;
-}
+Piece::Piece(int x, int y, bool isWhite) : x{x}, y{y}, isWhite{isWhite} {}
 
 inline int Piece::getX() {
     return x;
@@ -26,7 +22,7 @@ inline void Piece::setY(int y) {
 
 // King
 
-King::King(int x, int y) : Piece(x, y) {}
+King::King(int x, int y, bool isWhite) : Piece(x, y, isWhite) {}
 
 void King::move(int newX, int newY) {
     if ((newX - x) <= 1 && (newY - y) <= 1) {
@@ -37,7 +33,7 @@ void King::move(int newX, int newY) {
 
 // Queen
 
-Queen::Queen(int x, int y) : Piece(x, y) {}
+Queen::Queen(int x, int y, bool isWhite) : Piece(x, y, isWhite) {}
 
 void Queen::move(int newX, int newY) {
     // TODO: Implement
@@ -45,7 +41,7 @@ void Queen::move(int newX, int newY) {
 
 // Rook
 
-Rook::Rook(int x, int y) : Piece(x, y) {}
+Rook::Rook(int x, int y, bool isWhite) : Piece(x, y, isWhite) {}
 
 void Rook::move(int newX, int newY) {
     // TODO: Implement
@@ -53,7 +49,7 @@ void Rook::move(int newX, int newY) {
 
 // Knight
 
-Knight::Knight(int x, int y) : Piece(x, y) {}
+Knight::Knight(int x, int y, bool isWhite) : Piece(x, y, isWhite) {}
 
 void Knight::move(int newX, int newY) {
     // TODO: Implement
@@ -61,7 +57,7 @@ void Knight::move(int newX, int newY) {
 
 // Bishop
 
-Bishop::Bishop(int x, int y) : Piece(x, y) {}
+Bishop::Bishop(int x, int y, bool isWhite) : Piece(x, y, isWhite) {}
 
 void Bishop::move(int newX, int newY) {
     if ((newX - x) == (newY - y)) {
@@ -72,7 +68,7 @@ void Bishop::move(int newX, int newY) {
 
 // Pawn
 
-Pawn::Pawn(int x, int y) : Piece(x, y) {}
+Pawn::Pawn(int x, int y, bool isWhite) : Piece(x, y, isWhite) {}
 
 void Pawn::move(int newX, int newY) {
     // TODO: Implement
