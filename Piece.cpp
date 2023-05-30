@@ -9,9 +9,17 @@ bool Piece::isValidPos(int x, int y, int boardSizeOnX, int boardSizeOnY) {
     return true;
 }
 
-bool isCapturable(int newX, int newY, Piece* board[MAX_BOARDSIZE][MAX_BOARDSIZE], bool isWhite) {
+bool Piece::isCapturable(int newX, int newY, Piece* board[MAX_BOARDSIZE][MAX_BOARDSIZE], bool isWhite) {
     // TODO: Implement
     return true;
+}
+
+char Piece::getPieceType() {
+    return '\0';
+}
+
+void Piece::displayPiece() {
+    std::cout << getPieceType();
 }
 
 inline int Piece::getX() {
