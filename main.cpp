@@ -54,8 +54,30 @@ int main(int argc, char* argv[]) {
                     case 'p':
                         board[i][j] = new Pawn(i, j, isWhite);
                         break;
-                    default:
-                        break;
+
+                }
+            }
+        }
+    }
+
+    // Cycle for rounds
+    for (int round = 0; round < rounds; round++) {
+        // White pieces turn
+        for (int i = 0; i < boardSizeOnX; i++) {
+            for (int j = 0; j < boardSizeOnY; j++) {
+                Piece* piece = board[i][j];
+                if (piece->isWhite && piece != nullptr) {
+                    piece->move(board, boardSizeOnX, boardSizeOnY);
+                }
+            }
+        }
+
+        // Black pieces turn
+        for (int i = 0; i < boardSizeOnX; i++) {
+            for (int j = 0; j < boardSizeOnY; j++) {
+                Piece* piece = board[i][j];
+                if (!piece->isWhite && piece != nullptr) {
+                    piece->move(board, boardSizeOnX, boardSizeOnY);
                 }
             }
         }
