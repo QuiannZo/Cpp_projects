@@ -1,0 +1,10 @@
+# Ignore files and directories commonly excluded
+build/
+bin/
+
+# Ignore editor-specific files .vscode/
+.vscode/
+
+# Ignore compiled binaries
+*.exe
+*.out
