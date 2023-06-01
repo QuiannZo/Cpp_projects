@@ -16,6 +16,7 @@ public:
     int getY();
     void setX(int x);
     void setY(int y);
+    bool pieceIsWhite(const Piece& piece);
     // Moves piece to another specified spot
     virtual void move(Piece* board[MAX_BOARDSIZE][MAX_BOARDSIZE], int x, int y) = 0;
     // Checks if given new position is valid

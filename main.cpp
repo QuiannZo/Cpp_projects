@@ -65,7 +65,7 @@ int main(int argc, char* argv[]) {
         for (int i = 0; i < boardSizeOnX; i++) {
             for (int j = 0; j < boardSizeOnY; j++) {
                 Piece* piece = board[i][j];
-                if (piece->isWhite && piece != nullptr) {
+                if (piece->pieceIsWhite() && piece != nullptr) {
                     piece->move(board, boardSizeOnX, boardSizeOnY);
                 }
             }
@@ -75,7 +75,7 @@ int main(int argc, char* argv[]) {
         for (int i = 0; i < boardSizeOnX; i++) {
             for (int j = 0; j < boardSizeOnY; j++) {
                 Piece* piece = board[i][j];
-                if (!piece->isWhite && piece != nullptr) {
+                if (!piece->pieceIsWhite() && piece != nullptr) {
                     piece->move(board, boardSizeOnX, boardSizeOnY);
                 }
             }

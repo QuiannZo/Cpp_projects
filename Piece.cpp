@@ -38,6 +38,10 @@ inline void Piece::setY(int y) {
     this->y = y;
 }
 
+inline bool Piece::pieceIsWhite(const Piece& piece) {
+    return piece.isWhite;
+}
+
 // // KING
 
 King::King(int x, int y, bool isWhite) : Piece(x, y, isWhite) {}
