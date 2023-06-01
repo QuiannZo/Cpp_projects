@@ -12,10 +12,6 @@ protected:
 public:
     Piece(int x, int y, bool isWhite); // Piece constructor
     virtual ~Piece() {} // Virtual Piece destructor
-    int getX();
-    int getY();
-    void setX(int x);
-    void setY(int y);
     // Checks if piece is black or white
     bool pieceIsWhite();
     // Moves piece to another specified spot

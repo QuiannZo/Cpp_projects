@@ -28,22 +28,6 @@ void Piece::displayPiece() {
     std::cout << getPieceType();
 }
 
-inline int Piece::getX() {
-    return x;
-}
-
-inline int Piece::getY() {
-    return y;
-}
-
-inline void Piece::setX(int x) {
-    this->x = x;
-}
-
-inline void Piece::setY(int y) {
-    this->y = y;
-}
-
 inline bool Piece::pieceIsWhite(){
     return isWhite;
 }
