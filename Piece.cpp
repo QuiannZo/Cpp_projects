@@ -5,8 +5,7 @@
 Piece::Piece(int x, int y, bool isWhite) : x{x}, y{y}, isWhite{isWhite} {}
 
 bool Piece::isValidPos(int x, int y, int boardSizeOnX, int boardSizeOnY) {
-    // TODO: Implement
-    return true;
+    return x < boardSizeOnX && x >= 0 && y < boardSizeOnY && y >= 0;
 }
 
 bool Piece::isCapturable(int newX, int newY, Piece* board[MAX_BOARDSIZE][MAX_BOARDSIZE], bool isWhite) {
@@ -55,7 +54,7 @@ void Piece::movePiece(int newX, int newY, Piece* board[MAX_BOARDSIZE][MAX_BOARDS
 
 King::King(int x, int y, bool isWhite) : Piece(x, y, isWhite) {}
 
-void King::move(Piece* board[MAX_BOARDSIZE][MAX_BOARDSIZE], int x, int y) {
+void King::move(Piece* board[MAX_BOARDSIZE][MAX_BOARDSIZE], int boardSizeOnX, int boardSizeOnY) {
     // TODO: Implement
 }
 
@@ -68,7 +67,7 @@ char King::getPieceType() {
 
 Queen::Queen(int x, int y, bool isWhite) : Piece(x, y, isWhite) {}
 
-void Queen::move(Piece* board[MAX_BOARDSIZE][MAX_BOARDSIZE], int x, int y) {
+void Queen::move(Piece* board[MAX_BOARDSIZE][MAX_BOARDSIZE], int boardSizeOnX, int boardSizeOnY) {
     // TODO: Implement
 }
 
@@ -81,7 +80,7 @@ char Queen::getPieceType() {
 
 Rook::Rook(int x, int y, bool isWhite) : Piece(x, y, isWhite) {}
 
-void Rook::move(Piece* board[MAX_BOARDSIZE][MAX_BOARDSIZE], int x, int y) {
+void Rook::move(Piece* board[MAX_BOARDSIZE][MAX_BOARDSIZE], int boardSizeOnX, int boardSizeOnY) {
     // TODO: Implement
 }
 
@@ -94,7 +93,7 @@ char Rook::getPieceType() {
 
 Knight::Knight(int x, int y, bool isWhite) : Piece(x, y, isWhite) {}
 
-void Knight::move(Piece* board[MAX_BOARDSIZE][MAX_BOARDSIZE], int x, int y) {
+void Knight::move(Piece* board[MAX_BOARDSIZE][MAX_BOARDSIZE], int boardSizeOnX, int boardSizeOnY) {
     // TODO: Implement
 }
 
@@ -107,7 +106,7 @@ char Knight::getPieceType() {
 
 Bishop::Bishop(int x, int y, bool isWhite) : Piece(x, y, isWhite) {}
 
-void Bishop::move(Piece* board[MAX_BOARDSIZE][MAX_BOARDSIZE], int x, int y) {
+void Bishop::move(Piece* board[MAX_BOARDSIZE][MAX_BOARDSIZE], int boardSizeOnX, int boardSizeOnY) {
     // TODO: Implement
 }
 
@@ -120,7 +119,7 @@ char Bishop::getPieceType() {
 
 Pawn::Pawn(int x, int y, bool isWhite) : Piece(x, y, isWhite) {}
 
-void Pawn::move(Piece* board[MAX_BOARDSIZE][MAX_BOARDSIZE], int x, int y) {
+void Pawn::move(Piece* board[MAX_BOARDSIZE][MAX_BOARDSIZE], int boardSizeOnX, int boardSizeOnY) {
     // TODO: Implement
 }
 
