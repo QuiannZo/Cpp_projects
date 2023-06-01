@@ -42,6 +42,15 @@ inline bool Piece::pieceIsWhite(){
     return isWhite;
 }
 
+void Piece::movePiece(int newX, int newY, Piece* board[MAX_BOARDSIZE][MAX_BOARDSIZE], int boardSizeOnX, int boardSizeOnY) {
+    if (isValidPos(newX, newY, boardSizeOnX, boardSizeOnY)) {
+        board[newX][newY] = board[x][y];
+        board[x][y] = nullptr;
+        x = newX;
+        y = newY;
+    }
+}
+
 // // KING
 
 King::King(int x, int y, bool isWhite) : Piece(x, y, isWhite) {}

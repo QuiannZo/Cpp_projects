@@ -16,9 +16,12 @@ public:
     int getY();
     void setX(int x);
     void setY(int y);
+    // Checks if piece is black or white
     bool pieceIsWhite();
     // Moves piece to another specified spot
     virtual void move(Piece* board[MAX_BOARDSIZE][MAX_BOARDSIZE], int x, int y) = 0;
+    // Moves the actual piece to the new coordinates
+    void movePiece(int newX, int newY, Piece* board[MAX_BOARDSIZE][MAX_BOARDSIZE], int boardSizeOnX, int boardSizeOnY);
     // Checks if given new position is valid
     bool isValidPos(int x, int y, int boardSizeOnX, int boardSizeOnY);
     // Checks if a piece can be captured on given coordinates
