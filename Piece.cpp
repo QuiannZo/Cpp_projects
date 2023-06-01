@@ -70,8 +70,7 @@ void King::moveOrCapture(int newX, int newY, Piece* board[MAX_BOARDSIZE][MAX_BOA
 }
 
 char King::getPieceType() {
-    // TODO: Implement
-    return '\0';
+    return isWhite ? 'K' : 'k';
 }
 
 // // QUEEN
@@ -87,8 +86,7 @@ void Queen::moveOrCapture(int newX, int newY, Piece* board[MAX_BOARDSIZE][MAX_BO
 }
 
 char Queen::getPieceType() {
-    // TODO: Implement
-    return '\0';
+    return isWhite ? 'Q' : 'q';
 }
 
 // // ROOK
@@ -104,8 +102,7 @@ void Rook::moveOrCapture(int newX, int newY, Piece* board[MAX_BOARDSIZE][MAX_BOA
 }
 
 char Rook::getPieceType() {
-    // TODO: Implement
-    return '\0';
+    return isWhite ? 'T' : 't';
 }
 
 // // KNIGHT
@@ -121,8 +118,7 @@ void Knight::moveOrCapture(int newX, int newY, Piece* board[MAX_BOARDSIZE][MAX_B
 }
 
 char Knight::getPieceType() {
-    // TODO: Implement
-    return '\0';
+    return isWhite ? 'C' : 'c';
 }
 
 // // BISHOP
@@ -138,8 +134,7 @@ void Bishop::moveOrCapture(int newX, int newY, Piece* board[MAX_BOARDSIZE][MAX_B
 }
 
 char Bishop::getPieceType() {
-    // TODO: Implement
-    return '\0';
+    return isWhite ? 'A' : 'a';
 }
 
 // // PAWN
@@ -155,6 +150,5 @@ void Pawn::moveOrCapture(int newX, int newY, Piece* board[MAX_BOARDSIZE][MAX_BOA
 }
 
 char Pawn::getPieceType() {
-    // TODO: Implement
-    return '\0';
+    return isWhite ? 'P' : 'p';
 }
