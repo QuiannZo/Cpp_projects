@@ -44,7 +44,22 @@ King::King(int x, int y, bool isWhite) : Piece(x, y, isWhite) {}
 void King::move(Piece* board[MAX_BOARDSIZE][MAX_BOARDSIZE], int boardSizeOnX, int boardSizeOnY) {
     int possibleMoves[8][2] = {{1, 1}, {1, 0}, {1, -1}, {0, 1}, {0, -1}, {-1, 1}, {-1, 0}, {-1, -1}};
 
+    
+
     // TODO: Implement percentages logic
+    // 60% chance:
+    // // Evaluate capturable pieces
+    // // // If a piece is capturable:
+    // // // // moveOrCapture()
+    // // // Else:
+    // // // // moveRandom()
+    // 10% chance:
+    // // Evaluate capturable pieces
+    // // // If a piece is capturable:
+    // // // // moveOrCapture()
+    // // // Else:
+    // // // // moveRandom()
+    // 30% chance: Use movePiece() with 0, 0
 }
 
 char King::getPieceType() {
