@@ -5,12 +5,19 @@
 Piece::Piece(int x, int y, bool isWhite) : x{x}, y{y}, isWhite{isWhite} {}
 
 bool Piece::isValidPos(int x, int y, int boardSizeOnX, int boardSizeOnY) {
-    return x < boardSizeOnX && x >= 0 && y < boardSizeOnY && y >= 0;
+    if (x < boardSizeOnX && x >= 0 && y < boardSizeOnY && y >= 0) {
+        return true;
+    }
+    return false;
 }
 
 bool Piece::isCapturable(int newX, int newY, Piece* board[MAX_BOARDSIZE][MAX_BOARDSIZE], bool isWhite) {
-    // TODO: Implement
-    return true;
+    Piece* selectedPiece = board[newX][newY];
+    // Checks if they are different color and if it isn't nullptr
+    if (selectedPiece->pieceIsWhite() != this->isWhite && selectedPiece != nullptr) {
+        return true;
+    } 
+    return false;
 }
 
 char Piece::getPieceType() {
