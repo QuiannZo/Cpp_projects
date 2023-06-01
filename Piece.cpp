@@ -20,10 +20,6 @@ bool Piece::isCapturable(int newX, int newY, Piece* board[MAX_BOARDSIZE][MAX_BOA
     return false;
 }
 
-char Piece::getPieceType() {
-    return '\0';
-}
-
 void Piece::displayPiece() {
     std::cout << getPieceType();
 }
@@ -48,18 +44,7 @@ King::King(int x, int y, bool isWhite) : Piece(x, y, isWhite) {}
 void King::move(Piece* board[MAX_BOARDSIZE][MAX_BOARDSIZE], int boardSizeOnX, int boardSizeOnY) {
     int possibleMoves[8][2] = {{1, 1}, {1, 0}, {1, -1}, {0, 1}, {0, -1}, {-1, 1}, {-1, 0}, {-1, -1}};
 
-    // TODO: Implement:
-        // Random number generator for range between 0 and 7
-
-    // This would grab a random X and Y from the possible moves
-    int newX = possibleMoves[randomNumber][0];
-    int newY = possibleMoves[randomNumber][1];
-
-    moveOrCapture(newX, newY, board, boardSizeOnX, boardSizeOnY);
-}
-
-void King::moveOrCapture(int newX, int newY, Piece* board[MAX_BOARDSIZE][MAX_BOARDSIZE], int boardSizeOnX, int boardSizeOnY) {
-    // TODO: Implement
+    // TODO: Implement percentages logic
 }
 
 char King::getPieceType() {
@@ -71,10 +56,6 @@ char King::getPieceType() {
 Queen::Queen(int x, int y, bool isWhite) : Piece(x, y, isWhite) {}
 
 void Queen::move(Piece* board[MAX_BOARDSIZE][MAX_BOARDSIZE], int boardSizeOnX, int boardSizeOnY) {
-    // TODO: Implement
-}
-
-void Queen::moveOrCapture(int newX, int newY, Piece* board[MAX_BOARDSIZE][MAX_BOARDSIZE], int boardSizeOnX, int boardSizeOnY) {
     // TODO: Implement
 }
 
@@ -90,10 +71,6 @@ void Rook::move(Piece* board[MAX_BOARDSIZE][MAX_BOARDSIZE], int boardSizeOnX, in
     // TODO: Implement
 }
 
-void Rook::moveOrCapture(int newX, int newY, Piece* board[MAX_BOARDSIZE][MAX_BOARDSIZE], int boardSizeOnX, int boardSizeOnY) {
-    // TODO: Implement
-}
-
 char Rook::getPieceType() {
     return isWhite ? 'T' : 't';
 }
@@ -103,10 +80,6 @@ char Rook::getPieceType() {
 Knight::Knight(int x, int y, bool isWhite) : Piece(x, y, isWhite) {}
 
 void Knight::move(Piece* board[MAX_BOARDSIZE][MAX_BOARDSIZE], int boardSizeOnX, int boardSizeOnY) {
-    // TODO: Implement
-}
-
-void Knight::moveOrCapture(int newX, int newY, Piece* board[MAX_BOARDSIZE][MAX_BOARDSIZE], int boardSizeOnX, int boardSizeOnY) {
     // TODO: Implement
 }
 
@@ -122,10 +95,6 @@ void Bishop::move(Piece* board[MAX_BOARDSIZE][MAX_BOARDSIZE], int boardSizeOnX, 
     // TODO: Implement
 }
 
-void Bishop::moveOrCapture(int newX, int newY, Piece* board[MAX_BOARDSIZE][MAX_BOARDSIZE], int boardSizeOnX, int boardSizeOnY) {
-    // TODO: Implement
-}
-
 char Bishop::getPieceType() {
     return isWhite ? 'A' : 'a';
 }
@@ -135,10 +104,6 @@ char Bishop::getPieceType() {
 Pawn::Pawn(int x, int y, bool isWhite) : Piece(x, y, isWhite) {}
 
 void Pawn::move(Piece* board[MAX_BOARDSIZE][MAX_BOARDSIZE], int boardSizeOnX, int boardSizeOnY) {
-    // TODO: Implement
-}
-
-void Pawn::moveOrCapture(int newX, int newY, Piece* board[MAX_BOARDSIZE][MAX_BOARDSIZE], int boardSizeOnX, int boardSizeOnY) {
     // TODO: Implement
 }
 
