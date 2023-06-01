@@ -62,7 +62,16 @@ void Piece::movePiece(int newX, int newY, Piece* board[MAX_BOARDSIZE][MAX_BOARDS
 King::King(int x, int y, bool isWhite) : Piece(x, y, isWhite) {}
 
 void King::move(Piece* board[MAX_BOARDSIZE][MAX_BOARDSIZE], int boardSizeOnX, int boardSizeOnY) {
-    // TODO: Implement
+    int possibleMoves[8][2] = {{1, 1}, {1, 0}, {1, -1}, {0, 1}, {0, -1}, {-1, 1}, {-1, 0}, {-1, -1}};
+
+    // TODO: Implement:
+        // Random number generator for range between 0 and 7
+
+    // This would grab a random X and Y from the possible moves
+    int newX = possibleMoves[randomNumber][0];
+    int newY = possibleMoves[randomNumber][1];
+
+    moveOrCapture(newX, newY, board, boardSizeOnX, boardSizeOnY);
 }
 
 void King::moveOrCapture(int newX, int newY, Piece* board[MAX_BOARDSIZE][MAX_BOARDSIZE], int boardSizeOnX, int boardSizeOnY) {
