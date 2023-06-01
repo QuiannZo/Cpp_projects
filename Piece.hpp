@@ -36,6 +36,7 @@ class King : public Piece {
 public:
     King(int x, int y, bool isWhite);
     void move(Piece* board[MAX_BOARDSIZE][MAX_BOARDSIZE], int x, int y) override;
+    void moveOrCapture(int newX, int newY, Piece* board[MAX_BOARDSIZE][MAX_BOARDSIZE], int boardSizeOnX, int boardSizeOnY);
     char getPieceType() override;
 };
 
@@ -43,6 +44,7 @@ class Queen : public Piece {
 public:
     Queen(int x, int y, bool isWhite);
     void move(Piece* board[MAX_BOARDSIZE][MAX_BOARDSIZE], int x, int y) override;
+    void moveOrCapture(int newX, int newY, Piece* board[MAX_BOARDSIZE][MAX_BOARDSIZE], int boardSizeOnX, int boardSizeOnY);
     char getPieceType() override;
 };
 
@@ -50,6 +52,7 @@ class Rook : public Piece {
 public:
     Rook(int x, int y, bool isWhite);
     void move(Piece* board[MAX_BOARDSIZE][MAX_BOARDSIZE], int x, int y) override;
+    void moveOrCapture(int newX, int newY, Piece* board[MAX_BOARDSIZE][MAX_BOARDSIZE], int boardSizeOnX, int boardSizeOnY);
     char getPieceType() override;
 };
 
@@ -57,6 +60,7 @@ class Knight : public Piece {
 public:
     Knight(int x, int y, bool isWhite);
     void move(Piece* board[MAX_BOARDSIZE][MAX_BOARDSIZE], int x, int y) override;
+    void moveOrCapture(int newX, int newY, Piece* board[MAX_BOARDSIZE][MAX_BOARDSIZE], int boardSizeOnX, int boardSizeOnY);
     char getPieceType() override;
 };
 
@@ -64,6 +68,7 @@ class Bishop : public Piece {
 public:
     Bishop(int x, int y,bool isWhite);
     void move(Piece* board[MAX_BOARDSIZE][MAX_BOARDSIZE], int x, int y) override;
+    void moveOrCapture(int newX, int newY, Piece* board[MAX_BOARDSIZE][MAX_BOARDSIZE], int boardSizeOnX, int boardSizeOnY);
     char getPieceType() override;
 };
 
@@ -71,5 +76,6 @@ class Pawn : public Piece {
 public:
     Pawn(int x, int y, bool isWhite);
     void move(Piece* board[MAX_BOARDSIZE][MAX_BOARDSIZE], int x, int y) override;
+    void moveOrCapture(int newX, int newY, Piece* board[MAX_BOARDSIZE][MAX_BOARDSIZE], int boardSizeOnX, int boardSizeOnY);
     char getPieceType() override;
 };

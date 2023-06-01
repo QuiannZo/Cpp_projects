@@ -65,6 +65,10 @@ void King::move(Piece* board[MAX_BOARDSIZE][MAX_BOARDSIZE], int boardSizeOnX, in
     // TODO: Implement
 }
 
+void King::moveOrCapture(int newX, int newY, Piece* board[MAX_BOARDSIZE][MAX_BOARDSIZE], int boardSizeOnX, int boardSizeOnY) {
+    // TODO: Implement
+}
+
 char King::getPieceType() {
     // TODO: Implement
     return '\0';
@@ -75,6 +79,10 @@ char King::getPieceType() {
 Queen::Queen(int x, int y, bool isWhite) : Piece(x, y, isWhite) {}
 
 void Queen::move(Piece* board[MAX_BOARDSIZE][MAX_BOARDSIZE], int boardSizeOnX, int boardSizeOnY) {
+    // TODO: Implement
+}
+
+void Queen::moveOrCapture(int newX, int newY, Piece* board[MAX_BOARDSIZE][MAX_BOARDSIZE], int boardSizeOnX, int boardSizeOnY) {
     // TODO: Implement
 }
 
@@ -91,6 +99,10 @@ void Rook::move(Piece* board[MAX_BOARDSIZE][MAX_BOARDSIZE], int boardSizeOnX, in
     // TODO: Implement
 }
 
+void Rook::moveOrCapture(int newX, int newY, Piece* board[MAX_BOARDSIZE][MAX_BOARDSIZE], int boardSizeOnX, int boardSizeOnY) {
+    // TODO: Implement
+}
+
 char Rook::getPieceType() {
     // TODO: Implement
     return '\0';
@@ -101,6 +113,10 @@ char Rook::getPieceType() {
 Knight::Knight(int x, int y, bool isWhite) : Piece(x, y, isWhite) {}
 
 void Knight::move(Piece* board[MAX_BOARDSIZE][MAX_BOARDSIZE], int boardSizeOnX, int boardSizeOnY) {
+    // TODO: Implement
+}
+
+void Knight::moveOrCapture(int newX, int newY, Piece* board[MAX_BOARDSIZE][MAX_BOARDSIZE], int boardSizeOnX, int boardSizeOnY) {
     // TODO: Implement
 }
 
@@ -117,6 +133,10 @@ void Bishop::move(Piece* board[MAX_BOARDSIZE][MAX_BOARDSIZE], int boardSizeOnX, 
     // TODO: Implement
 }
 
+void Bishop::moveOrCapture(int newX, int newY, Piece* board[MAX_BOARDSIZE][MAX_BOARDSIZE], int boardSizeOnX, int boardSizeOnY) {
+    // TODO: Implement
+}
+
 char Bishop::getPieceType() {
     // TODO: Implement
     return '\0';
@@ -127,6 +147,10 @@ char Bishop::getPieceType() {
 Pawn::Pawn(int x, int y, bool isWhite) : Piece(x, y, isWhite) {}
 
 void Pawn::move(Piece* board[MAX_BOARDSIZE][MAX_BOARDSIZE], int boardSizeOnX, int boardSizeOnY) {
+    // TODO: Implement
+}
+
+void Pawn::moveOrCapture(int newX, int newY, Piece* board[MAX_BOARDSIZE][MAX_BOARDSIZE], int boardSizeOnX, int boardSizeOnY) {
     // TODO: Implement
 }
 
