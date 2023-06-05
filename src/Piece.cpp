@@ -1,4 +1,5 @@
 #include <iostream>
+#include <random>
 
 #include "Piece.hpp"
 
@@ -41,10 +42,32 @@ void Piece::movePiece(int newX, int newY, Piece*** board, int boardSizeOnX, int 
 
 King::King(int x, int y, bool isWhite) : Piece(x, y, isWhite) {}
 
-void King::move(Piece*** board, int boardSizeOnX, int boardSizeOnY) {
-    int possibleMoves[8][2] = {{1, 1}, {1, 0}, {1, -1}, {0, 1}, {0, -1}, {-1, 1}, {-1, 0}, {-1, -1}};
+void King::moveOrCapture(Piece*** board, int boardSizeOnX, int boardSizeOnY, int rand){
 
-    // TODO: Implement percentages logic
+}
+
+void King::moveAndDuplicate(Piece*** board, int boardSizeOnX, int boardSizeOnY){
+
+}
+
+void King::move(Piece*** board, int boardSizeOnX, int boardSizeOnY) {
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<int> dis(1, 10);
+    std::uniform_int_distribution<int> dis50(1, 2);
+
+    int randomNumber = dis(gen);
+    int random50 = dis50(gen);
+
+    if(randomNumber <= 6){
+        // Para mover pasa el puntero de la matriz a la matriz actualizada
+        moveOrCapture(board, boardSizeOnX, boardSizeOnY, random50);
+    } else if (randomNumber == 7){
+        // // Se crea un objeto de la pieza en la matriz actualizada y no se borra el actual.
+        moveAndDuplicate(board, boardSizeOnX, boardSizeOnY);
+    } else {
+        // Do nothing.
+    }
 }
 
 char King::getPieceType() {

@@ -17,8 +17,12 @@ public:
     bool pieceIsWhite();
     // Moves piece to another specified spot
     virtual void move(Piece*** board, int boardSizeOnX, int boardSizeOnY) = 0;
-    // Moves the actual piece to the new coordinates
+    // Moves the piece to the specified spot
     void movePiece(int newX, int newY, Piece*** board, int boardSizeOnX, int boardSizeOnY);
+    // Moves the piece or captures depending on rand, if even possible.
+    virtual void moveOrCapture(Piece*** board, int boardSizeOnX, int boardSizeOnY, int rand) = 0;
+    // Moves the piece and leaves a copy in the original position.
+    virtual void moveAndDuplicate(Piece*** board, int boardSizeOnX, int boardSizeOnY) = 0;
     // Checks if given new position is valid
     bool isValidPos(int x, int y, int boardSizeOnX, int boardSizeOnY);
     // Checks if a piece can be captured on given coordinates
@@ -34,6 +38,8 @@ public:
 class King : public Piece {
 public:
     King(int x, int y, bool isWhite);
+    void moveOrCapture(Piece*** board, int boardSizeOnX, int boardSizeOnY, int rand) override;
+    void moveAndDuplicate(Piece*** board, int boardSizeOnX, int boardSizeOnY) override;
     void move(Piece*** board, int x, int y) override;
     char getPieceType() override;
     int getPieceSpeed() override;
@@ -42,6 +48,8 @@ public:
 class Queen : public Piece {
 public:
     Queen(int x, int y, bool isWhite);
+    void moveOrCapture(Piece*** board, int boardSizeOnX, int boardSizeOnY, int rand) override;
+    void moveAndDuplicate(Piece*** board, int boardSizeOnX, int boardSizeOnY) override;
     void move(Piece*** board, int x, int y) override;
     char getPieceType() override;
     int getPieceSpeed() override;
@@ -50,6 +58,8 @@ public:
 class Rook : public Piece {
 public:
     Rook(int x, int y, bool isWhite);
+    void moveOrCapture(Piece*** board, int boardSizeOnX, int boardSizeOnY, int rand) override;
+    void moveAndDuplicate(Piece*** board, int boardSizeOnX, int boardSizeOnY) override;
     void move(Piece*** board, int x, int y) override;
     char getPieceType() override;
     int getPieceSpeed() override;
@@ -58,6 +68,8 @@ public:
 class Knight : public Piece {
 public:
     Knight(int x, int y, bool isWhite);
+    void moveOrCapture(Piece*** board, int boardSizeOnX, int boardSizeOnY, int rand) override;
+    void moveAndDuplicate(Piece*** board, int boardSizeOnX, int boardSizeOnY) override;
     void move(Piece*** board, int x, int y) override;
     char getPieceType() override;
     int getPieceSpeed() override;
@@ -66,6 +78,8 @@ public:
 class Bishop : public Piece {
 public:
     Bishop(int x, int y,bool isWhite);
+    void moveOrCapture(Piece*** board, int boardSizeOnX, int boardSizeOnY, int rand) override;
+    void moveAndDuplicate(Piece*** board, int boardSizeOnX, int boardSizeOnY) override;
     void move(Piece*** board, int x, int y) override;
     char getPieceType() override;
     int getPieceSpeed() override;
@@ -74,6 +88,8 @@ public:
 class Pawn : public Piece {
 public:
     Pawn(int x, int y, bool isWhite);
+    void moveOrCapture(Piece*** board, int boardSizeOnX, int boardSizeOnY, int rand) override;
+    void moveAndDuplicate(Piece*** board, int boardSizeOnX, int boardSizeOnY) override;
     void move(Piece*** board, int x, int y) override;
     char getPieceType() override;
     int getPieceSpeed() override;

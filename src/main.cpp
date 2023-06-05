@@ -73,7 +73,7 @@ int main(int argc, char* argv[]) {
     // Run the simulation.
     //run(board, boardSizeOnX, boardSizeOnY, rounds, verbose);
 
-    // Display final board.
+    // Display the final board.
     printMatrix(board, boardSizeOnX, boardSizeOnY);
 
     // Free memory
