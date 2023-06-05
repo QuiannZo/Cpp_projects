@@ -9,6 +9,7 @@ protected:
     int x; // row position on board
     int y; // col position on board
     bool isWhite; // to know if piece is black or white
+    int speed;
 public:
     Piece(int x, int y, bool isWhite); // Piece constructor
     virtual ~Piece() {} // Virtual Piece destructor
@@ -24,6 +25,8 @@ public:
     bool isCapturable(int newX, int newY, Piece*** board, bool isWhite);
     // Gets the character from a specified piece, depending if its black or white
     virtual char getPieceType() = 0;
+    // Gets piece speed
+    virtual int getPieceSpeed() = 0;
     // Displays the piece type on the terminal (Using getPieceType)
     void displayPiece();
 };
@@ -33,6 +36,7 @@ public:
     King(int x, int y, bool isWhite);
     void move(Piece*** board, int x, int y) override;
     char getPieceType() override;
+    int getPieceSpeed() override;
 };
 
 class Queen : public Piece {
@@ -40,6 +44,7 @@ public:
     Queen(int x, int y, bool isWhite);
     void move(Piece*** board, int x, int y) override;
     char getPieceType() override;
+    int getPieceSpeed() override;
 };
 
 class Rook : public Piece {
@@ -47,6 +52,7 @@ public:
     Rook(int x, int y, bool isWhite);
     void move(Piece*** board, int x, int y) override;
     char getPieceType() override;
+    int getPieceSpeed() override;
 };
 
 class Knight : public Piece {
@@ -54,6 +60,7 @@ public:
     Knight(int x, int y, bool isWhite);
     void move(Piece*** board, int x, int y) override;
     char getPieceType() override;
+    int getPieceSpeed() override;
 };
 
 class Bishop : public Piece {
@@ -61,6 +68,7 @@ public:
     Bishop(int x, int y,bool isWhite);
     void move(Piece*** board, int x, int y) override;
     char getPieceType() override;
+    int getPieceSpeed() override;
 };
 
 class Pawn : public Piece {
@@ -68,6 +76,7 @@ public:
     Pawn(int x, int y, bool isWhite);
     void move(Piece*** board, int x, int y) override;
     char getPieceType() override;
+    int getPieceSpeed() override;
 };
 
 Piece*** createMatrix(int rows, int cols);

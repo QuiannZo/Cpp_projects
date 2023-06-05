@@ -51,6 +51,10 @@ char King::getPieceType() {
     return isWhite ? 'K' : 'k';
 }
 
+int King::getPieceSpeed() {
+    return 4;
+}
+
 // // QUEEN
 
 Queen::Queen(int x, int y, bool isWhite) : Piece(x, y, isWhite) {}
@@ -61,6 +65,10 @@ void Queen::move(Piece*** board, int boardSizeOnX, int boardSizeOnY) {
 
 char Queen::getPieceType() {
     return isWhite ? 'Q' : 'q';
+}
+
+int Queen::getPieceSpeed() {
+    return 5;
 }
 
 // // ROOK
@@ -75,6 +83,10 @@ char Rook::getPieceType() {
     return isWhite ? 'T' : 't';
 }
 
+int Rook::getPieceSpeed() {
+    return 2;
+}
+
 // // KNIGHT
 
 Knight::Knight(int x, int y, bool isWhite) : Piece(x, y, isWhite) {}
@@ -85,6 +97,10 @@ void Knight::move(Piece*** board, int boardSizeOnX, int boardSizeOnY) {
 
 char Knight::getPieceType() {
     return isWhite ? 'C' : 'c';
+}
+
+int Knight::getPieceSpeed() {
+    return 6;
 }
 
 // // BISHOP
@@ -99,6 +115,10 @@ char Bishop::getPieceType() {
     return isWhite ? 'A' : 'a';
 }
 
+int Bishop::getPieceSpeed() {
+    return 3;
+}
+
 // // PAWN
 
 Pawn::Pawn(int x, int y, bool isWhite) : Piece(x, y, isWhite) {}
@@ -109,6 +129,10 @@ void Pawn::move(Piece*** board, int boardSizeOnX, int boardSizeOnY) {
 
 char Pawn::getPieceType() {
     return isWhite ? 'P' : 'p';
+}
+
+int Pawn::getPieceSpeed() {
+    return 1;
 }
 
 //Crear una matrix e inicializarla con null pointers.
@@ -222,27 +246,34 @@ void readMatrix(std::ifstream& arg, Piece*** board, int rows, int cols){
 }
 
 void run(Piece*** board, int boardSizeOnX, int boardSizeOnY, int rounds, bool verbose){
+    // Each of the rounds
     for (int round = 0; round < rounds; round++) {
         // White pieces turn
-        for (int i = 0; i < boardSizeOnX; i++) {
-            for (int j = 0; j < boardSizeOnY; j++) {
-                Piece* piece = board[i][j];
-                if (piece->pieceIsWhite() && piece != nullptr) {
-                    piece->move(board, boardSizeOnX, boardSizeOnY);
+        // Pieces move by speed (1 - 6). One being the fastest.
+        for(int speed = 1; speed <= 6; ++speed){
+            for (int i = 0; i < boardSizeOnX; i++) {
+                for (int j = 0; j < boardSizeOnY; j++) {
+                    Piece* piece = board[i][j];
+                    if (piece->pieceIsWhite() && piece != nullptr) {
+                        piece->move(board, boardSizeOnX, boardSizeOnY);
+                    }
                 }
             }
         }
 
         // Black pieces turn
-        for (int i = 0; i < boardSizeOnX; i++) {
-            for (int j = 0; j < boardSizeOnY; j++) {
-                Piece* piece = board[i][j];
-                if (!piece->pieceIsWhite() && piece != nullptr) {
-                    piece->move(board, boardSizeOnX, boardSizeOnY);
+        // Pieces move by speed (1 - 6). One being the fastest.
+        for(int speed = 1; speed <= 6; ++speed){
+            for (int i = 0; i < boardSizeOnX; i++) {
+                for (int j = 0; j < boardSizeOnY; j++) {
+                    Piece* piece = board[i][j];
+                    if (!piece->pieceIsWhite() && piece != nullptr && piece->getPieceSpeed() == speed) {
+                        piece->move(board, boardSizeOnX, boardSizeOnY);
+                    }
                 }
             }
         }
-        
+
         // rounds - 1 because the final round is always shown in main.
         if(verbose == true && round < rounds - 1){
             printMatrix(board, boardSizeOnX, boardSizeOnY);
