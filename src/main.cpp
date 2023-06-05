@@ -5,6 +5,14 @@
 
 #include "Piece.cpp"
 
+typedef struct boards {
+    Piece*** board;
+    Piece*** newBoard;
+    boards(Piece*** matrix){
+        board = matrix;
+    }
+} boards;
+
 int main(int argc, char* argv[]) {
     int boardSizeOnX = 0, boardSizeOnY = 0;
     int rounds = 0;

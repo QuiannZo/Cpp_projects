@@ -43,7 +43,41 @@ void Piece::movePiece(int newX, int newY, Piece*** board, int boardSizeOnX, int 
 King::King(int x, int y, bool isWhite) : Piece(x, y, isWhite) {}
 
 void King::moveOrCapture(Piece*** board, int boardSizeOnX, int boardSizeOnY, int rand){
+    if(rand == 1){
+        // Capture.
+        // Creates an array of all possible captures and randomly selects one.
+        Piece* pieces[8];
+        // Checks the kings surroundings.
+        // // If theres a piece above the king, and its from the enemmy.
+        if(board[x + 1][y] != nullptr && this->pieceIsWhite() != board[x + 1][y]->pieceIsWhite() && this->isValidPos(++x, y, boardSizeOnX, boardSizeOnY) == true){
+            pieces[0] = board[x + 1][y];
+        }
+        if(board[x + 1][y + 1] != nullptr && this->pieceIsWhite() != board[x + 1][y]->pieceIsWhite()){
+            pieces[0] = board[x + 1][y + 1];
+        }
+        if(board[x][y + 1] != nullptr && this->pieceIsWhite() != board[x + 1][y]->pieceIsWhite()){
+            pieces[0] = board[x][y + 1];
+        }
+        if(board[x - 1][y + 1] != nullptr && this->pieceIsWhite() != board[x + 1][y]->pieceIsWhite()){
+            pieces[0] = board[x - 1][y + 1];
+        }
+        if(board[x - 1][y] != nullptr && this->pieceIsWhite() != board[x + 1][y]->pieceIsWhite()){
+            pieces[0] = board[x - 1][y];
+        }
+        if(board[x - 1][y - 1] != nullptr && this->pieceIsWhite() != board[x + 1][y]->pieceIsWhite()){
+            pieces[0] = board[x - 1][y - 1];
+        }
+        if(board[x][y - 1] != nullptr && this->pieceIsWhite() != board[x + 1][y]->pieceIsWhite()){
+            pieces[0] = board[x][y - 1];
+        }
+        if(board[x + 1][y - 1] != nullptr && this->pieceIsWhite() != board[x + 1][y]->pieceIsWhite()){
+            pieces[0] = board[x + 1][y - 1];
+        }
 
+    } else {
+        //Move without capture.
+
+    }
 }
 
 void King::moveAndDuplicate(Piece*** board, int boardSizeOnX, int boardSizeOnY){
