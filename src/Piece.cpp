@@ -105,7 +105,7 @@ void King::moveOrCapture(Piece*** board, int boardSizeOnX, int boardSizeOnY, boo
     if (capturableCount > 0) {
         std::random_device rd;
         std::mt19937 gen(rd());
-        std::uniform_int_distribution<> indexdis(0, capturableCount);
+        std::uniform_int_distribution<> indexdis(0, capturableCount - 1);
         int index = indexdis(gen);
 
         int captureX = capturablePieces[index][0];
@@ -255,7 +255,7 @@ void Queen::moveOrCapture(Piece*** board, int boardSizeOnX, int boardSizeOnY, bo
     if (capturableCount > 0) {
         std::random_device rd;
         std::mt19937 gen(rd());
-        std::uniform_int_distribution<> indexdis(0, capturableCount);
+        std::uniform_int_distribution<> indexdis(0, capturableCount - 1);
         int index = indexdis(gen);
 
         int captureX = capturablePieces[index][0];
@@ -401,7 +401,7 @@ void Rook::moveOrCapture(Piece*** board, int boardSizeOnX, int boardSizeOnY, boo
     if (capturableCount > 0) {
         std::random_device rd;
         std::mt19937 gen(rd());
-        std::uniform_int_distribution<> indexdis(0, capturableCount);
+        std::uniform_int_distribution<> indexdis(0, capturableCount - 1);
         int index = indexdis(gen);
 
         int captureX = capturablePieces[index][0];
@@ -657,7 +657,7 @@ void Bishop::moveOrCapture(Piece*** board, int boardSizeOnX, int boardSizeOnY, b
     if (capturableCount > 0) {
         std::random_device rd;
         std::mt19937 gen(rd());
-        std::uniform_int_distribution<> indexdis(0, capturableCount);
+        std::uniform_int_distribution<> indexdis(0, capturableCount - 1);
         int index = indexdis(gen);
 
         int captureX = capturablePieces[index][0];
