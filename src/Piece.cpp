@@ -271,6 +271,10 @@ int Queen::getPieceSpeed() {
 
 Rook::Rook(int x, int y, bool isWhite) : Piece(x, y, isWhite) {}
 
+void Rook::randomMove(Piece*** board, int boardSizeOnX, int boardSizeOnY, bool duplicate) {
+
+}
+
 void Rook::moveOrCapture(Piece*** board, int boardSizeOnX, int boardSizeOnY, bool duplicate) {
 
 }
@@ -291,8 +295,16 @@ int Rook::getPieceSpeed() {
 
 Knight::Knight(int x, int y, bool isWhite) : Piece(x, y, isWhite) {}
 
+void Knight::randomMove(Piece*** board, int boardSizeOnX, int boardSizeOnY, bool duplicate) {
+
+}
+
+void Knight::moveOrCapture(Piece*** board, int boardSizeOnX, int boardSizeOnY, bool duplicate) {
+
+}
+
 void Knight::move(Piece*** board, int boardSizeOnX, int boardSizeOnY) {
-    // TODO: Implement
+
 }
 
 char Knight::getPieceType() {
@@ -307,8 +319,16 @@ int Knight::getPieceSpeed() {
 
 Bishop::Bishop(int x, int y, bool isWhite) : Piece(x, y, isWhite) {}
 
+void Bishop::randomMove(Piece*** board, int boardSizeOnX, int boardSizeOnY, bool duplicate) {
+
+}
+
+void Bishop::moveOrCapture(Piece*** board, int boardSizeOnX, int boardSizeOnY, bool duplicate) {
+
+}
+
 void Bishop::move(Piece*** board, int boardSizeOnX, int boardSizeOnY) {
-    // TODO: Implement
+
 }
 
 char Bishop::getPieceType() {
@@ -323,8 +343,16 @@ int Bishop::getPieceSpeed() {
 
 Pawn::Pawn(int x, int y, bool isWhite) : Piece(x, y, isWhite) {}
 
+void Pawn::randomMove(Piece*** board, int boardSizeOnX, int boardSizeOnY, bool duplicate) {
+
+}
+
+void Pawn::moveOrCapture(Piece*** board, int boardSizeOnX, int boardSizeOnY, bool duplicate) {
+
+}
+
 void Pawn::move(Piece*** board, int boardSizeOnX, int boardSizeOnY) {
-    // TODO: Implement
+
 }
 
 char Pawn::getPieceType() {
