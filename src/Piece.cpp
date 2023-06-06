@@ -84,8 +84,22 @@ void King::moveAndDuplicate(Piece*** board, int boardSizeOnX, int boardSizeOnY){
 
 }
 
-void King::randomMove(Piece*** board, int boardSizeOnX, int boardSizeY) {
-    
+void King::randomMove(Piece*** board, int boardSizeOnX, int boardSizeOnY) {
+    int directions[8][2] = {{-1, -1}, {-1, 0}, {-1, 1}, {0, -1}, {0, 1}, {1, -1}, {1, 0}, {1, 1}};
+
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dis(0, 7);
+    int index = dis(gen);
+
+    // Pick a random x and y from the possible directions
+    int targetX = directions[index][0] + x;
+    int targetY = directions[index][1] + y;
+
+    // Checks if is not out of bounds and is a nullptr
+    if (isValidPos(targetX, targetY, boardSizeOnX, boardSizeOnY) && board[targetX][targetY] == nullptr) {
+        movePiece(targetX, targetY, board, boardSizeOnX, boardSizeOnY);
+    }
 }
 
 void King::move(Piece*** board, int boardSizeOnX, int boardSizeOnY) {

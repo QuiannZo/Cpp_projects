@@ -40,6 +40,7 @@ public:
     King(int x, int y, bool isWhite);
     void moveOrCapture(Piece*** board, int boardSizeOnX, int boardSizeOnY, int rand) override;
     void moveAndDuplicate(Piece*** board, int boardSizeOnX, int boardSizeOnY) override;
+    void King::randomMove(Piece*** board, int boardSizeOnX, int boardSizeY);
     void move(Piece*** board, int x, int y) override;
     char getPieceType() override;
     int getPieceSpeed() override;
