@@ -1,5 +1,7 @@
 #include <iostream>
 #include <random>
+#include <string>
+#include <fstream>
 
 #include "Piece.hpp"
 
@@ -65,7 +67,7 @@ void King::randomMove(Piece*** board, int boardSizeOnX, int boardSizeOnY, bool d
 void King::moveOrCapture(Piece*** board, int boardSizeOnX, int boardSizeOnY, bool duplicate) {
     int directions[8][2] = {
         {-1, -1}, // bottom left
-        {-1, 0},  // middle left
+        {-1, 0},  // left
         {-1, 1},  // top left
         {0, -1},  // bottom
         {0, 1},   // top
@@ -92,14 +94,14 @@ void King::moveOrCapture(Piece*** board, int boardSizeOnX, int boardSizeOnY, boo
     if (capturableCount > 0) {
         std::random_device rd;
         std::mt19937 gen(rd());
-        std::uniform_int_distribution<> dis(0, capturableCount);
-        int index = dis(gen);
+        std::uniform_int_distribution<> indexdis(0, capturableCount);
+        int index = indexdis(gen);
 
         int captureX = capturablePieces[index][0];
         int captureY = capturablePieces[index][1];
 
-        std::uniform_int_distribution<> dis(0, 100);
-        int chance = dis(gen);
+        std::uniform_int_distribution<> chancedis(0, 100);
+        int chance = chancedis(gen);
         
         // 50% chance to capture the piece
         if (chance < 50) {
@@ -148,8 +150,8 @@ void Queen::randomMove(Piece*** board, int boardSizeOnX, int boardSizeOnY, bool 
 
     std::random_device rd;
     std::mt19937 gen(rd());
-    std::uniform_int_distribution<> dis(0, 7);
-    int index = dis(gen);
+    std::uniform_int_distribution<> indexdis(0, 7);
+    int index = indexdis(gen);
 
     // Pick a random x and y from the possible directions
     int directionX = directions[index][0];
@@ -159,8 +161,8 @@ void Queen::randomMove(Piece*** board, int boardSizeOnX, int boardSizeOnY, bool 
     int maxSteps = std::min(boardSizeOnX - x - 1, boardSizeOnY - y - 1);
 
     // Generate a random number for the number of possible steps
-    std::uniform_int_distribution<> dis(1, maxSteps);
-    int steps = dis(gen);
+    std::uniform_int_distribution<> stepsdis(1, maxSteps);
+    int steps = stepsdis(gen);
 
     // Sets targetX and targetY to the direction times steps, if x or y is 0, no change will be made to them
     int targetX = x + (directionX * steps);
@@ -174,7 +176,7 @@ void Queen::randomMove(Piece*** board, int boardSizeOnX, int boardSizeOnY, bool 
 void Queen::moveOrCapture(Piece*** board, int boardSizeOnX, int boardSizeOnY, bool duplicate) {
     int directions[8][2] = {
         {-1, -1}, // bottom left
-        {-1, 0},  // middle left
+        {-1, 0},  // left
         {-1, 1},  // top left
         {0, -1},  // bottom
         {0, 1},   // top
@@ -218,14 +220,14 @@ void Queen::moveOrCapture(Piece*** board, int boardSizeOnX, int boardSizeOnY, bo
     if (capturableCount > 0) {
         std::random_device rd;
         std::mt19937 gen(rd());
-        std::uniform_int_distribution<> dis(0, capturableCount);
-        int index = dis(gen);
+        std::uniform_int_distribution<> indexdis(0, capturableCount);
+        int index = indexdis(gen);
 
         int captureX = capturablePieces[index][0];
         int captureY = capturablePieces[index][1];
 
-        std::uniform_int_distribution<> dis(0, 100);
-        int chance = dis(gen);
+        std::uniform_int_distribution<> chancedis(0, 100);
+        int chance = chancedis(gen);
         
         // 50% chance to capture the piece
         if (chance < 50) {
@@ -269,8 +271,12 @@ int Queen::getPieceSpeed() {
 
 Rook::Rook(int x, int y, bool isWhite) : Piece(x, y, isWhite) {}
 
+void Rook::moveOrCapture(Piece*** board, int boardSizeOnX, int boardSizeOnY, bool duplicate) {
+
+}
+
 void Rook::move(Piece*** board, int boardSizeOnX, int boardSizeOnY) {
-    // TODO: Implement
+    
 }
 
 char Rook::getPieceType() {
@@ -368,7 +374,7 @@ void readMatrix(std::istream& arg, Piece*** board, int rows, int cols){
         for (int j = 0; j < cols; j++) {
             // Get piece type found on board
             char pieceType;
-            arg >> pieceType;
+            arg.get(pieceType);
             // If '-' assign to null
             if (pieceType == '-') {
                 board[i][j] = nullptr;
@@ -406,7 +412,7 @@ void readMatrix(std::ifstream& arg, Piece*** board, int rows, int cols){
         for (int j = 0; j < cols; j++) {
             // Get piece type found on board
             char pieceType;
-            arg >> pieceType;
+            arg.get(pieceType);
             // If '-' assign to null
             if (pieceType == '-') {
                 board[i][j] = nullptr;

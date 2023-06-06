@@ -2,8 +2,6 @@
 
 #define VERBOSE true
 
-const int MAX_BOARDSIZE = 10;
-
 class Piece {
 protected:
     int x; // row position on board
