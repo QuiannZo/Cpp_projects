@@ -29,10 +29,12 @@ inline bool Piece::pieceIsWhite(){
     return isWhite;
 }
 
-void Piece::movePiece(int newX, int newY, Piece*** board, int boardSizeOnX, int boardSizeOnY) {
+void Piece::movePiece(int newX, int newY, Piece*** board, int boardSizeOnX, int boardSizeOnY, bool duplicate) {
     if (isValidPos(newX, newY, boardSizeOnX, boardSizeOnY)) {
         board[newX][newY] = board[x][y];
-        board[x][y] = nullptr;
+        if (!duplicate) {
+            board[x][y] = nullptr;
+        }
         x = newX;
         y = newY;
     }
@@ -42,49 +44,7 @@ void Piece::movePiece(int newX, int newY, Piece*** board, int boardSizeOnX, int 
 
 King::King(int x, int y, bool isWhite) : Piece(x, y, isWhite) {}
 
-void King::moveOrCapture(Piece*** board, int boardSizeOnX, int boardSizeOnY, int rand){
-    if(rand == 1){
-        // Capture.
-        // Creates an array of all possible captures and randomly selects one.
-        Piece* pieces[8];
-        // Checks the kings surroundings.
-        // // If theres a piece above the king, and its from the enemmy.
-        if(board[x + 1][y] != nullptr && this->pieceIsWhite() != board[x + 1][y]->pieceIsWhite() && this->isValidPos(++x, y, boardSizeOnX, boardSizeOnY) == true){
-            pieces[0] = board[x + 1][y];
-        }
-        if(board[x + 1][y + 1] != nullptr && this->pieceIsWhite() != board[x + 1][y]->pieceIsWhite()){
-            pieces[0] = board[x + 1][y + 1];
-        }
-        if(board[x][y + 1] != nullptr && this->pieceIsWhite() != board[x + 1][y]->pieceIsWhite()){
-            pieces[0] = board[x][y + 1];
-        }
-        if(board[x - 1][y + 1] != nullptr && this->pieceIsWhite() != board[x + 1][y]->pieceIsWhite()){
-            pieces[0] = board[x - 1][y + 1];
-        }
-        if(board[x - 1][y] != nullptr && this->pieceIsWhite() != board[x + 1][y]->pieceIsWhite()){
-            pieces[0] = board[x - 1][y];
-        }
-        if(board[x - 1][y - 1] != nullptr && this->pieceIsWhite() != board[x + 1][y]->pieceIsWhite()){
-            pieces[0] = board[x - 1][y - 1];
-        }
-        if(board[x][y - 1] != nullptr && this->pieceIsWhite() != board[x + 1][y]->pieceIsWhite()){
-            pieces[0] = board[x][y - 1];
-        }
-        if(board[x + 1][y - 1] != nullptr && this->pieceIsWhite() != board[x + 1][y]->pieceIsWhite()){
-            pieces[0] = board[x + 1][y - 1];
-        }
-
-    } else {
-        //Move without capture.
-
-    }
-}
-
-void King::moveAndDuplicate(Piece*** board, int boardSizeOnX, int boardSizeOnY){
-
-}
-
-void King::randomMove(Piece*** board, int boardSizeOnX, int boardSizeOnY) {
+void King::randomMove(Piece*** board, int boardSizeOnX, int boardSizeOnY, bool duplicate) {
     int directions[8][2] = {{-1, -1}, {-1, 0}, {-1, 1}, {0, -1}, {0, 1}, {1, -1}, {1, 0}, {1, 1}};
 
     std::random_device rd;
@@ -98,11 +58,11 @@ void King::randomMove(Piece*** board, int boardSizeOnX, int boardSizeOnY) {
 
     // Checks if is not out of bounds and is a nullptr
     if (isValidPos(targetX, targetY, boardSizeOnX, boardSizeOnY) && board[targetX][targetY] == nullptr) {
-        movePiece(targetX, targetY, board, boardSizeOnX, boardSizeOnY);
+        movePiece(targetX, targetY, board, boardSizeOnX, boardSizeOnY, duplicate);
     }
 }
 
-void King::move(Piece*** board, int boardSizeOnX, int boardSizeOnY) {
+void King::moveOrCapture(Piece*** board, int boardSizeOnX, int boardSizeOnY, bool duplicate) {
     int directions[8][2] = {
         {-1, -1}, // bottom left
         {-1, 0},  // middle left
@@ -115,6 +75,7 @@ void King::move(Piece*** board, int boardSizeOnX, int boardSizeOnY) {
     };
     int capturablePieces[8][2];
     int capturableCount = 0;
+    bool duplicate = false;
 
     // Loop to save all possible capturable pieces on capturablePieces array
     for (int i = 0; i < 8; i++) {
@@ -144,12 +105,32 @@ void King::move(Piece*** board, int boardSizeOnX, int boardSizeOnY) {
         // 50% chance to capture the piece
         if (chance < 50) {
             delete board[captureX][captureY];
-            movePiece(captureX, captureY, board, boardSizeOnX, boardSizeOnY);
+            movePiece(captureX, captureY, board, boardSizeOnX, boardSizeOnY, duplicate);
             return;
         }
     }
     // 50% chance to move randomly or if no pieces were capturable
-    randomMove(board, boardSizeOnX, boardSizeOnY);
+    randomMove(board, boardSizeOnX, boardSizeOnY, duplicate);
+}
+
+
+void King::move(Piece*** board, int boardSizeOnX, int boardSizeOnY) {
+    bool duplicate = false;
+
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dis(0, 100);
+    int chance = dis(gen);
+
+    // 10% chance (with duplication)
+    if (chance < 10) {
+        duplicate = true;
+    }
+    // 60% chance (normal move or capture with no duplication)
+    else if (chance < 70) {
+        moveOrCapture(board, boardSizeOnX, boardSizeOnY, duplicate);
+    }
+    // Else (30% chance) it doesn't do anything
 }
 
 char King::getPieceType() {

@@ -18,9 +18,9 @@ public:
     // Moves piece to another specified spot
     virtual void move(Piece*** board, int boardSizeOnX, int boardSizeOnY) = 0;
     // Moves the piece to the specified spot
-    void movePiece(int newX, int newY, Piece*** board, int boardSizeOnX, int boardSizeOnY);
+    void movePiece(int newX, int newY, Piece*** board, int boardSizeOnX, int boardSizeOnY, bool duplicate);
     // Moves the piece or captures depending on rand, if even possible.
-    virtual void moveOrCapture(Piece*** board, int boardSizeOnX, int boardSizeOnY, int rand) = 0;
+    virtual void moveOrCapture(Piece*** board, int boardSizeOnX, int boardSizeOnY, bool duplicate) = 0;
     // Moves the piece and leaves a copy in the original position.
     virtual void moveAndDuplicate(Piece*** board, int boardSizeOnX, int boardSizeOnY) = 0;
     // Checks if given new position is valid
@@ -38,9 +38,8 @@ public:
 class King : public Piece {
 public:
     King(int x, int y, bool isWhite);
-    void moveOrCapture(Piece*** board, int boardSizeOnX, int boardSizeOnY, int rand) override;
-    void moveAndDuplicate(Piece*** board, int boardSizeOnX, int boardSizeOnY) override;
-    void King::randomMove(Piece*** board, int boardSizeOnX, int boardSizeY);
+    void King::randomMove(Piece*** board, int boardSizeOnX, int boardSizeY, bool duplicate);
+    void moveOrCapture(Piece*** board, int boardSizeOnX, int boardSizeOnY, bool duplicate) override;
     void move(Piece*** board, int x, int y) override;
     char getPieceType() override;
     int getPieceSpeed() override;
