@@ -481,9 +481,10 @@ void run(Piece*** board, int boardSizeOnX, int boardSizeOnY, int rounds, bool ve
         for(int speed = 1; speed <= 6; ++speed){
             for (int i = 0; i < boardSizeOnX; i++) {
                 for (int j = 0; j < boardSizeOnY; j++) {
-                    Piece* piece = board[i][j];
-                    if (piece->pieceIsWhite() && piece != nullptr) {
-                        piece->move(board, boardSizeOnX, boardSizeOnY);
+                    if (board[i][j] != nullptr){
+                        if (board[i][j]->pieceIsWhite() & board[i][j]->getPieceSpeed() == speed) {
+                        //board[i][j]->move(board, boardSizeOnX, boardSizeOnY);
+                        }
                     }
                 }
             }
@@ -494,9 +495,10 @@ void run(Piece*** board, int boardSizeOnX, int boardSizeOnY, int rounds, bool ve
         for(int speed = 1; speed <= 6; ++speed){
             for (int i = 0; i < boardSizeOnX; i++) {
                 for (int j = 0; j < boardSizeOnY; j++) {
-                    Piece* piece = board[i][j];
-                    if (!piece->pieceIsWhite() && piece != nullptr && piece->getPieceSpeed() == speed) {
-                        piece->move(board, boardSizeOnX, boardSizeOnY);
+                    if(board[i][j] != nullptr){
+                        if (!board[i][j]->pieceIsWhite() && board[i][j]->getPieceSpeed() == speed) {
+                            //board[i][j]->move(board, boardSizeOnX, boardSizeOnY);
+                        }
                     }
                 }
             }
@@ -505,6 +507,7 @@ void run(Piece*** board, int boardSizeOnX, int boardSizeOnY, int rounds, bool ve
         // rounds - 1 because the final round is always shown in main.
         if(verbose == true && round < rounds - 1){
             printMatrix(board, boardSizeOnX, boardSizeOnY);
+            std::cout << std::endl;
         }
     }
 }
