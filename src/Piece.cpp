@@ -56,7 +56,7 @@ void King::randomMove(Piece*** board, int boardSizeOnX, int boardSizeOnY, bool d
     int targetX = directions[index][0] + x;
     int targetY = directions[index][1] + y;
 
-    // Checks if is not out of bounds and is a nullptr
+    // Checks if its not out of bounds and is a nullptr
     if (isValidPos(targetX, targetY, boardSizeOnX, boardSizeOnY) && board[targetX][targetY] == nullptr) {
         movePiece(targetX, targetY, board, boardSizeOnX, boardSizeOnY, duplicate);
     }
@@ -112,7 +112,6 @@ void King::moveOrCapture(Piece*** board, int boardSizeOnX, int boardSizeOnY, boo
     randomMove(board, boardSizeOnX, boardSizeOnY, duplicate);
 }
 
-
 void King::move(Piece*** board, int boardSizeOnX, int boardSizeOnY) {
     bool duplicate = false;
 
@@ -144,8 +143,118 @@ int King::getPieceSpeed() {
 
 Queen::Queen(int x, int y, bool isWhite) : Piece(x, y, isWhite) {}
 
+void Queen::randomMove(Piece*** board, int boardSizeOnX, int boardSizeOnY, bool duplicate) {
+    int directions[8][2] = {{-1, -1}, {-1, 0}, {-1, 1}, {0, -1}, {0, 1}, {1, -1}, {1, 0}, {1, 1}};
+
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dis(0, 7);
+    int index = dis(gen);
+
+    // Pick a random x and y from the possible directions
+    int directionX = directions[index][0];
+    int directionY = directions[index][1];
+
+    // Calculate the max amount of steps the piece can take
+    int maxSteps = std::min(boardSizeOnX - x - 1, boardSizeOnY - y - 1);
+
+    // Generate a random number for the number of possible steps
+    std::uniform_int_distribution<> dis(1, maxSteps);
+    int steps = dis(gen);
+
+    // Sets targetX and targetY to the direction times steps, if x or y is 0, no change will be made to them
+    int targetX = x + (directionX * steps);
+    int targetY = y + (directionY * steps);
+
+    if (isValidPos(targetX, targetY, boardSizeOnX, boardSizeOnY) && board[targetX][targetY] == nullptr) {
+        movePiece(targetX, targetY, board, boardSizeOnX, boardSizeOnY, duplicate);
+    }
+}
+
+void Queen::moveOrCapture(Piece*** board, int boardSizeOnX, int boardSizeOnY, bool duplicate) {
+    int directions[8][2] = {
+        {-1, -1}, // bottom left
+        {-1, 0},  // middle left
+        {-1, 1},  // top left
+        {0, -1},  // bottom
+        {0, 1},   // top
+        {1, -1},  // bottom right
+        {1, 0},   // right
+        {1, 1}    // top right
+    };
+    int capturablePieces[8][2];
+    int capturableCount = 0;
+
+    // Loop to save all possible capturable pieces on capturablePieces array
+    for (int i = 0; i < 8; i++) {
+        int captureX = x; // x is the current x value for the piece
+        int captureY = y; // y is the current y value for the piece
+        
+        // For every direction, check all available spaces
+        while (true) {
+            captureX += directions[i][0];
+            captureY += directions[i][1];
+
+            // If current position is out of bounds, break
+            if (!isValidPos(captureX, captureY, boardSizeOnX, boardSizeOnY)) {
+                break;
+            }
+
+            // If found a piece of opposite color, set as capturable and break
+            if ((board[captureX][captureY]->pieceIsWhite() != this->pieceIsWhite()) && (board[captureX][captureY] != nullptr)) {
+                capturablePieces[capturableCount][0] = captureX;
+                capturablePieces[capturableCount][1] = captureY;
+                capturableCount++;
+                break;
+            }
+
+            // If none of the above happen, but the position isn't empty, it means there's an ally piece in that location, then break
+            if (board[captureX][captureY] != nullptr) {
+                break;
+            }
+        }
+    }
+
+    if (capturableCount > 0) {
+        std::random_device rd;
+        std::mt19937 gen(rd());
+        std::uniform_int_distribution<> dis(0, capturableCount);
+        int index = dis(gen);
+
+        int captureX = capturablePieces[index][0];
+        int captureY = capturablePieces[index][1];
+
+        std::uniform_int_distribution<> dis(0, 100);
+        int chance = dis(gen);
+        
+        // 50% chance to capture the piece
+        if (chance < 50) {
+            delete board[captureX][captureY];
+            movePiece(captureX, captureY, board, boardSizeOnX, boardSizeOnY, duplicate);
+            return;
+        }
+    }
+    // 50% chance to move randomly or if no pieces were capturable
+    randomMove(board, boardSizeOnX, boardSizeOnY, duplicate);
+}
+
 void Queen::move(Piece*** board, int boardSizeOnX, int boardSizeOnY) {
-    // TODO: Implement
+    bool duplicate = false;
+
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dis(0, 100);
+    int chance = dis(gen);
+
+    // 10% chance (with duplication)
+    if (chance < 10) {
+        duplicate = true;
+    }
+    // 60% chance (normal move or capture with no duplication)
+    if (chance < 70) {
+        moveOrCapture(board, boardSizeOnX, boardSizeOnY, duplicate);
+    }
+    // Else (30% chance) it doesn't do anything
 }
 
 char Queen::getPieceType() {
