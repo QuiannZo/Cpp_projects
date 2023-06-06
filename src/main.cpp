@@ -3,7 +3,7 @@
 #include <fstream>
 #include <string>
 
-#include "Piece.cpp"
+#include "Piece.hpp"
 
 typedef struct boards {
     Piece*** board;
