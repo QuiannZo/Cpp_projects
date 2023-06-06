@@ -84,24 +84,58 @@ void King::moveAndDuplicate(Piece*** board, int boardSizeOnX, int boardSizeOnY){
 
 }
 
+void King::randomMove(Piece*** board, int boardSizeOnX, int boardSizeY) {
+    
+}
+
 void King::move(Piece*** board, int boardSizeOnX, int boardSizeOnY) {
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_int_distribution<int> dis(1, 10);
-    std::uniform_int_distribution<int> dis50(1, 2);
+    int directions[8][2] = {
+        {-1, -1}, // bottom left
+        {-1, 0},  // middle left
+        {-1, 1},  // top left
+        {0, -1},  // bottom
+        {0, 1},   // top
+        {1, -1},  // bottom right
+        {1, 0},   // right
+        {1, 1}    // top right
+    };
+    int capturablePieces[8][2];
+    int capturableCount = 0;
 
-    int randomNumber = dis(gen);
-    int random50 = dis50(gen);
-
-    if(randomNumber <= 6){
-        // Para mover pasa el puntero de la matriz a la matriz actualizada
-        moveOrCapture(board, boardSizeOnX, boardSizeOnY, random50);
-    } else if (randomNumber == 7){
-        // // Se crea un objeto de la pieza en la matriz actualizada y no se borra el actual.
-        moveAndDuplicate(board, boardSizeOnX, boardSizeOnY);
-    } else {
-        // Do nothing.
+    // Loop to save all possible capturable pieces on capturablePieces array
+    for (int i = 0; i < 8; i++) {
+        int captureX = directions[i][0] + x; // x is the current x value for the piece
+        int captureY = directions[i][1] + y; // y is the current y value for the piece
+        // If piece is not out of bounds, is the opposite color and isn't a nullptr
+        if (isValidPos(captureX, captureY, boardSizeOnX, boardSizeOnY) && (board[captureX][captureY]->pieceIsWhite() != this->pieceIsWhite()) && (board[captureX][captureY] != nullptr)) {
+            // Set position as capturable on capturablePieces array
+            capturablePieces[capturableCount][0] = captureX;
+            capturablePieces[capturableCount][1] = captureY;
+            capturableCount++;
+        }
     }
+
+    if (capturableCount > 0) {
+        std::random_device rd;
+        std::mt19937 gen(rd());
+        std::uniform_int_distribution<> dis(0, capturableCount);
+        int index = dis(gen);
+
+        int captureX = capturablePieces[index][0];
+        int captureY = capturablePieces[index][1];
+
+        std::uniform_int_distribution<> dis(0, 100);
+        int chance = dis(gen);
+        
+        // 50% chance to capture the piece
+        if (chance < 50) {
+            delete board[captureX][captureY];
+            movePiece(captureX, captureY, board, boardSizeOnX, boardSizeOnY);
+            return;
+        }
+    }
+    // 50% chance to move randomly or if no pieces were capturable
+    randomMove(board, boardSizeOnX, boardSizeOnY);
 }
 
 char King::getPieceType() {
