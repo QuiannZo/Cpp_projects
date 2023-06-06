@@ -75,7 +75,6 @@ void King::moveOrCapture(Piece*** board, int boardSizeOnX, int boardSizeOnY, boo
     };
     int capturablePieces[8][2];
     int capturableCount = 0;
-    bool duplicate = false;
 
     // Loop to save all possible capturable pieces on capturablePieces array
     for (int i = 0; i < 8; i++) {
@@ -127,7 +126,7 @@ void King::move(Piece*** board, int boardSizeOnX, int boardSizeOnY) {
         duplicate = true;
     }
     // 60% chance (normal move or capture with no duplication)
-    else if (chance < 70) {
+    if (chance < 70) {
         moveOrCapture(board, boardSizeOnX, boardSizeOnY, duplicate);
     }
     // Else (30% chance) it doesn't do anything
