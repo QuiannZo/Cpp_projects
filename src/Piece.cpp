@@ -402,7 +402,7 @@ void readMatrix(std::istream& arg, Piece*** board, int rows, int cols){
         for (int j = 0; j < cols; j++) {
             // Get piece type found on board
             char pieceType;
-            arg.get(pieceType);
+            arg >> pieceType;
             // If '-' assign to null
             if (pieceType == '-') {
                 board[i][j] = nullptr;
@@ -440,7 +440,7 @@ void readMatrix(std::ifstream& arg, Piece*** board, int rows, int cols){
         for (int j = 0; j < cols; j++) {
             // Get piece type found on board
             char pieceType;
-            arg.get(pieceType);
+            arg >> pieceType;
             // If '-' assign to null
             if (pieceType == '-') {
                 board[i][j] = nullptr;
