@@ -98,14 +98,20 @@ public:
     int getPieceSpeed() override;
 };
 */
-Piece*** createMatrix(int rows, int cols);
 
-void deleteMatrix(Piece*** matrix, int rows, int cols);
+class Controller {
+  public:
+    Controller();
 
-void printMatrix(Piece*** matrix, int rows, int cols);
+    Piece*** createMatrix(int rows, int cols);
 
-void readMatrix(std::istream& arg, Piece*** board, int rows, int cols);
+    void deleteMatrix(Piece*** matrix, int rows, int cols);
 
-void readMatrix(std::ifstream& arg, Piece*** board, int rows, int cols);
+    void printMatrix(Piece*** matrix, int rows, int cols);
 
-void run(Piece*** board, int boardSizeOnX, int boardSizeOnY, int rounds, bool verbose);
+    void readMatrix(std::istream& arg, Piece*** board, int rows, int cols);
+
+    void readMatrix(std::ifstream& arg, Piece*** board, int rows, int cols);
+
+    void run(Piece*** board, int boardSizeOnX, int boardSizeOnY, int rounds, bool verbose);
+};

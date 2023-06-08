@@ -828,8 +828,12 @@ int Pawn::getPieceSpeed() {
     return 1;
 }*/
 
+//Void controller constructor.
+
+Controller::Controller(){}
+
 //Crear una matrix e inicializarla con null pointers.
-Piece*** createMatrix(int rows, int cols){
+Piece*** Controller::createMatrix(int rows, int cols){
     Piece*** matrix = new Piece**[rows];
     for(int i = 0; i < rows; ++i){
         matrix[i] = new Piece*[cols];
@@ -838,7 +842,7 @@ Piece*** createMatrix(int rows, int cols){
 }
 
 //Borra la matriz. Primero convierte los campos a nullptr, luego borra las filas, y luego el arreglo apuntando a las filas.
-void deleteMatrix(Piece*** matrix, int rows, int cols){
+void Controller::deleteMatrix(Piece*** matrix, int rows, int cols){
     for(int i = 0; i < rows; i++){
         for(int j = 0; j < cols; j++){
             if (matrix[i][j] != nullptr) {
@@ -850,7 +854,7 @@ void deleteMatrix(Piece*** matrix, int rows, int cols){
     delete[] matrix;
 }
 
-void printMatrix(Piece*** matrix, int rows, int cols){
+void Controller::printMatrix(Piece*** matrix, int rows, int cols){
     for(int i = 0; i < rows; i++){
         for(int j = 0; j < cols; j++){
             //Piece* piece = matrix[i][j];
@@ -864,7 +868,7 @@ void printMatrix(Piece*** matrix, int rows, int cols){
     }
 }
 
-void readMatrix(std::istream& arg, Piece*** board, int rows, int cols){
+void Controller::readMatrix(std::istream& arg, Piece*** board, int rows, int cols){
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < cols; j++) {
             // Get piece type found on board
@@ -902,7 +906,7 @@ void readMatrix(std::istream& arg, Piece*** board, int rows, int cols){
     }
 }
 
-void readMatrix(std::ifstream& arg, Piece*** board, int rows, int cols){
+void Controller::readMatrix(std::ifstream& arg, Piece*** board, int rows, int cols){
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < cols; j++) {
             // Get piece type found on board
@@ -940,7 +944,7 @@ void readMatrix(std::ifstream& arg, Piece*** board, int rows, int cols){
     }
 }
 
-void run(Piece*** board, int boardSizeOnX, int boardSizeOnY, int rounds, bool verbose){
+void Controller::run(Piece*** board, int boardSizeOnX, int boardSizeOnY, int rounds, bool verbose){
     // Each of the rounds
     for (int round = 0; round < rounds; round++) {
         // White pieces turn

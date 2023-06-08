@@ -19,6 +19,8 @@ int main(int argc, char* argv[]) {
     Piece*** board;
     bool verbose = false;
 
+    Controller controller;
+
     if (argc > 1 && std::string(argv[1]) == "-v") {
         verbose = true;
     }
@@ -56,10 +58,10 @@ int main(int argc, char* argv[]) {
         std::getline(file, line);
 
         // Create matrix of Piece objects to represent a board
-        board = createMatrix(boardSizeOnX, boardSizeOnY);
+        board = controller.createMatrix(boardSizeOnX, boardSizeOnY);
 
         // Read matrix.
-        readMatrix(file, board, boardSizeOnX, boardSizeOnY);
+        controller.readMatrix(file, board, boardSizeOnX, boardSizeOnY);
 
         // Close the file
         file.close();
@@ -72,19 +74,19 @@ int main(int argc, char* argv[]) {
         std::cin >> rounds;
 
         // Create matrix of Piece objects to represent a board
-        board = createMatrix(boardSizeOnX, boardSizeOnY);
+        board = controller.createMatrix(boardSizeOnX, boardSizeOnY);
 
         // Cycle through board array to find and set pieces on the board
-        readMatrix(std::cin, board, boardSizeOnX, boardSizeOnY);
+        controller.readMatrix(std::cin, board, boardSizeOnX, boardSizeOnY);
     }
 
     // Run the simulation.
-    run(board, boardSizeOnX, boardSizeOnY, rounds, verbose);
+    controller.run(board, boardSizeOnX, boardSizeOnY, rounds, verbose);
 
     // Display the final board.
-    printMatrix(board, boardSizeOnX, boardSizeOnY);
+    controller.printMatrix(board, boardSizeOnX, boardSizeOnY);
 
     // Free memory
-    deleteMatrix(board, boardSizeOnX, boardSizeOnY);
+    controller.deleteMatrix(board, boardSizeOnX, boardSizeOnY);
     return EXIT_SUCCESS;
 }
