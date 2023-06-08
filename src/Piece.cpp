@@ -943,9 +943,11 @@ void run(Piece*** board, int boardSizeOnX, int boardSizeOnY, int rounds, bool ve
         for(int speed = 1; speed <= 6; ++speed){
             for (int i = 0; i < boardSizeOnX; i++) {
                 for (int j = 0; j < boardSizeOnY; j++) {
-                    if (board[i][j] != nullptr && board[i][j]->pieceHasMoved() == false){
-                        if (board[i][j]->pieceIsWhite() && board[i][j]->getPieceSpeed() == speed) {
-                            board[i][j]->move(board, boardSizeOnX, boardSizeOnY);
+                    if (board[i][j] != nullptr){
+                        if (board[i][j]->pieceHasMoved() == false) {
+                            if (board[i][j]->pieceIsWhite() && board[i][j]->getPieceSpeed() == speed) {
+                                board[i][j]->move(board, boardSizeOnX, boardSizeOnY);
+                            }
                         }
                     }
                 }
@@ -957,9 +959,11 @@ void run(Piece*** board, int boardSizeOnX, int boardSizeOnY, int rounds, bool ve
         for(int speed = 1; speed <= 6; ++speed){
             for (int i = 0; i < boardSizeOnX; i++) {
                 for (int j = 0; j < boardSizeOnY; j++) {
-                    if(board[i][j] != nullptr && board[i][j]->pieceHasMoved() == false){
-                        if (!board[i][j]->pieceIsWhite() && board[i][j]->getPieceSpeed() == speed) {
-                            board[i][j]->move(board, boardSizeOnX, boardSizeOnY);
+                    if(board[i][j] != nullptr){
+                        if (board[i][j]->pieceHasMoved() == false) {
+                            if (!board[i][j]->pieceIsWhite() && board[i][j]->getPieceSpeed() == speed) {
+                                board[i][j]->move(board, boardSizeOnX, boardSizeOnY);
+                            }
                         }
                     }
                 }
