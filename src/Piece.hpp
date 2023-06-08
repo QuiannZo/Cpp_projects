@@ -20,7 +20,7 @@ public:
     // Moves piece to another specified spot
     virtual void move(Piece*** board, int boardSizeOnX, int boardSizeOnY) = 0;
     // Moves the piece to the specified spot
-    void movePiece(int newX, int newY, Piece*** board, int boardSizeOnX, int boardSizeOnY, bool duplicate);
+    virtual void movePiece(int newX, int newY, Piece*** board, int boardSizeOnX, int boardSizeOnY, bool duplicate) = 0;
     // Moves the piece randomly on its available positions
     virtual void randomMove(Piece*** board, int boardSizeOnX, int boardSizeY, bool duplicate) = 0;
     // Moves the piece or captures depending on rand, if even possible.
@@ -40,6 +40,7 @@ public:
 class King : public Piece {
 public:
     King(int x, int y, bool isWhite);
+    void movePiece(int newX, int newY, Piece*** board, int boardSizeOnX, int boardSizeOnY, bool duplicate) override;
     void randomMove(Piece*** board, int boardSizeOnX, int boardSizeY, bool duplicate) override;
     void moveOrCapture(Piece*** board, int boardSizeOnX, int boardSizeOnY, bool duplicate) override;
     void move(Piece*** board, int boardSizeOnX, int boardSizeOnY) override;

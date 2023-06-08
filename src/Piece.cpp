@@ -45,10 +45,17 @@ inline bool Piece::pieceHasMoved() {
     return hasMoved;
 }
 
-void Piece::movePiece(int newX, int newY, Piece*** board, int boardSizeOnX, int boardSizeOnY, bool duplicate) {
+
+// // KING
+
+King::King(int x, int y, bool isWhite) : Piece(x, y, isWhite) {}
+
+void King::movePiece(int newX, int newY, Piece*** board, int boardSizeOnX, int boardSizeOnY, bool duplicate) {
     if (isValidPos(newX, newY, boardSizeOnX, boardSizeOnY)) {
-        board[newX][newY] = board[x][y];
-        if (duplicate == false) {
+        if (duplicate) {
+            board[newX][newY] = new King(newX, newY, this->pieceIsWhite());
+        } else {
+            board[newX][newY] = board[x][y];
             board[x][y] = nullptr;
         }
         x = newX;
@@ -56,10 +63,6 @@ void Piece::movePiece(int newX, int newY, Piece*** board, int boardSizeOnX, int 
     }
     this->hasMoved = true;
 }
-
-// // KING
-
-King::King(int x, int y, bool isWhite) : Piece(x, y, isWhite) {}
 
 void King::randomMove(Piece*** board, int boardSizeOnX, int boardSizeOnY, bool duplicate) {
     int directions[8][2] = {{-1, -1}, {-1, 0}, {-1, 1}, {0, -1}, {0, 1}, {1, -1}, {1, 0}, {1, 1}};
