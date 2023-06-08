@@ -11,10 +11,9 @@ protected:
     int speed;
 public:
     Piece(int x, int y, bool isWhite); // Piece constructor
-    virtual ~Piece() {} // Virtual Piece destructor
     // Checks if piece is black or white
     bool pieceIsWhite();
-    // Sets hasMoved to true
+    // Sets hasMoved to true or false
     inline void setMoved(bool moved);
     // returns hasMoved state
     inline bool pieceHasMoved();

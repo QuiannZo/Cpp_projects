@@ -35,8 +35,10 @@ inline bool Piece::pieceIsWhite() {
     return isWhite;
 }
 
-inline void Piece::setMoved(bool moved) {
-    this->hasMoved = moved;
+void Piece::setMoved(bool moved) {
+    if (this != nullptr) {
+        this->hasMoved = moved;
+    }
 }
 
 inline bool Piece::pieceHasMoved() {
