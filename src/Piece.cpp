@@ -14,12 +14,16 @@ bool Piece::isValidPos(int x, int y, int boardSizeOnX, int boardSizeOnY) {
     return false;
 }
 
-bool Piece::isCapturable(int newX, int newY, Piece*** board, bool isWhite) {
-    Piece* selectedPiece = board[newX][newY];
-    // Checks if they are different color and if it isn't nullptr
-    if (selectedPiece->pieceIsWhite() != this->isWhite && selectedPiece != nullptr) {
-        return true;
-    } 
+bool Piece::isCapturable(int newX, int newY, Piece*** board, bool isWhite, int maxX, int maxY) {
+    if(isValidPos(newX, newY, maxX, maxY)){
+        Piece* selectedPiece = board[newX][newY];
+        // Checks if they are different color and if it isn't nullptr
+        if (selectedPiece != nullptr) {
+           if(selectedPiece->pieceIsWhite() != this->isWhite){
+                return true;
+            }
+        } 
+    }
     return false;
 }
 
@@ -34,7 +38,7 @@ inline bool Piece::pieceIsWhite(){
 void Piece::movePiece(int newX, int newY, Piece*** board, int boardSizeOnX, int boardSizeOnY, bool duplicate) {
     if (isValidPos(newX, newY, boardSizeOnX, boardSizeOnY)) {
         board[newX][newY] = board[x][y];
-        if (!duplicate) {
+        if (duplicate == false) {
             board[x][y] = nullptr;
         }
         x = newX;
@@ -68,9 +72,20 @@ void King::randomMove(Piece*** board, int boardSizeOnX, int boardSizeOnY, bool d
         int targetY = directions[i][1] + y;
 
         // Checks if target position isn't out of bounds and is empty
-        if (isValidPos(targetX, targetY, boardSizeOnX, boardSizeOnY) && board[targetX][targetY] == nullptr) {
-            movePiece(targetX, targetY, board, boardSizeOnX, boardSizeOnY, duplicate);
-            return; // Because if not, it would continue moving the piece if available
+        /*if(board[targetX][targetY] == nullptr){
+            if (isValidPos(targetX, targetY, boardSizeOnX, boardSizeOnY)) {
+                movePiece(targetX, targetY, board, boardSizeOnX, boardSizeOnY, duplicate);
+                return; // Because if not, it would continue moving the piece if available
+            }
+        }*/
+
+        // Checks if target position isn't out of bounds
+        if (isValidPos(targetX, targetY, boardSizeOnX, boardSizeOnY)) {
+            // Checks if target position is empty
+            if (board[targetX][targetY] == nullptr) {
+                movePiece(targetX, targetY, board, boardSizeOnX, boardSizeOnY, duplicate);
+                return; // Because if not, it would continue moving the piece if available
+            }
         }
     }
 }
@@ -94,11 +109,15 @@ void King::moveOrCapture(Piece*** board, int boardSizeOnX, int boardSizeOnY, boo
         int captureX = directions[i][0] + x; // x is the current x value for the piece
         int captureY = directions[i][1] + y; // y is the current y value for the piece
         // If piece is not out of bounds, is the opposite color and isn't a nullptr
-        if (isValidPos(captureX, captureY, boardSizeOnX, boardSizeOnY) && (board[captureX][captureY]->pieceIsWhite() != this->pieceIsWhite()) && (board[captureX][captureY] != nullptr)) {
-            // Set position as capturable on capturablePieces array
-            capturablePieces[capturableCount][0] = captureX;
-            capturablePieces[capturableCount][1] = captureY;
-            capturableCount++;
+        if(isValidPos(captureX, captureY, boardSizeOnX, boardSizeOnY)){
+            if((board[captureX][captureY] != nullptr)){
+               if ((board[captureX][captureY]->pieceIsWhite() != this->pieceIsWhite())) {
+                    // Set position as capturable on capturablePieces array
+                    capturablePieces[capturableCount][0] = captureX;
+                    capturablePieces[capturableCount][1] = captureY;
+                    capturableCount++;
+                }
+            }
         }
     }
 
@@ -145,7 +164,7 @@ void King::move(Piece*** board, int boardSizeOnX, int boardSizeOnY) {
 }
 
 char King::getPieceType() {
-    return isWhite ? 'K' : 'k';
+    return isWhite ? 'R' : 'r';
 }
 
 int King::getPieceSpeed() {
@@ -154,7 +173,7 @@ int King::getPieceSpeed() {
 
 // // QUEEN
 
-Queen::Queen(int x, int y, bool isWhite) : Piece(x, y, isWhite) {}
+/*Queen::Queen(int x, int y, bool isWhite) : Piece(x, y, isWhite) {}
 
 void Queen::randomMove(Piece*** board, int boardSizeOnX, int boardSizeOnY, bool duplicate) {
     int directions[8][2] = {{-1, -1}, {-1, 0}, {-1, 1}, {0, -1}, {0, 1}, {1, -1}, {1, 0}, {1, 1}};
@@ -726,7 +745,7 @@ char Pawn::getPieceType() {
 
 int Pawn::getPieceSpeed() {
     return 1;
-}
+}*/
 
 //Crear una matrix e inicializarla con null pointers.
 Piece*** createMatrix(int rows, int cols){
@@ -779,7 +798,7 @@ void readMatrix(std::istream& arg, Piece*** board, int rows, int cols){
                     case 'r':
                         board[i][j] = new King(i, j, isWhite);
                         break;
-                    case 'q':
+                    /*case 'q':
                         board[i][j] = new Queen(i, j, isWhite);
                         break;
                     case 't':
@@ -793,7 +812,7 @@ void readMatrix(std::istream& arg, Piece*** board, int rows, int cols){
                         break;
                     case 'p':
                         board[i][j] = new Pawn(i, j, isWhite);
-                        break;
+                        break;*/
                 }
             }
         }
@@ -817,7 +836,7 @@ void readMatrix(std::ifstream& arg, Piece*** board, int rows, int cols){
                     case 'r':
                         board[i][j] = new King(i, j, isWhite);
                         break;
-                    case 'q':
+                    /*case 'q':
                         board[i][j] = new Queen(i, j, isWhite);
                         break;
                     case 't':
@@ -831,7 +850,7 @@ void readMatrix(std::ifstream& arg, Piece*** board, int rows, int cols){
                         break;
                     case 'p':
                         board[i][j] = new Pawn(i, j, isWhite);
-                        break;
+                        break;*/
                 }
             }
         }
@@ -848,7 +867,7 @@ void run(Piece*** board, int boardSizeOnX, int boardSizeOnY, int rounds, bool ve
                 for (int j = 0; j < boardSizeOnY; j++) {
                     if (board[i][j] != nullptr){
                         if (board[i][j]->pieceIsWhite() & board[i][j]->getPieceSpeed() == speed) {
-                        //board[i][j]->move(board, boardSizeOnX, boardSizeOnY);
+                            board[i][j]->move(board, boardSizeOnX, boardSizeOnY);
                         }
                     }
                 }
@@ -862,7 +881,7 @@ void run(Piece*** board, int boardSizeOnX, int boardSizeOnY, int rounds, bool ve
                 for (int j = 0; j < boardSizeOnY; j++) {
                     if(board[i][j] != nullptr){
                         if (!board[i][j]->pieceIsWhite() && board[i][j]->getPieceSpeed() == speed) {
-                            //board[i][j]->move(board, boardSizeOnX, boardSizeOnY);
+                            board[i][j]->move(board, boardSizeOnX, boardSizeOnY);
                         }
                     }
                 }

@@ -24,7 +24,7 @@ public:
     // Checks if given new position is valid
     bool isValidPos(int x, int y, int boardSizeOnX, int boardSizeOnY);
     // Checks if a piece can be captured on given coordinates
-    bool isCapturable(int newX, int newY, Piece*** board, bool isWhite);
+    bool isCapturable(int newX, int newY, Piece*** board, bool isWhite, int maxX, int maxY);
     // Gets the character from a specified piece, depending if its black or white
     virtual char getPieceType() = 0;
     // Gets piece speed
@@ -42,7 +42,7 @@ public:
     char getPieceType() override;
     int getPieceSpeed() override;
 };
-
+/*
 class Queen : public Piece {
 public:
     Queen(int x, int y, bool isWhite);
@@ -92,7 +92,7 @@ public:
     char getPieceType() override;
     int getPieceSpeed() override;
 };
-
+*/
 Piece*** createMatrix(int rows, int cols);
 
 void deleteMatrix(Piece*** matrix, int rows, int cols);
