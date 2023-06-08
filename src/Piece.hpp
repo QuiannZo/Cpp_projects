@@ -7,12 +7,17 @@ protected:
     int x; // row position on board
     int y; // col position on board
     bool isWhite; // to know if piece is black or white
+    bool hasMoved; // to know if piece has moved on the round
     int speed;
 public:
     Piece(int x, int y, bool isWhite); // Piece constructor
     virtual ~Piece() {} // Virtual Piece destructor
     // Checks if piece is black or white
     bool pieceIsWhite();
+    // Sets hasMoved to true
+    inline void setMoved(bool moved);
+    // returns hasMoved state
+    inline bool pieceHasMoved();
     // Moves piece to another specified spot
     virtual void move(Piece*** board, int boardSizeOnX, int boardSizeOnY) = 0;
     // Moves the piece to the specified spot
@@ -38,7 +43,7 @@ public:
     King(int x, int y, bool isWhite);
     void randomMove(Piece*** board, int boardSizeOnX, int boardSizeY, bool duplicate) override;
     void moveOrCapture(Piece*** board, int boardSizeOnX, int boardSizeOnY, bool duplicate) override;
-    void move(Piece*** board, int x, int y) override;
+    void move(Piece*** board, int boardSizeOnX, int boardSizeOnY) override;
     char getPieceType() override;
     int getPieceSpeed() override;
 };

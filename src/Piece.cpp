@@ -31,8 +31,16 @@ void Piece::displayPiece() {
     std::cout << getPieceType();
 }
 
-inline bool Piece::pieceIsWhite(){
+inline bool Piece::pieceIsWhite() {
     return isWhite;
+}
+
+inline void Piece::setMoved(bool moved) {
+    this->hasMoved = moved;
+}
+
+inline bool Piece::pieceHasMoved() {
+    return hasMoved;
 }
 
 void Piece::movePiece(int newX, int newY, Piece*** board, int boardSizeOnX, int boardSizeOnY, bool duplicate) {
@@ -44,6 +52,7 @@ void Piece::movePiece(int newX, int newY, Piece*** board, int boardSizeOnX, int 
         x = newX;
         y = newY;
     }
+    this->hasMoved = true;
 }
 
 // // KING
@@ -83,6 +92,7 @@ void King::randomMove(Piece*** board, int boardSizeOnX, int boardSizeOnY, bool d
         if (isValidPos(targetX, targetY, boardSizeOnX, boardSizeOnY)) {
             // Checks if target position is empty
             if (board[targetX][targetY] == nullptr) {
+                std::cout << "A King has moved randomly to (" << targetX << ", " << targetY << ") from (" << x << ", " << y << ")" << std::endl;
                 movePiece(targetX, targetY, board, boardSizeOnX, boardSizeOnY, duplicate);
                 return; // Because if not, it would continue moving the piece if available
             }
@@ -121,6 +131,9 @@ void King::moveOrCapture(Piece*** board, int boardSizeOnX, int boardSizeOnY, boo
         }
     }
 
+    if (duplicate == true) {
+        std::cout << "(Duplicated)";
+    }
     if (capturableCount > 0) {
         std::random_device rd;
         std::mt19937 gen(rd());
@@ -132,10 +145,10 @@ void King::moveOrCapture(Piece*** board, int boardSizeOnX, int boardSizeOnY, boo
 
         std::uniform_int_distribution<> chancedis(0, 100);
         int chance = chancedis(gen);
-        
         // 50% chance to capture the piece
         if (chance < 50) {
             delete board[captureX][captureY];
+            std::cout << "A King has captured a piece on (" << captureX << ", " << captureY << ") from (" << x << ", " << y << ")" << std::endl;
             movePiece(captureX, captureY, board, boardSizeOnX, boardSizeOnY, duplicate);
             return;
         }
@@ -159,8 +172,10 @@ void King::move(Piece*** board, int boardSizeOnX, int boardSizeOnY) {
     // 60% chance (normal move or capture with no duplication)
     if (chance < 70) {
         moveOrCapture(board, boardSizeOnX, boardSizeOnY, duplicate);
+    } else {
+        // Else (30% chance) it doesn't do anything
+        std::cout << "A King did not move" << std::endl;
     }
-    // Else (30% chance) it doesn't do anything
 }
 
 char King::getPieceType() {
@@ -245,7 +260,68 @@ void Queen::moveOrCapture(Piece*** board, int boardSizeOnX, int boardSizeOnY, bo
     for (int i = 0; i < 8; i++) {
         int captureX = x; // x is the current x value for the piece
         int captureY = y; // y is the current y value for the piece
+        void Bishop::moveOrCapture(Piece*** board, int boardSizeOnX, int boardSizeOnY, bool duplicate) {
+    int directions[4][2] = {
+        {-1, -1}, // bottom left
+        {-1, 1},  // top left
+        {1, -1},  // bottom right
+        {1, 1}    // top right
+    };
+    int capturablePieces[4][2];
+    int capturableCount = 0;
+
+    // Loop to save all possible capturable pieces on capturablePieces array
+    for (int i = 0; i < 4; i++) {
+        int captureX = x; // x is the current x value for the piece
+        int captureY = y; // y is the current y value for the piece
         
+        // For every direction, check all available spaces
+        while (true) {
+            captureX += directions[i][0];
+            captureY += directions[i][1];
+
+            // If current position is out of bounds, break
+            if (!isValidPos(captureX, captureY, boardSizeOnX, boardSizeOnY)) {
+                break;
+            }
+
+            // If found a piece of opposite color, set as capturable and break
+            if ((board[captureX][captureY]->pieceIsWhite() != this->pieceIsWhite()) && (board[captureX][captureY] != nullptr)) {
+                capturablePieces[capturableCount][0] = captureX;
+                capturablePieces[capturableCount][1] = captureY;
+                capturableCount++;
+                break;
+            }
+
+            // If none of the above happen, but the position isn't empty, it means there's an ally piece in that location, then break
+            if (board[captureX][captureY] != nullptr) {
+                break;
+            }
+        }
+    }
+
+    if (capturableCount > 0) {
+        std::random_device rd;
+        std::mt19937 gen(rd());
+        std::uniform_int_distribution<> indexdis(0, capturableCount);
+        int index = indexdis(gen);
+
+        int captureX = capturablePieces[index][0];
+        int captureY = capturablePieces[index][1];
+
+        std::uniform_int_distribution<> chancedis(0, 100);
+        int chance = chancedis(gen);
+        
+        // 50% chance to capture the piece
+        if (chance < 50) {
+            delete board[captureX][captureY];
+            movePiece(captureX, captureY, board, boardSizeOnX, boardSizeOnY, duplicate);
+            return;
+        }
+    }
+    // 50% chance to move randomly or if no pieces were capturable
+    randomMove(board, boardSizeOnX, boardSizeOnY, duplicate);
+}
         // For every direction, check all available spaces
         while (true) {
             captureX += directions[i][0];
@@ -750,7 +826,7 @@ int Pawn::getPieceSpeed() {
 //Crear una matrix e inicializarla con null pointers.
 Piece*** createMatrix(int rows, int cols){
     Piece*** matrix = new Piece**[rows];
-    for(int i = 0; i < cols; ++i){
+    for(int i = 0; i < rows; ++i){
         matrix[i] = new Piece*[cols];
     }
     return matrix; // Returns the triple pointer.
@@ -762,9 +838,9 @@ void deleteMatrix(Piece*** matrix, int rows, int cols){
         for(int j = 0; j < cols; j++){
             delete matrix[i][j];
         }
-        delete matrix[i];
+        delete[] matrix[i];
     }
-    delete matrix;
+    delete[] matrix;
 }
 
 void printMatrix(Piece*** matrix, int rows, int cols){
@@ -865,8 +941,8 @@ void run(Piece*** board, int boardSizeOnX, int boardSizeOnY, int rounds, bool ve
         for(int speed = 1; speed <= 6; ++speed){
             for (int i = 0; i < boardSizeOnX; i++) {
                 for (int j = 0; j < boardSizeOnY; j++) {
-                    if (board[i][j] != nullptr){
-                        if (board[i][j]->pieceIsWhite() & board[i][j]->getPieceSpeed() == speed) {
+                    if (board[i][j] != nullptr && board[i][j]->pieceHasMoved() == false){
+                        if (board[i][j]->pieceIsWhite() && board[i][j]->getPieceSpeed() == speed) {
                             board[i][j]->move(board, boardSizeOnX, boardSizeOnY);
                         }
                     }
@@ -879,7 +955,7 @@ void run(Piece*** board, int boardSizeOnX, int boardSizeOnY, int rounds, bool ve
         for(int speed = 1; speed <= 6; ++speed){
             for (int i = 0; i < boardSizeOnX; i++) {
                 for (int j = 0; j < boardSizeOnY; j++) {
-                    if(board[i][j] != nullptr){
+                    if(board[i][j] != nullptr && board[i][j]->pieceHasMoved() == false){
                         if (!board[i][j]->pieceIsWhite() && board[i][j]->getPieceSpeed() == speed) {
                             board[i][j]->move(board, boardSizeOnX, boardSizeOnY);
                         }
@@ -892,6 +968,13 @@ void run(Piece*** board, int boardSizeOnX, int boardSizeOnY, int rounds, bool ve
         if(verbose == true && round < rounds - 1){
             printMatrix(board, boardSizeOnX, boardSizeOnY);
             std::cout << std::endl;
+        }
+
+        // Reset all pieces' moved state to false
+        for (int i = 0; i < boardSizeOnX; i++) {
+            for (int j = 0; j < boardSizeOnY; j++) {
+                board[i][j]->setMoved(false);
+            }
         }
     }
 }
