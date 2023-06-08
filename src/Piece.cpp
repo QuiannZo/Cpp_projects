@@ -838,7 +838,9 @@ Piece*** createMatrix(int rows, int cols){
 void deleteMatrix(Piece*** matrix, int rows, int cols){
     for(int i = 0; i < rows; i++){
         for(int j = 0; j < cols; j++){
-            delete matrix[i][j];
+            if (matrix[i][j] != nullptr) {
+                delete matrix[i][j];
+            }
         }
         delete[] matrix[i];
     }
