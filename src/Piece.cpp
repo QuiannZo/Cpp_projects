@@ -54,9 +54,12 @@ void King::movePiece(int newX, int newY, Piece*** board, int boardSizeOnX, int b
     if (isValidPos(newX, newY, boardSizeOnX, boardSizeOnY)) {
         if (duplicate) {
             board[newX][newY] = new King(newX, newY, this->pieceIsWhite());
+            this->hasMoved = true;
+            board[newX][newY]->setMoved(true);
         } else {
             board[newX][newY] = board[x][y];
             board[x][y] = nullptr;
+            this->hasMoved = true;
         }
         x = newX;
         y = newY;
@@ -962,7 +965,7 @@ void Controller::setToNull(Piece*** matrix, int rows, int cols){
     }
 }
 
-void Controller::run(Piece*** board, Piece*** newBoard, int boardSizeOnX, int boardSizeOnY, int rounds, bool verbose){
+void Controller::run(Piece*** board, int boardSizeOnX, int boardSizeOnY, int rounds, bool verbose){
     // Each of the rounds
     for (int round = 0; round < rounds; round++) {
         // White pieces turn
@@ -999,7 +1002,7 @@ void Controller::run(Piece*** board, Piece*** newBoard, int boardSizeOnX, int bo
 
         // rounds - 1 because the final round is always shown in main.
         if(verbose == true && round < rounds - 1){
-            printMatrix(newBoard, boardSizeOnX, boardSizeOnY);
+            printMatrix(board, boardSizeOnX, boardSizeOnY);
             std::cout << std::endl;
         }
 
@@ -1009,8 +1012,5 @@ void Controller::run(Piece*** board, Piece*** newBoard, int boardSizeOnX, int bo
                 board[i][j]->setMoved(false);
             }
         }
-
-        copyMatrix(board, newBoard, boardSizeOnX, boardSizeOnY);
-        setToNull(newBoard, boardSizeOnX, boardSizeOnY);
     }
 }

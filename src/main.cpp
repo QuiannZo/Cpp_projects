@@ -79,9 +79,6 @@ int main(int argc, char* argv[]) {
         // Cycle through board array to find and set pieces on the board
         controller.readMatrix(std::cin, board, boardSizeOnX, boardSizeOnY);
     }
-    //Matrix copy.
-    Piece*** newBoard = controller.createMatrix(boardSizeOnX, boardSizeOnY);
-    controller.defaultMatrixInit(newBoard, boardSizeOnX, boardSizeOnY);
 
     // Run the simulation.
     controller.run(board, newBoard, boardSizeOnX, boardSizeOnY, rounds, verbose);
@@ -91,6 +88,5 @@ int main(int argc, char* argv[]) {
 
     // Free memory
     controller.deleteMatrix(board, boardSizeOnX, boardSizeOnY);
-    controller.deleteMatrix(newBoard, boardSizeOnX, boardSizeOnY);
     return EXIT_SUCCESS;
 }

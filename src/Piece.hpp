@@ -119,5 +119,5 @@ class Controller {
 
     void setToNull(Piece*** matrix, int rows, int cols);
 
-    void run(Piece*** board, Piece*** newBoard, int boardSizeOnX, int boardSizeOnY, int rounds, bool verbose);
+    void run(Piece*** board, int boardSizeOnX, int boardSizeOnY, int rounds, bool verbose);
 };
