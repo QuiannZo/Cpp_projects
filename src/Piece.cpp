@@ -939,32 +939,6 @@ void Controller::readMatrix(std::ifstream& arg, Piece*** board, int rows, int co
     }
 }
 
-void Controller::defaultMatrixInit(Piece*** board, int rows, int cols){
-    for(int i = 0; i < rows; i++){
-        for(int j = 0; j < cols; j++){
-            board[i][j] = nullptr;
-        }
-    }
-}
-
-void Controller::copyMatrix(Piece*** matrixReciever, Piece*** matrixToCopy, int rows, int cols){
-    for(int i = 0; i < rows; i++){
-        for(int j = 0; j < cols; j++){
-            matrixReciever[i][j] = matrixToCopy[i][j];
-        }
-    }
-}
-
-void Controller::setToNull(Piece*** matrix, int rows, int cols){
-    for(int i = 0; i < rows; i++){
-        for(int j = 0; j < cols; j++){
-            if (matrix[i][j] != nullptr) {
-                delete matrix[i][j];
-            }
-        }
-    }
-}
-
 void Controller::run(Piece*** board, int boardSizeOnX, int boardSizeOnY, int rounds, bool verbose){
     // Each of the rounds
     for (int round = 0; round < rounds; round++) {

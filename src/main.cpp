@@ -81,7 +81,7 @@ int main(int argc, char* argv[]) {
     }
 
     // Run the simulation.
-    controller.run(board, newBoard, boardSizeOnX, boardSizeOnY, rounds, verbose);
+    controller.run(board, boardSizeOnX, boardSizeOnY, rounds, verbose);
 
     // Display the final board.
     controller.printMatrix(board, boardSizeOnX, boardSizeOnY);
