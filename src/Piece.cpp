@@ -85,14 +85,6 @@ void King::randomMove(Piece*** board, int boardSizeOnX, int boardSizeOnY, bool d
         int targetX = directions[i][0] + x;
         int targetY = directions[i][1] + y;
 
-        // Checks if target position isn't out of bounds and is empty
-        /*if(board[targetX][targetY] == nullptr){
-            if (isValidPos(targetX, targetY, boardSizeOnX, boardSizeOnY)) {
-                movePiece(targetX, targetY, board, boardSizeOnX, boardSizeOnY, duplicate);
-                return; // Because if not, it would continue moving the piece if available
-            }
-        }*/
-
         // Checks if target position isn't out of bounds
         if (isValidPos(targetX, targetY, boardSizeOnX, boardSizeOnY)) {
             // Checks if target position is empty
