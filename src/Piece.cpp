@@ -936,7 +936,33 @@ void Controller::readMatrix(std::ifstream& arg, Piece*** board, int rows, int co
     }
 }
 
-void Controller::run(Piece*** board, int boardSizeOnX, int boardSizeOnY, int rounds, bool verbose){
+void Controller::defaultMatrixInit(Piece*** board, int rows, int cols){
+    for(int i = 0; i < rows; i++){
+        for(int j = 0; j < cols; j++){
+            board[i][j] = nullptr;
+        }
+    }
+}
+
+void Controller::copyMatrix(Piece*** matrixReciever, Piece*** matrixToCopy, int rows, int cols){
+    for(int i = 0; i < rows; i++){
+        for(int j = 0; j < cols; j++){
+            matrixReciever[i][j] = matrixToCopy[i][j];
+        }
+    }
+}
+
+void Controller::setToNull(Piece*** matrix, int rows, int cols){
+    for(int i = 0; i < rows; i++){
+        for(int j = 0; j < cols; j++){
+            if (matrix[i][j] != nullptr) {
+                delete matrix[i][j];
+            }
+        }
+    }
+}
+
+void Controller::run(Piece*** board, Piece*** newBoard, int boardSizeOnX, int boardSizeOnY, int rounds, bool verbose){
     // Each of the rounds
     for (int round = 0; round < rounds; round++) {
         // White pieces turn
@@ -973,7 +999,7 @@ void Controller::run(Piece*** board, int boardSizeOnX, int boardSizeOnY, int rou
 
         // rounds - 1 because the final round is always shown in main.
         if(verbose == true && round < rounds - 1){
-            printMatrix(board, boardSizeOnX, boardSizeOnY);
+            printMatrix(newBoard, boardSizeOnX, boardSizeOnY);
             std::cout << std::endl;
         }
 
@@ -983,5 +1009,8 @@ void Controller::run(Piece*** board, int boardSizeOnX, int boardSizeOnY, int rou
                 board[i][j]->setMoved(false);
             }
         }
+
+        copyMatrix(board, newBoard, boardSizeOnX, boardSizeOnY);
+        setToNull(newBoard, boardSizeOnX, boardSizeOnY);
     }
 }

@@ -113,5 +113,11 @@ class Controller {
 
     void readMatrix(std::ifstream& arg, Piece*** board, int rows, int cols);
 
-    void run(Piece*** board, int boardSizeOnX, int boardSizeOnY, int rounds, bool verbose);
+    void defaultMatrixInit(Piece*** board, int rows, int cols);
+
+    void copyMatrix(Piece*** matrixReceiver, Piece*** matrixToCopy, int rows, int cols);
+
+    void setToNull(Piece*** matrix, int rows, int cols);
+
+    void run(Piece*** board, Piece*** newBoard, int boardSizeOnX, int boardSizeOnY, int rounds, bool verbose);
 };
