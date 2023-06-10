@@ -84,7 +84,8 @@ int main(int argc, char* argv[]) {
     controller.run(board, boardSizeOnX, boardSizeOnY, rounds, verbose);
 
     // Display the final board.
-    controller.printMatrix(board, boardSizeOnX, boardSizeOnY);
+    if (!verbose)
+        controller.printMatrix(board, boardSizeOnX, boardSizeOnY);
 
     // Free memory
     controller.deleteMatrix(board, boardSizeOnX, boardSizeOnY);

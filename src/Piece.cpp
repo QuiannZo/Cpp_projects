@@ -45,7 +45,6 @@ inline bool Piece::pieceHasMoved() {
     return hasMoved;
 }
 
-
 // // KING
 
 King::King(int x, int y, bool isWhite) : Piece(x, y, isWhite) {}
@@ -59,12 +58,11 @@ void King::movePiece(int newX, int newY, Piece*** board, int boardSizeOnX, int b
         } else {
             board[newX][newY] = board[x][y];
             board[x][y] = nullptr;
-            this->hasMoved = true;
         }
         x = newX;
         y = newY;
+        this->hasMoved = true;
     }
-    this->hasMoved = true;
 }
 
 void King::randomMove(Piece*** board, int boardSizeOnX, int boardSizeOnY, bool duplicate) {
@@ -132,7 +130,7 @@ void King::moveOrCapture(Piece*** board, int boardSizeOnX, int boardSizeOnY, boo
     }
 
     if (duplicate == true) {
-        std::cout << "(Duplicated)";
+        std::cout << "(Duplicated) ";
     }
     if (capturableCount > 0) {
         std::random_device rd;
@@ -174,7 +172,7 @@ void King::move(Piece*** board, int boardSizeOnX, int boardSizeOnY) {
         moveOrCapture(board, boardSizeOnX, boardSizeOnY, duplicate);
     } else {
         // Else (30% chance) it doesn't do anything
-        std::cout << "A King did not move" << std::endl;
+        std::cout << "A King did not move on (" << x << ", " << y << ")" << std::endl;
     }
 }
 
@@ -942,20 +940,30 @@ void Controller::readMatrix(std::ifstream& arg, Piece*** board, int rows, int co
 void Controller::run(Piece*** board, int boardSizeOnX, int boardSizeOnY, int rounds, bool verbose){
     // Each of the rounds
     for (int round = 0; round < rounds; round++) {
+        bool whiteHasActivePieces = false;
+        bool blackHasActivePieces = false;
         // White pieces turn
         // Pieces move by speed (1 - 6). One being the fastest.
         for(int speed = 1; speed <= 6; ++speed){
             for (int i = 0; i < boardSizeOnX; i++) {
                 for (int j = 0; j < boardSizeOnY; j++) {
                     if (board[i][j] != nullptr){
-                        if (board[i][j]->pieceHasMoved() == false) {
-                            if (board[i][j]->pieceIsWhite() && board[i][j]->getPieceSpeed() == speed) {
-                                board[i][j]->move(board, boardSizeOnX, boardSizeOnY);
+                        if (!(board[i][j]->pieceHasMoved())) {
+                            if (board[i][j]->pieceIsWhite()) {
+                                whiteHasActivePieces = true;
+                                if (board[i][j]->getPieceSpeed() == speed) {
+                                    board[i][j]->move(board, boardSizeOnX, boardSizeOnY);
+                                }
                             }
                         }
                     }
                 }
             }
+        }
+
+        if (!whiteHasActivePieces) {
+            std::cout << "Black wins after " << round + 1 << " rounds!" << std::endl;
+            break;
         }
 
         // Black pieces turn
@@ -964,21 +972,29 @@ void Controller::run(Piece*** board, int boardSizeOnX, int boardSizeOnY, int rou
             for (int i = 0; i < boardSizeOnX; i++) {
                 for (int j = 0; j < boardSizeOnY; j++) {
                     if(board[i][j] != nullptr){
-                        if (board[i][j]->pieceHasMoved() == false) {
-                            if (!board[i][j]->pieceIsWhite() && board[i][j]->getPieceSpeed() == speed) {
-                                board[i][j]->move(board, boardSizeOnX, boardSizeOnY);
+                        if (!(board[i][j]->pieceHasMoved())) {
+                            if (!board[i][j]->pieceIsWhite()) {
+                                blackHasActivePieces = true;
+                                if (board[i][j]->getPieceSpeed() == speed) {
+                                    board[i][j]->move(board, boardSizeOnX, boardSizeOnY);
+                                }
                             }
                         }
                     }
                 }
             }
         }
-
         // rounds - 1 because the final round is always shown in main.
         if(verbose == true && round < rounds - 1){
             printMatrix(board, boardSizeOnX, boardSizeOnY);
             std::cout << std::endl;
         }
+
+        if (!blackHasActivePieces) {
+            std::cout << "White wins after " << round + 1 << " rounds!" << std::endl;
+            break;
+        }
+
 
         // Reset all pieces' moved state to false
         for (int i = 0; i < boardSizeOnX; i++) {
