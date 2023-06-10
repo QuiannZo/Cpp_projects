@@ -86,7 +86,6 @@ int main(int argc, char* argv[]) {
     // Display the final board.
     if (!verbose)
         controller.printMatrix(board, boardSizeOnX, boardSizeOnY);
-
     // Free memory
     controller.deleteMatrix(board, boardSizeOnX, boardSizeOnY);
     return EXIT_SUCCESS;

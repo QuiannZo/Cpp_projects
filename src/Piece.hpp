@@ -47,10 +47,10 @@ public:
     char getPieceType() override;
     int getPieceSpeed() override;
 };
-/*
 class Queen : public Piece {
 public:
     Queen(int x, int y, bool isWhite);
+    void movePiece(int newX, int newY, Piece*** board, int boardSizeOnX, int boardSizeOnY, bool duplicate) override;
     void randomMove(Piece*** board, int boardSizeOnX, int boardSizeY, bool duplicate) override;
     void moveOrCapture(Piece*** board, int boardSizeOnX, int boardSizeOnY, bool duplicate) override;
     void move(Piece*** board, int x, int y) override;
@@ -61,6 +61,7 @@ public:
 class Rook : public Piece {
 public:
     Rook(int x, int y, bool isWhite);
+    void movePiece(int newX, int newY, Piece*** board, int boardSizeOnX, int boardSizeOnY, bool duplicate) override;
     void randomMove(Piece*** board, int boardSizeOnX, int boardSizeY, bool duplicate) override;
     void moveOrCapture(Piece*** board, int boardSizeOnX, int boardSizeOnY, bool duplicate) override;
     void move(Piece*** board, int x, int y) override;
@@ -71,6 +72,7 @@ public:
 class Knight : public Piece {
 public:
     Knight(int x, int y, bool isWhite);
+    void movePiece(int newX, int newY, Piece*** board, int boardSizeOnX, int boardSizeOnY, bool duplicate) override;
     void randomMove(Piece*** board, int boardSizeOnX, int boardSizeY, bool duplicate) override;
     void moveOrCapture(Piece*** board, int boardSizeOnX, int boardSizeOnY, bool duplicate) override;
     void move(Piece*** board, int x, int y) override;
@@ -81,23 +83,25 @@ public:
 class Bishop : public Piece {
 public:
     Bishop(int x, int y, bool isWhite);
+    void movePiece(int newX, int newY, Piece*** board, int boardSizeOnX, int boardSizeOnY, bool duplicate) override;
     void randomMove(Piece*** board, int boardSizeOnX, int boardSizeY, bool duplicate) override;
     void moveOrCapture(Piece*** board, int boardSizeOnX, int boardSizeOnY, bool duplicate) override;
     void move(Piece*** board, int x, int y) override;
     char getPieceType() override;
     int getPieceSpeed() override;
 };
-
+/*
 class Pawn : public Piece {
 public:
     Pawn(int x, int y, bool isWhite);
+    void movePiece(int newX, int newY, Piece*** board, int boardSizeOnX, int boardSizeOnY, bool duplicate) override;
     void randomMove(Piece*** board, int boardSizeOnX, int boardSizeY, bool duplicate) override;
     void moveOrCapture(Piece*** board, int boardSizeOnX, int boardSizeOnY, bool duplicate) override;
     void move(Piece*** board, int x, int y) override;
     char getPieceType() override;
     int getPieceSpeed() override;
-};
-*/
+};*/
+
 
 class Controller {
   public:
