@@ -9,6 +9,7 @@ protected:
     bool isWhite; // to know if piece is black or white
     bool hasMoved; // to know if piece has moved on the round
     int speed;
+    bool firstMove;
 public:
     Piece(int x, int y, bool isWhite); // Piece constructor
     // Checks if piece is black or white
@@ -35,6 +36,8 @@ public:
     virtual int getPieceSpeed() = 0;
     // Displays the piece type on the terminal (Using getPieceType)
     void displayPiece();
+    inline bool getFirstMove();
+    void setFirstMove(bool first);
 };
 
 class King : public Piece {
@@ -90,7 +93,7 @@ public:
     char getPieceType() override;
     int getPieceSpeed() override;
 };
-/*
+
 class Pawn : public Piece {
 public:
     Pawn(int x, int y, bool isWhite);
@@ -100,7 +103,7 @@ public:
     void move(Piece*** board, int x, int y) override;
     char getPieceType() override;
     int getPieceSpeed() override;
-};*/
+};
 
 
 class Controller {
