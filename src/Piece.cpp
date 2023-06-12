@@ -946,7 +946,6 @@ void Pawn::movePiece(int newX, int newY, Piece*** board, int boardSizeOnX, int b
 void Pawn::randomMove(Piece*** board, int boardSizeOnX, int boardSizeOnY, bool duplicate) {
     int direction = (pieceIsWhite()) ? -1 : 1;
     
-
     std::random_device rd;
     std::mt19937 gen(rd());
     std::uniform_int_distribution<> dis(0, 100);
@@ -981,6 +980,7 @@ void Pawn::randomMove(Piece*** board, int boardSizeOnX, int boardSizeOnY, bool d
 
     if (isValidPos(targetX, targetY, boardSizeOnX, boardSizeOnY)) {
         if (board[targetX][targetY] == nullptr) {
+            std::cout << "A Pawn has moved forward to (" << targetX << ", " << targetY << ") from (" << x << ", " << y << ")" << std::endl;
             movePiece(targetX, targetY, board, boardSizeOnX, boardSizeOnY, duplicate);
             return;
         }
@@ -1271,7 +1271,9 @@ void Controller::run(Piece*** board, int boardSizeOnX, int boardSizeOnY, int rou
         // Reset all pieces' moved state to false
         for (int i = 0; i < boardSizeOnX; i++) {
             for (int j = 0; j < boardSizeOnY; j++) {
-                board[i][j]->setMoved(false);
+                if (board[i][j] != nullptr) {
+                    board[i][j]->setMoved(false);
+                }
             }
         }
     }
