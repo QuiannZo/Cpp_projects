@@ -14,19 +14,6 @@ bool Piece::isValidPos(int x, int y, int boardSizeOnX, int boardSizeOnY) {
     return false;
 }
 
-bool Piece::isCapturable(int newX, int newY, Piece*** board, bool isWhite, int maxX, int maxY) {
-    if(isValidPos(newX, newY, maxX, maxY)){
-        Piece* selectedPiece = board[newX][newY];
-        // Checks if they are different color and if it isn't nullptr
-        if (selectedPiece != nullptr) {
-           if(selectedPiece->pieceIsWhite() != this->isWhite){
-                return true;
-            }
-        } 
-    }
-    return false;
-}
-
 void Piece::displayPiece() {
     std::cout << getPieceType();
 }

@@ -94,17 +94,6 @@ public:
    */
     bool isValidPos(int x, int y, int boardSizeOnX, int boardSizeOnY);
   /**
-   * @brief Checks if a piece can be captured on given coordinates
-   *
-   * @param newX new x position
-   * @param newY new y position
-   * @param board the matrix board
-   * @param isWhite boolean to check team
-   * @param maxX maximum possible x value
-   * @param maxY maximum possible y value
-   */
-    bool isCapturable(int newX, int newY, Piece*** board, bool isWhite, int maxX, int maxY);
-  /**
    * @brief Gets the character from a specified piece, depending if its black or white
    */
     virtual char getPieceType() = 0;
@@ -254,7 +243,7 @@ public:
 
 /**
  * @class Controller
- * @brief The controller class controlls the game initialization and the matrix and memory management
+ * @brief The controller class controls the game initialization and the matrix and memory management
  */
 class Controller {
   public:
