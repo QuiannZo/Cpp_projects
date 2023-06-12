@@ -905,22 +905,21 @@ void Pawn::movePiece(int newX, int newY, Piece*** board, int boardSizeOnX, int b
             std::mt19937 gen(rd());
             std::uniform_int_distribution<> dis(0, 3);
             int randomPiece = dis(gen);
-
             switch (randomPiece) {
                 case 0:
-                    board[newX][newY] = new Rook(newX, newY, this->pieceIsWhite());
+                    board[newX][newY] = new Rook(newX, newY, pieceIsWhite());
                     std::cout << "^ this Pawn turned into a Rook" << std::endl; 
                     break;
                 case 1:
-                    board[newX][newY] = new Knight(newX, newY, this->pieceIsWhite());
+                    board[newX][newY] = new Knight(newX, newY, pieceIsWhite());
                     std::cout << "^ this Pawn turned into a Knight" << std::endl; 
                     break;
                 case 2:
-                    board[newX][newY] = new Bishop(newX, newY, this->pieceIsWhite());
+                    board[newX][newY] = new Bishop(newX, newY, pieceIsWhite());
                     std::cout << "^ this Pawn turned into a Bishop" << std::endl; 
                     break;
                 case 3:
-                    board[newX][newY] = new Queen(newX, newY, this->pieceIsWhite());
+                    board[newX][newY] = new Queen(newX, newY, pieceIsWhite());
                     std::cout << "^ this Pawn turned into a Queen" << std::endl; 
                     break;
             }
@@ -930,17 +929,16 @@ void Pawn::movePiece(int newX, int newY, Piece*** board, int boardSizeOnX, int b
             }
         } else { // If not on final tile
             if (duplicate) {
-                board[newX][newY] = new Pawn(newX, newY, this->pieceIsWhite());
-                board[newX][newY]->setMoved(true);
-                board[newX][newY]->setFirstMove(false);
+                board[newX][newY] = new Pawn(newX, newY, pieceIsWhite());
             } else {
                 board[newX][newY] = board[x][y];
                 board[x][y] = nullptr;
+                x = newX;
+                y = newY;
             }
-            x = newX;
-            y = newY;
+            board[newX][newY]->setFirstMove(false);
+            board[newX][newY]->setMoved(true);
             this->hasMoved = true;
-            this->setFirstMove(false);
         }
     }
 }
@@ -966,7 +964,7 @@ void Pawn::randomMove(Piece*** board, int boardSizeOnX, int boardSizeOnY, bool d
                     if (board[targetX + direction][targetY] == nullptr) {
                         if (random < 50) {
                             // Move two spots
-                            std::cout << "A Pawn has moved two steps forward to (" << targetX+direction << ", " << targetY+direction << ") from (" << x+direction << ", " << y+direction << ")" << std::endl;
+                            std::cout << "A Pawn has moved two steps forward to (" << targetX+direction << ", " << targetY<< ") from (" << x+direction << ", " << y << ")" << std::endl;
                             movePiece(targetX + direction, targetY, board, boardSizeOnX, boardSizeOnY, duplicate);
                             return;
                         } else {
@@ -1021,8 +1019,8 @@ void Pawn::moveOrCapture(Piece*** board, int boardSizeOnX, int boardSizeOnY, boo
     // Loop to save all possible capturable pieces on capturablePieces array
     // Skips 0 as this is the upwards or downwards move
     for (int i = 1; i < 3; i++) {
-        int captureX = x; // x is the current x value for the piece
-        int captureY = y; // y is the current y value for the piece
+        int captureX = x + directions[i][0]; // x is the current x value for the piece
+        int captureY = y + directions[i][1]; // y is the current y value for the piece
         
         // Check if the capture position is valid and contains an opponent's piece
         if (isValidPos(captureX, captureY, boardSizeOnX, boardSizeOnY)) {
@@ -1192,7 +1190,7 @@ void Controller::readMatrix(std::ifstream& arg, Piece*** board, int rows, int co
                         board[i][j] = new Queen(i, j, isWhite);
                         break;
                     case 't':
-                       board[i][j] = new Rook(i, j, isWhite);
+                        board[i][j] = new Rook(i, j, isWhite);
                         break;
                     case 'c':
                         board[i][j] = new Knight(i, j, isWhite);
