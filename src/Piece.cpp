@@ -87,14 +87,14 @@ void King::randomMove(Piece*** board, int boardSizeOnX, int boardSizeOnY, bool d
         if (isValidPos(targetX, targetY, boardSizeOnX, boardSizeOnY)) {
             // Checks if target position is empty
             if (board[targetX][targetY] == nullptr) {
-                std::cout << "A King has moved randomly to (" << targetX+1 << ", " << targetY+1 << ") from (" << x+1 << ", " << y+1 << ")" << std::endl;
+                // std::cout << "A King has moved randomly to (" << targetX+1 << ", " << targetY+1 << ") from (" << x+1 << ", " << y+1 << ")" << std::endl;
                 movePiece(targetX, targetY, board, boardSizeOnX, boardSizeOnY, duplicate);
                 return; // Because if not, it would continue moving the piece if available
             }
         }
     }
     // No moves were found
-    std::cout << "A King has no available moves on (" << x+1 << ", " << y+1 << ")" << std::endl;
+    // std::cout << "A King has no available moves on (" << x+1 << ", " << y+1 << ")" << std::endl;
 }
 
 void King::moveOrCapture(Piece*** board, int boardSizeOnX, int boardSizeOnY, bool duplicate) {
@@ -127,10 +127,10 @@ void King::moveOrCapture(Piece*** board, int boardSizeOnX, int boardSizeOnY, boo
             }
         }
     }
-
+    /*
     if (duplicate == true) {
         std::cout << "(Duplicated) ";
-    }
+    } */
     if (capturableCount > 0) {
         std::random_device rd;
         std::mt19937 gen(rd());
@@ -145,7 +145,7 @@ void King::moveOrCapture(Piece*** board, int boardSizeOnX, int boardSizeOnY, boo
         // 50% chance to capture the piece
         if (chance < 50) {
             delete board[captureX][captureY];
-            std::cout << "A King has captured a piece on (" << captureX+1 << ", " << captureY+1 << ") from (" << x+1 << ", " << y+1 << ")" << std::endl;
+            // std::cout << "A King has captured a piece on (" << captureX+1 << ", " << captureY+1 << ") from (" << x+1 << ", " << y+1 << ")" << std::endl;
             movePiece(captureX, captureY, board, boardSizeOnX, boardSizeOnY, duplicate);
             return;
         }
@@ -171,7 +171,7 @@ void King::move(Piece*** board, int boardSizeOnX, int boardSizeOnY) {
         moveOrCapture(board, boardSizeOnX, boardSizeOnY, duplicate);
     } else {
         // Else (30% chance) it doesn't do anything
-        std::cout << "A King did not move on (" << x+1 << ", " << y+1 << ")" << std::endl;
+        // std::cout << "A King did not move on (" << x+1 << ", " << y+1 << ")" << std::endl;
     }
 }
 
@@ -252,14 +252,14 @@ void Queen::randomMove(Piece*** board, int boardSizeOnX, int boardSizeOnY, bool 
             int targetY = y + (directionY * randomSteps);
             if (isValidPos(targetX, targetY, boardSizeOnX, boardSizeOnY)) {
                 if(board[targetX][targetY] == nullptr){
-                    std::cout << "A Queen has moved randomly to (" << targetX+1 << ", " << targetY+1 << ") from (" << x+1 << ", " << y+1 << ")" << std::endl;
+                    // std::cout << "A Queen has moved randomly to (" << targetX+1 << ", " << targetY+1 << ") from (" << x+1 << ", " << y+1 << ")" << std::endl;
                     movePiece(targetX, targetY, board, boardSizeOnX, boardSizeOnY, duplicate);
                     return;
                 }
             }
         }
     }
-    std::cout << "A Queen has no available moves on (" << x+1 << ", " << y+1 << ")" << std::endl;
+    // std::cout << "A Queen has no available moves on (" << x+1 << ", " << y+1 << ")" << std::endl;
 }
 
 void Queen::moveOrCapture(Piece*** board, int boardSizeOnX, int boardSizeOnY, bool duplicate) {
@@ -311,10 +311,10 @@ void Queen::moveOrCapture(Piece*** board, int boardSizeOnX, int boardSizeOnY, bo
             }
         }
     }
-
+    /*
     if (duplicate == true) {
         std::cout << "(Duplicated) ";
-    }
+    }*/
 
     if (capturableCount > 0) {
         std::random_device rd;
@@ -331,7 +331,7 @@ void Queen::moveOrCapture(Piece*** board, int boardSizeOnX, int boardSizeOnY, bo
         // 50% chance to capture the piece
         if (chance < 50) {
             delete board[captureX][captureY];
-            std::cout << "A Queen has captured a piece on (" << captureX+1 << ", " << captureY+1 << ") from (" << x+1 << ", " << y+1 << ")" << std::endl;
+            // std::cout << "A Queen has captured a piece on (" << captureX+1 << ", " << captureY+1 << ") from (" << x+1 << ", " << y+1 << ")" << std::endl;
             movePiece(captureX, captureY, board, boardSizeOnX, boardSizeOnY, duplicate);
             return;
         }
@@ -357,7 +357,7 @@ void Queen::move(Piece*** board, int boardSizeOnX, int boardSizeOnY) {
         moveOrCapture(board, boardSizeOnX, boardSizeOnY, duplicate);
     } else {
         // Else (30% chance) it doesn't do anything
-        std::cout << "A Queen did not move on (" << x+1 << ", " << y+1 << ")" << std::endl;
+        // std::cout << "A Queen did not move on (" << x+1 << ", " << y+1 << ")" << std::endl;
     }
 
 }
@@ -440,14 +440,14 @@ void Rook::randomMove(Piece*** board, int boardSizeOnX, int boardSizeOnY, bool d
 
             if (isValidPos(targetX, targetY, boardSizeOnX, boardSizeOnY)) {
                 if(board[targetX][targetY] == nullptr){
-                    std::cout << "A Rook has moved randomly to (" << targetX+1 << ", " << targetY+1 << ") from (" << x+1 << ", " << y+1 << ")" << std::endl;
+                    // std::cout << "A Rook has moved randomly to (" << targetX+1 << ", " << targetY+1 << ") from (" << x+1 << ", " << y+1 << ")" << std::endl;
                     movePiece(targetX, targetY, board, boardSizeOnX, boardSizeOnY, duplicate);
                     return;
                 }
             }
         }
     }
-    std::cout << "A Rook has no available moves on (" << x+1 << ", " << y+1 << ")" << std::endl;
+    // std::cout << "A Rook has no available moves on (" << x+1 << ", " << y+1 << ")" << std::endl;
 }
 
 void Rook::moveOrCapture(Piece*** board, int boardSizeOnX, int boardSizeOnY, bool duplicate) {
@@ -495,10 +495,10 @@ void Rook::moveOrCapture(Piece*** board, int boardSizeOnX, int boardSizeOnY, boo
             }
         }
     }
-
+    /*
     if (duplicate == true) {
         std::cout << "(Duplicated) ";
-    }
+    }*/
 
     if (capturableCount > 0) {
         std::random_device rd;
@@ -515,7 +515,7 @@ void Rook::moveOrCapture(Piece*** board, int boardSizeOnX, int boardSizeOnY, boo
         // 50% chance to capture the piece
         if (chance < 50) {
             delete board[captureX][captureY];
-            std::cout << "A Rook has captured a piece on (" << captureX+1 << ", " << captureY+1 << ") from (" << x+1 << ", " << y+1 << ")" << std::endl;
+            // std::cout << "A Rook has captured a piece on (" << captureX+1 << ", " << captureY+1 << ") from (" << x+1 << ", " << y+1 << ")" << std::endl;
             movePiece(captureX, captureY, board, boardSizeOnX, boardSizeOnY, duplicate);
             return;
         }
@@ -541,7 +541,7 @@ void Rook::move(Piece*** board, int boardSizeOnX, int boardSizeOnY) {
         moveOrCapture(board, boardSizeOnX, boardSizeOnY, duplicate);
     } else {
         // Else (30% chance) it doesn't do anything
-        std::cout << "A Rook did not move on (" << x+1 << ", " << y+1 << ")" << std::endl;
+        // std::cout << "A Rook did not move on (" << x+1 << ", " << y+1 << ")" << std::endl;
     }
 }
 
@@ -598,13 +598,13 @@ void Knight::randomMove(Piece*** board, int boardSizeOnX, int boardSizeOnY, bool
         if (isValidPos(targetX, targetY, boardSizeOnX, boardSizeOnY)) {
             // Checks if target position is empty
             if (board[targetX][targetY] == nullptr) {
-                std::cout << "A Knight has moved randomly to (" << targetX+1 << ", " << targetY+1 << ") from (" << x+1 << ", " << y+1 << ")" << std::endl;
+                // std::cout << "A Knight has moved randomly to (" << targetX+1 << ", " << targetY+1 << ") from (" << x+1 << ", " << y+1 << ")" << std::endl;
                 movePiece(targetX, targetY, board, boardSizeOnX, boardSizeOnY, duplicate);
                 return; // Because if not, it would continue moving the piece if available
             }
         }
     }
-    std::cout << "A Knight has no available moves on (" << x+1 << ", " << y+1 << ")" << std::endl;
+    // std::cout << "A Knight has no available moves on (" << x+1 << ", " << y+1 << ")" << std::endl;
 }
 
 void Knight::moveOrCapture(Piece*** board, int boardSizeOnX, int boardSizeOnY, bool duplicate) {
@@ -637,10 +637,10 @@ void Knight::moveOrCapture(Piece*** board, int boardSizeOnX, int boardSizeOnY, b
             }
         }
     }
-
+    /*
     if (duplicate) {
         std::cout << "(Duplicated) ";
-    }
+    }*/
 
     if (capturableCount > 0) {
         std::random_device rd;
@@ -657,7 +657,7 @@ void Knight::moveOrCapture(Piece*** board, int boardSizeOnX, int boardSizeOnY, b
         // 50% chance to capture the piece
         if (chance < 50) {
             delete board[captureX][captureY];
-            std::cout << "A Knight has captured a piece on (" << captureX+1 << ", " << captureY+1 << ") from (" << x+1 << ", " << y+1 << ")" << std::endl;
+            // std::cout << "A Knight has captured a piece on (" << captureX+1 << ", " << captureY+1 << ") from (" << x+1 << ", " << y+1 << ")" << std::endl;
             movePiece(captureX, captureY, board, boardSizeOnX, boardSizeOnY, duplicate);
             return;
         }
@@ -683,7 +683,7 @@ void Knight::move(Piece*** board, int boardSizeOnX, int boardSizeOnY) {
         moveOrCapture(board, boardSizeOnX, boardSizeOnY, duplicate);
     } else {
         // Else (30% chance) it doesn't do anything
-        std::cout << "A Knight did not move on (" << x+1 << ", " << y+1 << ")" << std::endl;
+        // std::cout << "A Knight did not move on (" << x+1 << ", " << y+1 << ")" << std::endl;
     }
 }
 
@@ -765,14 +765,14 @@ void Bishop::randomMove(Piece*** board, int boardSizeOnX, int boardSizeOnY, bool
 
             if (isValidPos(targetX, targetY, boardSizeOnX, boardSizeOnY)) {
                 if(board[targetX][targetY] == nullptr){
-                    std::cout << "A Bishop has moved randomly to (" << targetX+1 << ", " << targetY+1 << ") from (" << x+1 << ", " << y+1 << ")" << std::endl;
+                    // std::cout << "A Bishop has moved randomly to (" << targetX+1 << ", " << targetY+1 << ") from (" << x+1 << ", " << y+1 << ")" << std::endl;
                     movePiece(targetX, targetY, board, boardSizeOnX, boardSizeOnY, duplicate);
                     return;
                 }
             }
         }
     }
-    std::cout << "A Bishop has no available moves on (" << x+1 << ", " << y+1 << ")" << std::endl;
+    // std::cout << "A Bishop has no available moves on (" << x+1 << ", " << y+1 << ")" << std::endl;
 }
 
 void Bishop::moveOrCapture(Piece*** board, int boardSizeOnX, int boardSizeOnY, bool duplicate) {
@@ -820,10 +820,10 @@ void Bishop::moveOrCapture(Piece*** board, int boardSizeOnX, int boardSizeOnY, b
             }
         }
     }
-
+    /*
     if (duplicate == true) {
         std::cout << "(Duplicated) ";
-    }
+    }*/
 
     if (capturableCount > 0) {
         std::random_device rd;
@@ -840,7 +840,7 @@ void Bishop::moveOrCapture(Piece*** board, int boardSizeOnX, int boardSizeOnY, b
         // 50% chance to capture the piece
         if (chance < 50) {
             delete board[captureX][captureY];
-            std::cout << "A Bishop has captured a piece on (" << captureX+1 << ", " << captureY+1 << ") from (" << x+1 << ", " << y+1 << ")" << std::endl;
+            // std::cout << "A Bishop has captured a piece on (" << captureX+1 << ", " << captureY+1 << ") from (" << x+1 << ", " << y+1 << ")" << std::endl;
             movePiece(captureX, captureY, board, boardSizeOnX, boardSizeOnY, duplicate);
             return;
         }
@@ -866,7 +866,7 @@ void Bishop::move(Piece*** board, int boardSizeOnX, int boardSizeOnY) {
         moveOrCapture(board, boardSizeOnX, boardSizeOnY, duplicate);
     } else {
         // Else (30% chance) it doesn't do anything
-        std::cout << "A Bishop did not move on (" << x+1 << ", " << y+1 << ")" << std::endl;
+        // std::cout << "A Bishop did not move on (" << x+1 << ", " << y+1 << ")" << std::endl;
     }
 }
 
@@ -895,19 +895,19 @@ void Pawn::movePiece(int newX, int newY, Piece*** board, int boardSizeOnX, int b
             switch (randomPiece) {
                 case 0:
                     board[newX][newY] = new Rook(newX, newY, pieceIsWhite());
-                    std::cout << "^ this Pawn turned into a Rook" << std::endl; 
+                    // std::cout << "^ this Pawn turned into a Rook" << std::endl; 
                     break;
                 case 1:
                     board[newX][newY] = new Knight(newX, newY, pieceIsWhite());
-                    std::cout << "^ this Pawn turned into a Knight" << std::endl; 
+                    // std::cout << "^ this Pawn turned into a Knight" << std::endl; 
                     break;
                 case 2:
                     board[newX][newY] = new Bishop(newX, newY, pieceIsWhite());
-                    std::cout << "^ this Pawn turned into a Bishop" << std::endl; 
+                    // std::cout << "^ this Pawn turned into a Bishop" << std::endl; 
                     break;
                 case 3:
                     board[newX][newY] = new Queen(newX, newY, pieceIsWhite());
-                    std::cout << "^ this Pawn turned into a Queen" << std::endl; 
+                    // std::cout << "^ this Pawn turned into a Queen" << std::endl; 
                     break;
             }
 
@@ -950,12 +950,12 @@ void Pawn::randomMove(Piece*** board, int boardSizeOnX, int boardSizeOnY, bool d
                     if (board[targetX + direction][targetY] == nullptr) {
                         if (random < 50) {
                             // Move two spots
-                            std::cout << "A Pawn has moved two steps forward to (" << targetX+direction << ", " << targetY<< ") from (" << x+direction << ", " << y << ")" << std::endl;
+                            // std::cout << "A Pawn has moved two steps forward to (" << targetX+direction << ", " << targetY<< ") from (" << x+direction << ", " << y << ")" << std::endl;
                             movePiece(targetX + direction, targetY, board, boardSizeOnX, boardSizeOnY, duplicate);
                             return;
                         } else {
                             // Move one spot
-                            std::cout << "A Pawn has moved forward to (" << targetX << ", " << targetY << ") from (" << x << ", " << y << ")" << std::endl;
+                            // std::cout << "A Pawn has moved forward to (" << targetX << ", " << targetY << ") from (" << x << ", " << y << ")" << std::endl;
                             movePiece(targetX, targetY, board, boardSizeOnX, boardSizeOnY, duplicate);
                             return;
                         }
@@ -967,12 +967,12 @@ void Pawn::randomMove(Piece*** board, int boardSizeOnX, int boardSizeOnY, bool d
 
     if (isValidPos(targetX, targetY, boardSizeOnX, boardSizeOnY)) {
         if (board[targetX][targetY] == nullptr) {
-            std::cout << "A Pawn has moved forward to (" << targetX << ", " << targetY << ") from (" << x << ", " << y << ")" << std::endl;
+            // std::cout << "A Pawn has moved forward to (" << targetX << ", " << targetY << ") from (" << x << ", " << y << ")" << std::endl;
             movePiece(targetX, targetY, board, boardSizeOnX, boardSizeOnY, duplicate);
             return;
         }
     }
-    std::cout << "A Pawn has no available moves on (" << x << ", " << y << ")" << std::endl;        
+    // std::cout << "A Pawn has no available moves on (" << x << ", " << y << ")" << std::endl;        
 }
 
 void Pawn::moveOrCapture(Piece*** board, int boardSizeOnX, int boardSizeOnY, bool duplicate) {
@@ -1020,10 +1020,10 @@ void Pawn::moveOrCapture(Piece*** board, int boardSizeOnX, int boardSizeOnY, boo
             } 
         }
     }
-
+    /*
     if (duplicate == true) {
         std::cout << "(Duplicated) ";
-    }
+    }*/
 
     if (capturableCount > 0) {
         std::random_device rd;
@@ -1040,7 +1040,7 @@ void Pawn::moveOrCapture(Piece*** board, int boardSizeOnX, int boardSizeOnY, boo
         // 50% chance to capture the piece
         if (chance < 50) {
             delete board[captureX][captureY];
-            std::cout << "A Pawn has captured a piece on (" << captureX << ", " << captureY << ") from (" << x << ", " << y << ")" << std::endl;
+            // std::cout << "A Pawn has captured a piece on (" << captureX << ", " << captureY << ") from (" << x << ", " << y << ")" << std::endl;
             movePiece(captureX, captureY, board, boardSizeOnX, boardSizeOnY, duplicate);
             return;
         }
@@ -1066,7 +1066,7 @@ void Pawn::move(Piece*** board, int boardSizeOnX, int boardSizeOnY) {
         moveOrCapture(board, boardSizeOnX, boardSizeOnY, duplicate);
     } else {
         // Else (30% chance) it doesn't do anything
-        std::cout << "A Pawn did not move on (" << x+1 << ", " << y+1 << ")" << std::endl;
+        // std::cout << "A Pawn did not move on (" << x+1 << ", " << y+1 << ")" << std::endl;
     }
 }
 
@@ -1082,7 +1082,7 @@ int Pawn::getPieceSpeed() {
 
 Controller::Controller(){}
 
-//Crear una matrix e inicializarla con null pointers.
+// Create matrix and init with nullptrs
 Piece*** Controller::createMatrix(int rows, int cols){
     Piece*** matrix = new Piece**[rows];
     for(int i = 0; i < rows; ++i){
@@ -1091,7 +1091,7 @@ Piece*** Controller::createMatrix(int rows, int cols){
     return matrix; // Returns the triple pointer.
 }
 
-//Borra la matriz. Primero convierte los campos a nullptr, luego borra las filas, y luego el arreglo apuntando a las filas.
+// Deletes the matrix
 void Controller::deleteMatrix(Piece*** matrix, int rows, int cols){
     for(int i = 0; i < rows; i++){
         for(int j = 0; j < cols; j++){
@@ -1104,6 +1104,7 @@ void Controller::deleteMatrix(Piece*** matrix, int rows, int cols){
     delete[] matrix;
 }
 
+// Prints the matrix
 void Controller::printMatrix(Piece*** matrix, int rows, int cols){
     for(int i = 0; i < rows; i++){
         for(int j = 0; j < cols; j++){
@@ -1201,7 +1202,7 @@ void Controller::run(Piece*** board, int boardSizeOnX, int boardSizeOnY, int rou
         bool blackHasActivePieces = false;
         // White pieces turn
         // Pieces move by speed (1 - 6). One being the fastest.
-        std::cout << "\033[4mWhite moves:\033[0m" << std::endl;
+        //std::cout << "\033[4mWhite moves:\033[0m" << std::endl;
         for(int speed = 1; speed <= 6; ++speed){
             for (int i = 0; i < boardSizeOnX; i++) {
                 for (int j = 0; j < boardSizeOnY; j++) {
@@ -1226,7 +1227,7 @@ void Controller::run(Piece*** board, int boardSizeOnX, int boardSizeOnY, int rou
 
         // Black pieces turn
         // Pieces move by speed (1 - 6). One being the fastest.
-        std::cout << "\033[4mBlack moves:\033[0m" << std::endl;
+        //std::cout << "\033[4mBlack moves:\033[0m" << std::endl;
         for(int speed = 1; speed <= 6; ++speed){
             for (int i = 0; i < boardSizeOnX; i++) {
                 for (int j = 0; j < boardSizeOnY; j++) {
