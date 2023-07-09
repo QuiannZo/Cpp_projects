@@ -60,6 +60,10 @@ void controller::readClassData(int argc, char* argv[]){
         garageForController.TrackA[ai].push_back(trackName);
     }
 
+    
+
+    //// PRINTER OF DATA ////
+    std::cout << "Prints trackT" << std::endl;
     // Print tree TrackT in order.
     for(RedBlackTree<int, std::vector<std::string>>::Iterator itr = garageForController.TrackT.begin(); 
     itr != garageForController.TrackT.end(); ++itr){
@@ -68,6 +72,7 @@ void controller::readClassData(int argc, char* argv[]){
         }
     }
 
+    std::cout << "Prints trackW" << std::endl;
     // Print tree TrackW in order
     for(RedBlackTree<int, std::vector<std::string>>::Iterator itr = garageForController.TrackW.begin(); 
     itr != garageForController.TrackW.end(); ++itr){
@@ -76,6 +81,7 @@ void controller::readClassData(int argc, char* argv[]){
         }
     }
 
+    std::cout << "Prints trackA" << std::endl;
     // Print tree TrackA in order.
     for(RedBlackTree<int, std::vector<std::string>>::Iterator itr = garageForController.TrackA.begin(); 
     itr != garageForController.TrackA.end(); ++itr){
