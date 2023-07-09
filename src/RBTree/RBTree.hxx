@@ -223,6 +223,7 @@ namespace ecci {
         }
 
         // Goes to the left to find minimum node.
+        /*
         Node* findMinimum(Node* node) const {
             if (node) {
                 while (node->left) {
@@ -231,6 +232,19 @@ namespace ecci {
             }
 
             return node;
+        }*/
+
+        static Node* findMinimum(Node* subtree)
+        {
+            if(subtree)
+            {
+                while (subtree->left)
+                {
+                    subtree = subtree->left;
+                }
+                
+            }
+            return subtree;
         }
 
         // Goes to the right to find maximum node.
@@ -247,6 +261,7 @@ namespace ecci {
         // Check for right node, if it exists, and applys findMinimum() to the node. If theres no right node,
         // creates a node parent. While parent exists and node equals the right node, node equals parent and
         // parent equals grand parent.
+        /*
         Node* findNextNode(Node* node) const {
             if (node) {
                 if (node->right) {
@@ -262,6 +277,24 @@ namespace ecci {
             }
 
             return nullptr;
+        }*/
+
+        static Node* findNextNode(Node* current)
+        {
+            Node* original = current;
+            if(current->right)
+                return RedBlackTree::findMinimum(current->right);
+            while(current->parent && current  == current->parent->right)
+            {
+                current = current->parent;
+                if(current->parent == nullptr)
+                    return nullptr;
+            }
+            if (current->parent && current == current->parent->left)
+            {
+                current = current->parent;
+            }
+            return current == original? nullptr : current;
         }
 
         Node* insertImp(const KeyType& key, const ValueType& value) {

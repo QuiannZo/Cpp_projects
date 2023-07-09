@@ -1,8 +1,10 @@
 #include<iostream>
 
 #include "RBTree/RBTree.hxx"
+#include <Controller.hpp>
 
-int main(){
+int main(int argc, char* argv[]){
+    /*
     ecci::RedBlackTree<std::string, int> tree;
     ecci::RedBlackTree<std::string, int> treeTwo;
 
@@ -17,5 +19,9 @@ int main(){
     std::cout << std::endl;
     treeTwo = tree;
     std::cout << "Test: " << treeTwo["KartOne"] << std::endl;
+    */
+
+    controller controller;
+    controller.readClassData(argc, argv);
     return 0;
 }
