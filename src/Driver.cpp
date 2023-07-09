@@ -45,6 +45,16 @@ int KartDriver::calcSpeed(int terrain, int water, int air) {
     return 0;
 }
 
+Part KartDriver::getVehicle() {
+    return kart;
+}
+Part KartDriver::getTire() {
+    return tires;
+}
+Part KartDriver::getGlider() {
+    return glider;
+}
+
 // Bikes
 BikeDriver::BikeDriver()
 : Driver(), bike{}, tires{}, glider{}
@@ -58,6 +68,16 @@ int BikeDriver::calcSpeed(int terrain, int water, int air) {
     return 0;
 }
 
+Part BikeDriver::getVehicle() {
+    return bike;
+}
+Part BikeDriver::getTire() {
+    return tires;
+}
+Part BikeDriver::getGlider() {
+    return glider;
+}
+
 // ATVS
 ATVDriver::ATVDriver()
 : Driver(), atv{}, tires{}, glider{}
@@ -69,4 +89,14 @@ ATVDriver::ATVDriver(std::string gt, std::string ch, Part atv, Part tires, Part 
 
 int ATVDriver::calcSpeed(int terrain, int water, int air) {
     return 0;
+}
+
+Part ATVDriver::getVehicle() {
+    return atv;
+}
+Part ATVDriver::getTire() {
+    return tires;
+}
+Part ATVDriver::getGlider() {
+    return glider;
 }

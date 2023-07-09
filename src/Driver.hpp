@@ -59,6 +59,10 @@ class Driver{
     Driver();
     Driver(std::string gt, std::string ch);
     virtual int calcSpeed(int terrain, int water, int air) = 0;
+  public:
+    virtual Part getVehicle() = 0;
+    virtual Part getTire() = 0;
+    virtual Part getGlider() = 0;
 };
 
 class KartDriver : public Driver {
@@ -70,6 +74,10 @@ class KartDriver : public Driver {
     KartDriver();
     KartDriver(std::string gt, std::string ch, Part kart, Part tires, Part glider);
     int calcSpeed(int terrain, int water, int air) override;
+  public:
+    Part getVehicle() override;
+    Part getTire() override;
+    Part getGlider() override;
 };
 
 class BikeDriver : public Driver {
@@ -81,6 +89,10 @@ class BikeDriver : public Driver {
     BikeDriver();
     BikeDriver(std::string gt, std::string ch, Part bike, Part tires, Part glider);
     int calcSpeed(int terrain, int water, int air) override;
+  public:
+    Part getVehicle() override;
+    Part getTire() override;
+    Part getGlider() override;
 };
 
 class ATVDriver : public Driver {
@@ -92,4 +104,8 @@ class ATVDriver : public Driver {
     ATVDriver();
     ATVDriver(std::string gt, std::string ch, Part atv, Part tires, Part glider);
     int calcSpeed(int terrain, int water, int air) override;
+  public:
+    Part getVehicle() override;
+    Part getTire() override;
+    Part getGlider() override;
 };

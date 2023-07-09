@@ -34,6 +34,8 @@ void controller::readClassData(int argc, char* argv[]){
         std::cout << "Failed to open the files." << std::endl;
     }
 
+    //// Read the tracks and players ////
+
     std::vector<std::string> lines;
     std::string line;
 
@@ -60,6 +62,39 @@ void controller::readClassData(int argc, char* argv[]){
         garageForController.TrackA[ai].push_back(trackName);
     }
 
+    // Get the players.
+    std::string newLine;
+
+    // Skip the tags line.
+    std::string skip;
+    std::getline(fPlayers, skip);
+    
+    while (std::getline(fPlayers, newLine)) {
+        std::vector<std::string> playerData;
+        std::string field;
+        std::istringstream ss(newLine);
+        for(int i = 0; i < 6; i++){
+            std::getline(ss, field, ',');
+            playerData.push_back(field);
+        }
+        // Create the driver and store it in the main driver list on the controller garage.
+        if(playerData.at(3) == "Kart"){
+            Driver* bDriver = new KartDriver(playerData.at(0), playerData.at(1), playerData.at(2), playerData.at(4), 
+            playerData.at(5));
+            garageForController.DriverList.push_back(bDriver);
+        } else if(playerData.at(3) == "Bike"){
+            Driver* bDriver = new BikeDriver(playerData.at(0), playerData.at(1), playerData.at(2), playerData.at(4), 
+            playerData.at(5));
+            garageForController.DriverList.push_back(bDriver);
+        } else if(playerData.at(3) == "ATV"){
+            Driver* bDriver = new ATVDriver(playerData.at(0), playerData.at(1), playerData.at(2), playerData.at(4), 
+            playerData.at(5));
+            garageForController.DriverList.push_back(bDriver);
+        }
+    }
+
+    //// Now read the parts ////
+    
     
 
     //// PRINTER OF DATA ////
@@ -88,5 +123,12 @@ void controller::readClassData(int argc, char* argv[]){
         for(int i = 0; i < itr.getValue().size(); ++i){
             std::cout << "Test: " << itr.getKey() << ": " << itr.getValue().at(i) << std::endl;
         }
+    }
+
+    std::cout << "Prints Players" << std::endl;
+    // Prints players(gt, character).
+    for(int i = 0; i < garageForController.DriverList.size(); ++i){
+        std::cout << garageForController.DriverList.at(i)->gamerTag << ": " << 
+        garageForController.DriverList.at(i)->character << "....." << garageForController.DriverList.at(i)->getVehicle().name << std::endl;
     }
 }

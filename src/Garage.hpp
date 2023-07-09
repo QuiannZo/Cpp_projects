@@ -29,7 +29,7 @@ class Garage {
     // Players.
     // // When creating the driver sons to store here, the code must get the type of kart from the file input to create
     // // and store the object on the list.
-    std::vector<Driver> DriverList;
+    std::vector<Driver*> DriverList;
 
   public:
     Garage();
