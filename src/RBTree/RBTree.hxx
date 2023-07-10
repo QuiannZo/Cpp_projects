@@ -258,27 +258,6 @@ namespace ecci {
             return node;
         }
 
-        // Check for right node, if it exists, and applys findMinimum() to the node. If theres no right node,
-        // creates a node parent. While parent exists and node equals the right node, node equals parent and
-        // parent equals grand parent.
-        /*
-        Node* findNextNode(Node* node) const {
-            if (node) {
-                if (node->right) {
-                    return findMinimum(node->right);
-                } else {
-                    Node* parent = node->parent;
-                    while (parent && node == parent->right) {
-                        node = parent;
-                        parent = parent->parent;
-                    }
-                    return parent;
-                }
-            }
-
-            return nullptr;
-        }*/
-
         static Node* findNextNode(Node* current)
         {
             Node* original = current;

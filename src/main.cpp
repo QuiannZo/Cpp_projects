@@ -22,7 +22,7 @@ int main(int argc, char* argv[]){
     */
 
     controller controller;
-    controller.readClassData(argc, argv);
+    controller.readClassData();
     controller.runMenu();
     return 0;
 }

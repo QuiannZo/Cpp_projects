@@ -14,7 +14,7 @@ class controller{
     ~controller();
   public:
     void trim(std::string& str);
-    void readClassData(int argc, char* argv[]);
+    void readClassData();
     void printParts(std::string piece);
     void bestCombinationForTrack(std::string track);
     void runMenu();
