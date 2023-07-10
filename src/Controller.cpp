@@ -181,4 +181,40 @@ void controller::readClassData(int argc, char* argv[]){
 
     //// Now read the parts ////
     
+    /*
+    //// PRINTER OF DATA ////
+    std::cout << "Prints trackT" << std::endl;
+    // Print tree TrackT in order.
+    for(RedBlackTree<int, std::vector<std::string>>::Iterator itr = garageForController.TrackT.begin(); 
+    itr != garageForController.TrackT.end(); ++itr){
+        for(int i = 0; i < itr.getValue().size(); ++i){
+            std::cout << "Test: " << itr.getKey() << ": " << itr.getValue().at(i) << std::endl;
+        }
+    }
+
+    std::cout << "Prints trackW" << std::endl;
+    // Print tree TrackW in order
+    for(RedBlackTree<int, std::vector<std::string>>::Iterator itr = garageForController.TrackW.begin(); 
+    itr != garageForController.TrackW.end(); ++itr){
+        for(int i = 0; i < itr.getValue().size(); ++i){
+            std::cout << "Test: " << itr.getKey() << ": " << itr.getValue().at(i) << std::endl;
+        }
+    }
+
+    std::cout << "Prints trackA" << std::endl;
+    // Print tree TrackA in order.
+    for(RedBlackTree<int, std::vector<std::string>>::Iterator itr = garageForController.TrackA.begin(); 
+    itr != garageForController.TrackA.end(); ++itr){
+        for(int i = 0; i < itr.getValue().size(); ++i){
+            std::cout << "Test: " << itr.getKey() << ": " << itr.getValue().at(i) << std::endl;
+        }
+    }
+
+    std::cout << "Prints Players" << std::endl;
+    // Prints players(gt, character).
+    for(int i = 0; i < garageForController.DriverList.size(); ++i){
+        std::cout << garageForController.DriverList.at(i)->gamerTag << ": " << 
+        garageForController.DriverList.at(i)->character << "....." << garageForController.DriverList.at(i)->getVehicle().name << std::endl;
+    }
+    */
 }
