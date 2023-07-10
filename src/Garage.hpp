@@ -10,16 +10,17 @@ using ecci::RedBlackTree;
 class Garage {
   public:
     // Parts by atributes.
-    RedBlackTree<int, std::vector<std::string>> KartsAceleration;
-    RedBlackTree<double, std::vector<std::string>> KartsSpeed;
-    RedBlackTree<int, std::vector<std::string>> BikesAceleration;
-    RedBlackTree<double, std::vector<std::string>> BikesSpeed;
-    RedBlackTree<int, std::vector<std::string>> ATVsAceleration;
-    RedBlackTree<double, std::vector<std::string>> ATVsSpeed;
+    RedBlackTree<double, std::vector<std::string>> KartsAceleration;
+    RedBlackTree<int, std::vector<std::string>> KartsSpeed;
+    RedBlackTree<double, std::vector<std::string>> BikesAceleration;
+    RedBlackTree<int, std::vector<std::string>> BikesSpeed;
+    RedBlackTree<double, std::vector<std::string>> ATVsAceleration;
+    RedBlackTree<int, std::vector<std::string>> ATVsSpeed;
     RedBlackTree<int, std::vector<std::string>> TiresTSpeed;
     RedBlackTree<int, std::vector<std::string>> TiresWSpeed;
     RedBlackTree<int, std::vector<std::string>> TiresASpeed;
-    RedBlackTree<int, std::vector<std::string>> gliders;
+    RedBlackTree<int, std::vector<std::string>> glidersDelay;
+    RedBlackTree<int, std::vector<std::string>> glidersSpeed;
 
     // Tracks by Terrain, water, and air meters.
     RedBlackTree<int, std::vector<std::string>> TrackT;
