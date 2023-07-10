@@ -3,3 +3,6 @@
 Garage::Garage(){
     
 }
+
+Garage::~Garage(){
+}

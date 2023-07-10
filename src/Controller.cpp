@@ -15,6 +15,12 @@
 
 controller::controller(){}
 
+controller::~controller(){
+    for (Driver* driver : garageForController.DriverList) {
+        delete driver;
+    }
+}
+
 // Trim function to get the blank lines.
 // Code gathered from: https://stackoverflow.com/questions/216823/how-to-trim-an-stdstring
 void controller::trim(std::string& str) {
@@ -218,6 +224,10 @@ void controller::readClassData(int argc, char* argv[]){
             std::cout << "Test: " << itr.getKey() << ": " << itr.getValue().at(i) << std::endl;
         }
     }*/
+
+    //Close files.
+    fPlayers.close();
+    fPieces.close();
 }
 
 void controller::printParts(std::string piece){
@@ -267,9 +277,15 @@ void controller::printParts(std::string piece){
             std::cout << Gliders.at(i) << std::endl;
         }
     }
+    fPieces.close();
 }
 
 void controller::bestCombinationForTrack(std::string track) {
+    // Terrain
+
+    // Water
+
+    // Air
     
 }
 

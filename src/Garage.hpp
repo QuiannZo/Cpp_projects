@@ -34,4 +34,5 @@ class Garage {
 
   public:
     Garage();
+    ~Garage();
 };
