@@ -12,6 +12,7 @@ class controller{
     Garage garageForController;
     controller();
   public:
+    void runMenu();
     void trim(std::string& str);
     void readClassData(int argc, char* argv[]);
 };

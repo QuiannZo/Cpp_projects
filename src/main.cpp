@@ -1,7 +1,6 @@
-#include<iostream>
-
+#include <iostream>
 #include "RBTree/RBTree.hxx"
-#include <Controller.hpp>
+#include "Controller.hpp"
 
 int main(int argc, char* argv[]){
     /*
@@ -23,5 +22,7 @@ int main(int argc, char* argv[]){
 
     controller controller;
     controller.readClassData(argc, argv);
+    controller.runMenu();
     return 0;
 }
+
