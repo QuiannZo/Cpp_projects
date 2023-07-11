@@ -17,6 +17,30 @@ controller::controller(){}
 
 controller::~controller(){}
 
+int searchByMember(RedBlackTree<int, std::vector<std::string>> tree, std::string memberValue){
+    for(RedBlackTree<int, std::vector<std::string>>::Iterator itr = tree.begin(); 
+    itr != tree.end(); ++itr){
+        for(int i = 0; i < itr.getValue().size(); ++i){
+            if(itr.getValue().at(i) == memberValue){
+                return itr.getKey();
+            }
+        }
+    }
+    return 1;
+}
+
+double searchByMember(RedBlackTree<double, std::vector<std::string>> tree, std::string memberValue){
+    for(RedBlackTree<double, std::vector<std::string>>::Iterator itr = tree.begin(); 
+    itr != tree.end(); ++itr){
+        for(int i = 0; i < itr.getValue().size(); ++i){
+            if(itr.getValue().at(i) == memberValue){
+                return itr.getKey();
+            }
+        }
+    }
+    return 1;
+}
+
 // Trim function to get the blank lines.
 // Code gathered from: https://stackoverflow.com/questions/216823/how-to-trim-an-stdstring
 void controller::trim(std::string& str) {
@@ -120,7 +144,7 @@ void controller::readClassData(){
                 speedd = std::stoi(speed);
                 // Add to garage.
                 garageForController.KartsAceleration[acc].push_back(name);
-                garageForController.KartsAceleration[speedd].push_back(name);
+                garageForController.KartsSpeed[speedd].push_back(name);
             } else if(piece == "Tires"){
                 std::string name, speedT, speedW, speedA;
                 std::getline(ss2, name, ',');
@@ -219,8 +243,8 @@ void controller::readClassData(){
         for(int i = 0; i < itr.getValue().size(); ++i){
             std::cout << "Test: " << itr.getKey() << ": " << itr.getValue().at(i) << std::endl;
         }
-    }*/
-
+    }
+    */
     //Close files.
     fPlayers.close();
     fPieces.close();
@@ -277,9 +301,10 @@ void controller::printParts(std::string piece){
 }
 
 void controller::bestCombinationForTrack(std::string track) {
-    int t, w, a;
+    int t = 0, w = 0, a = 0;
     // Terrain
-
+    t = searchByMember(garageForController.KartsSpeed, track);
+    std::cout << "Test: " << t << std::endl;
     // Water
 
     // Air
@@ -324,6 +349,7 @@ void controller::runMenu() {
             case 4: {
                 // Calculate Best Combination (All Tracks)
                 std::cout << "Calculating best combination for all tracks..." << std::endl;
+                bestCombinationForTrack("Mach 8");
                 break;
             }
             case 5: {

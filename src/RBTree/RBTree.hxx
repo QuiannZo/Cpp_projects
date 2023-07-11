@@ -131,33 +131,33 @@ namespace ecci {
             //DECLARE_RULE5(Iterator, default);
 
             // Comparer for two nodes.
-            inline bool operator!=(const Iterator& other) const {
+            bool operator!=(const Iterator& other) const {
                 return this->node != other.node;
             }
 
             // Const getter for node key.
-            inline const KeyType& getKey() const {
+            /*const KeyType& getKey() const {
                 assert(this->node);
                 return this->node->key;
-            }
+            }*/
 
             // Getter for node key.
-            inline KeyType& getKey() {
+            KeyType& getKey() {
                 assert(this->node);
                 return this->node->key;
             }
 
             // Getter for node value.
-            inline ValueType& getValue() {
+            ValueType& getValue() {
                 assert(this->node);
                 return this->node->value;
             }
 
             // Const getter for node value.
-            inline const ValueType& getValue() const {
+            /*const ValueType& getValue() const {
                 assert(this->node);
                 return this->node->value;
-            }
+            }*/
 
             // Calls findNextNode() to go to the next node.
             inline Iterator& operator++() {
@@ -221,18 +221,6 @@ namespace ecci {
 
             return nullptr;
         }
-
-        // Goes to the left to find minimum node.
-        /*
-        Node* findMinimum(Node* node) const {
-            if (node) {
-                while (node->left) {
-                    node = node->left;
-                }
-            }
-
-            return node;
-        }*/
 
         static Node* findMinimum(Node* subtree)
         {
