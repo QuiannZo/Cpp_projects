@@ -55,6 +55,18 @@ Part KartDriver::getGlider() {
     return glider;
 }
 
+void KartDriver::setVehicle(Part vehicle){
+    kart = vehicle;
+}
+
+void KartDriver::setTire(Part tire){
+    tires = tire;
+}
+
+void KartDriver::setVehicle(Part glider){
+    glider = glider;
+}
+
 // Bikes
 BikeDriver::BikeDriver()
 : Driver(), bike{}, tires{}, glider{}
@@ -78,6 +90,18 @@ Part BikeDriver::getGlider() {
     return glider;
 }
 
+void BikeDriver::setVehicle(Part vehicle){
+    bike = vehicle;
+}
+
+void BikeDriver::setTire(Part tire){
+    tires = tire;
+}
+
+void BikeDriver::setVehicle(Part glider){
+    glider = glider;
+}
+
 // ATVS
 ATVDriver::ATVDriver()
 : Driver(), atv{}, tires{}, glider{}
@@ -99,4 +123,16 @@ Part ATVDriver::getTire() {
 }
 Part ATVDriver::getGlider() {
     return glider;
+}
+
+void ATVDriver::setVehicle(Part vehicle){
+    atv = vehicle;
+}
+
+void ATVDriver::setTire(Part tire){
+    tires = tire;
+}
+
+void ATVDriver::setVehicle(Part glider){
+    glider = glider;
 }

@@ -140,7 +140,7 @@ void controller::readClassData(){
                 std::getline(ss2, speed, ',');
                 double acc;
                 int speedd;
-                acc = std::stoi(ac);
+                acc = std::stod(ac);
                 speedd = std::stoi(speed);
                 // Add to garage.
                 garageForController.KartsAceleration[acc].push_back(name);
@@ -166,7 +166,7 @@ void controller::readClassData(){
                 std::getline(ss2, speed, ',');
                 double acc;
                 int speedd;
-                acc = std::stoi(ac);
+                acc = std::stod(ac);
                 speedd = std::stoi(speed);
                 // Add to garage.
                 garageForController.BikesAceleration[acc].push_back(name);
@@ -178,7 +178,7 @@ void controller::readClassData(){
                 std::getline(ss2, speed, ',');
                 double acc;
                 int speedd;
-                acc = std::stoi(ac);
+                acc = std::stod(ac);
                 speedd = std::stoi(speed);
                 // Add to garage.
                 garageForController.ATVsAceleration[acc].push_back(name);
@@ -236,15 +236,15 @@ void controller::readClassData(){
         garageForController.DriverList.at(i)->character << "....." << garageForController.DriverList.at(i)->getVehicle().name << std::endl;
     }
 
-    std::cout << "Prints Tires" << std::endl;
-    // Print tree TiresT in order.
-    for(RedBlackTree<int, std::vector<std::string>>::Iterator itr = garageForController.TiresTSpeed.begin(); 
-    itr != garageForController.TiresTSpeed.end(); ++itr){
+    std::cout << "Prints kartAceleration" << std::endl;
+    // Print tree kartAceleration in order.
+    for(RedBlackTree<double, std::vector<std::string>>::Iterator itr = garageForController.KartsAceleration.begin(); 
+    itr != garageForController.KartsAceleration.end(); ++itr){
         for(int i = 0; i < itr.getValue().size(); ++i){
             std::cout << "Test: " << itr.getKey() << ": " << itr.getValue().at(i) << std::endl;
         }
-    }
-    */
+    }*/
+
     //Close files.
     fPlayers.close();
     fPieces.close();
@@ -301,10 +301,13 @@ void controller::printParts(std::string piece){
 }
 
 void controller::bestCombinationForTrack(std::string track) {
-    int t = 0, w = 0, a = 0;
+    int t = 0;
+    double w = 0;
     // Terrain
     t = searchByMember(garageForController.KartsSpeed, track);
+    w = searchByMember(garageForController.KartsAceleration, track);
     std::cout << "Test: " << t << std::endl;
+    std::cout << "Test: " << w << std::endl;
     // Water
 
     // Air

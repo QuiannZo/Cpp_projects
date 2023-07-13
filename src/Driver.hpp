@@ -63,6 +63,9 @@ class Driver{
     virtual Part getVehicle() = 0;
     virtual Part getTire() = 0;
     virtual Part getGlider() = 0;
+    virtual void setVehicle(Part vehicle) = 0;
+    virtual void setTire(Part tire) = 0;
+    virtual void setGlider(Part glider) = 0;
 };
 
 class KartDriver : public Driver {
@@ -78,6 +81,9 @@ class KartDriver : public Driver {
     Part getVehicle() override;
     Part getTire() override;
     Part getGlider() override;
+    void setVehicle(Part vehicle) override;
+    void setTire(Part tire) override;
+    void setGlider(Part glider) override;
 };
 
 class BikeDriver : public Driver {
@@ -93,6 +99,9 @@ class BikeDriver : public Driver {
     Part getVehicle() override;
     Part getTire() override;
     Part getGlider() override;
+    void setVehicle(Part vehicle) override;
+    void setTire(Part tire) override;
+    void setGlider(Part glider) override;
 };
 
 class ATVDriver : public Driver {
@@ -108,4 +117,7 @@ class ATVDriver : public Driver {
     Part getVehicle() override;
     Part getTire() override;
     Part getGlider() override;
+    void setVehicle(Part vehicle) override;
+    void setTire(Part tire) override;
+    void setGlider(Part glider) override;
 };
