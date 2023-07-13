@@ -17,5 +17,7 @@ class controller{
     void readClassData();
     void printParts(std::string piece);
     void bestCombinationForTrack(std::string track);
+    // Sumo todas las distancias y aplico para el total.
+    void bestCombinationForAllTracks();
     void runMenu();
 };

@@ -60,65 +60,6 @@ void controller::readClassData(){
         std::cout << "Failed to open the files." << std::endl;
     }
 
-    //// Read the tracks and players ////
-
-    std::vector<std::string> lines;
-    std::string line;
-
-    // Get the tracks.
-    while (std::getline(fPlayers, line)) {
-        trim(line);
-        if(line.empty()){
-            break;
-        }
-        std::istringstream ss(line);
-        std::string trackName;
-        std::string t, w, a;
-        std::vector<std::string> names;
-        std::getline(ss, trackName, ',');
-        std::getline(ss, t, ',');
-        std::getline(ss, w, ',');
-        std::getline(ss, a, ',');
-        int ti = std::stoi(t);
-        int wi = std::stoi(w);
-        int ai = std::stoi(a);
-
-        garageForController.TrackT[ti].push_back(trackName);
-        garageForController.TrackW[wi].push_back(trackName);
-        garageForController.TrackA[ai].push_back(trackName);
-    }
-
-    // Get the players.
-    std::string newLine;
-
-    // Skip the tags line.
-    std::string skip;
-    std::getline(fPlayers, skip);
-    
-    while (std::getline(fPlayers, newLine)) {
-        std::vector<std::string> playerData;
-        std::string field;
-        std::istringstream ss(newLine);
-        for(int i = 0; i < 6; i++){
-            std::getline(ss, field, ',');
-            playerData.push_back(field);
-        }
-        // Create the driver and store it in the main driver list on the controller garage.
-        if(playerData.at(3) == "Kart"){
-            Driver* bDriver = new KartDriver(playerData.at(0), playerData.at(1), playerData.at(2), playerData.at(4), 
-            playerData.at(5));
-            garageForController.DriverList.push_back(bDriver);
-        } else if(playerData.at(3) == "Bike"){
-            Driver* bDriver = new BikeDriver(playerData.at(0), playerData.at(1), playerData.at(2), playerData.at(4), 
-            playerData.at(5));
-            garageForController.DriverList.push_back(bDriver);
-        } else if(playerData.at(3) == "ATV"){
-            Driver* bDriver = new ATVDriver(playerData.at(0), playerData.at(1), playerData.at(2), playerData.at(4), 
-            playerData.at(5));
-            garageForController.DriverList.push_back(bDriver);
-        }
-    }
-
     //// Now read the parts ////
     std::string partLine;
     while(std::getline(fPieces, partLine)){
@@ -200,6 +141,112 @@ void controller::readClassData(){
         std::getline(fPieces, skipLine);
     }
 
+    //// Read the tracks and players ////
+
+    std::vector<std::string> lines;
+    std::string line;
+
+    // Get the tracks.
+    while (std::getline(fPlayers, line)) {
+        trim(line);
+        if(line.empty()){
+            break;
+        }
+        std::istringstream ss(line);
+        std::string trackName;
+        std::string t, w, a;
+        std::vector<std::string> names;
+        std::getline(ss, trackName, ',');
+        std::getline(ss, t, ',');
+        std::getline(ss, w, ',');
+        std::getline(ss, a, ',');
+        int ti = std::stoi(t);
+        int wi = std::stoi(w);
+        int ai = std::stoi(a);
+
+        garageForController.TrackT[ti].push_back(trackName);
+        garageForController.TrackW[wi].push_back(trackName);
+        garageForController.TrackA[ai].push_back(trackName);
+    }
+
+    // Get the players.
+    std::string newLine;
+
+    // Skip the tags line.
+    std::string skip;
+    std::getline(fPlayers, skip);
+    
+    while (std::getline(fPlayers, newLine)) {
+        std::vector<std::string> playerData;
+        std::string field;
+        std::istringstream ss(newLine);
+        for(int i = 0; i < 6; i++){
+            std::getline(ss, field, ',');
+            playerData.push_back(field);
+        }
+        // Create the driver and store it in the main driver list on the controller garage.
+        // Hay que hacer las partes de 1 y guardarlas. Se busca el nombre en el arbol para hallar los otros dos atributos.
+        // Usar el metodo de arriba.
+        if(playerData.at(3) == "Kart"){
+            // Crear parte kart, tire y glider.
+            // playerData at index 3, 4 and 5.
+
+            double aceleration = searchByMember(garageForController.KartsAceleration, playerData.at(2));
+            int speed = searchByMember(garageForController.KartsSpeed, playerData.at(2));
+            Part* kart = new Kart(playerData.at(2), aceleration, speed);
+
+            int tSpeed = searchByMember(garageForController.TiresTSpeed, playerData.at(4));
+            int wSpeed = searchByMember(garageForController.TiresWSpeed, playerData.at(4));
+            int aSpeed = searchByMember(garageForController.TiresASpeed, playerData.at(4));
+            Tire tires(playerData.at(4), tSpeed, wSpeed, aSpeed);
+
+            int gDelay = searchByMember(garageForController.glidersDelay, playerData.at(5));
+            int gAirSpeed = searchByMember(garageForController.glidersSpeed, playerData.at(5));
+            Glider glider(playerData.at(5), gDelay, gAirSpeed);
+
+            Driver* bDriver = new KartDriver(playerData.at(0), playerData.at(1), *kart, tires, glider);
+            garageForController.DriverList.push_back(bDriver);
+        } else if(playerData.at(3) == "Bike"){
+            // Crear parte kart, tire y glider.
+            // playerData at index 3, 4 and 5.
+
+            double aceleration = searchByMember(garageForController.KartsAceleration, playerData.at(2));
+            int speed = searchByMember(garageForController.KartsSpeed, playerData.at(2));
+            Part* kart = new Kart(playerData.at(2), aceleration, speed);
+
+            int tSpeed = searchByMember(garageForController.TiresTSpeed, playerData.at(4));
+            int wSpeed = searchByMember(garageForController.TiresWSpeed, playerData.at(4));
+            int aSpeed = searchByMember(garageForController.TiresASpeed, playerData.at(4));
+            Tire tires(playerData.at(4), tSpeed, wSpeed, aSpeed);
+
+            int gDelay = searchByMember(garageForController.glidersDelay, playerData.at(5));
+            int gAirSpeed = searchByMember(garageForController.glidersSpeed, playerData.at(5));
+            Glider glider(playerData.at(5), gDelay, gAirSpeed);
+
+            Driver* bDriver = new BikeDriver(playerData.at(0), playerData.at(1), *kart, tires, glider);
+            garageForController.DriverList.push_back(bDriver);
+        } else if(playerData.at(3) == "ATV"){
+            // Crear parte kart, tire y glider.
+            // playerData at index 3, 4 and 5.
+
+            double aceleration = searchByMember(garageForController.KartsAceleration, playerData.at(2));
+            int speed = searchByMember(garageForController.KartsSpeed, playerData.at(2));
+            Part* kart = new Kart(playerData.at(2), aceleration, speed);
+
+            int tSpeed = searchByMember(garageForController.TiresTSpeed, playerData.at(4));
+            int wSpeed = searchByMember(garageForController.TiresWSpeed, playerData.at(4));
+            int aSpeed = searchByMember(garageForController.TiresASpeed, playerData.at(4));
+            Tire tires(playerData.at(4), tSpeed, wSpeed, aSpeed);
+
+            int gDelay = searchByMember(garageForController.glidersDelay, playerData.at(5));
+            int gAirSpeed = searchByMember(garageForController.glidersSpeed, playerData.at(5));
+            Glider glider(playerData.at(5), gDelay, gAirSpeed);
+
+            Driver* bDriver = new ATVDriver(playerData.at(0), playerData.at(1), *kart, tires, glider);
+            garageForController.DriverList.push_back(bDriver);
+        }
+    }
+
     /*
     //// PRINTER OF DATA ////
     std::cout << "Prints trackT" << std::endl;
@@ -243,7 +290,10 @@ void controller::readClassData(){
         for(int i = 0; i < itr.getValue().size(); ++i){
             std::cout << "Test: " << itr.getKey() << ": " << itr.getValue().at(i) << std::endl;
         }
-    }*/
+    }
+
+    std::cout << "Test: " << garageForController.DriverList.at(0)->tires.airSpeed << std::endl;
+    */
 
     //Close files.
     fPlayers.close();
@@ -301,13 +351,15 @@ void controller::printParts(std::string piece){
 }
 
 void controller::bestCombinationForTrack(std::string track) {
-    int t = 0;
-    double w = 0;
+    // Get the distances of the track.
+    int t = 0, w = 0, a = 0;
+    t = searchByMember(garageForController.TrackT, track);
+    w = searchByMember(garageForController.TrackW, track);
+    a = searchByMember(garageForController.TrackA, track);
+
+    // Look for the shortest time possible on all track places.
     // Terrain
-    t = searchByMember(garageForController.KartsSpeed, track);
-    w = searchByMember(garageForController.KartsAceleration, track);
-    std::cout << "Test: " << t << std::endl;
-    std::cout << "Test: " << w << std::endl;
+    
     // Water
 
     // Air
