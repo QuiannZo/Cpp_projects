@@ -206,6 +206,7 @@ void controller::readClassData(){
 
             Driver* bDriver = new KartDriver(playerData.at(0), playerData.at(1), *kart, tires, glider);
             garageForController.DriverList.push_back(bDriver);
+            delete kart;
         } else if(playerData.at(3) == "Bike"){
             // Crear parte kart, tire y glider.
             // playerData at index 3, 4 and 5.
@@ -225,6 +226,7 @@ void controller::readClassData(){
 
             Driver* bDriver = new BikeDriver(playerData.at(0), playerData.at(1), *kart, tires, glider);
             garageForController.DriverList.push_back(bDriver);
+            delete kart;
         } else if(playerData.at(3) == "ATV"){
             // Crear parte kart, tire y glider.
             // playerData at index 3, 4 and 5.
@@ -244,6 +246,7 @@ void controller::readClassData(){
 
             Driver* bDriver = new ATVDriver(playerData.at(0), playerData.at(1), *kart, tires, glider);
             garageForController.DriverList.push_back(bDriver);
+            delete kart;
         }
     }
 
@@ -357,12 +360,27 @@ void controller::bestCombinationForTrack(std::string track) {
     w = searchByMember(garageForController.TrackW, track);
     a = searchByMember(garageForController.TrackA, track);
 
-    // Look for the shortest time possible on all track places.
     // Terrain
-    
-    // Water
+    // Para cada carro, llanta y planeador se calcula la velocidad en los n metros tierra. Se devuelve la minima.
+    std::vector<std::string> bestCombination;  // Stores the best combination
+    int bestScore = 0;  // Score representing the best combination, initialize with appropriate value
 
-    // Air
+    RedBlackTree<double, std::vector<std::string>>::Iterator it = garageForController.KartsAceleration.begin();
+    while (it != garageForController.KartsAceleration.end()) {
+        if (it.getValue().size() > 0) {  // Ensure there is at least one combination for the speed value
+            double aceleration = it.getKey();
+            std::vector<std::string> currentCombination = it.getValue();
+
+            // Compare the current combination with the best combination based on additional criteria, if applicable
+
+            if (aceleration > bestScore) {
+                bestScore = aceleration;
+                bestCombination = currentCombination;
+            }
+        }
+
+        ++it;  // Move to the next combination
+    }
     
 }
 
@@ -404,7 +422,6 @@ void controller::runMenu() {
             case 4: {
                 // Calculate Best Combination (All Tracks)
                 std::cout << "Calculating best combination for all tracks..." << std::endl;
-                bestCombinationForTrack("Mach 8");
                 break;
             }
             case 5: {
@@ -414,6 +431,7 @@ void controller::runMenu() {
                 std::cin.ignore();  // Ignore the newline character from the previous input
                 std::getline(std::cin, trackName);
                 std::cout << "Calculating best combination for track: " << trackName << "..." << std::endl;
+                bestCombinationForTrack(trackName);
                 break;
             }
             case 6: {
