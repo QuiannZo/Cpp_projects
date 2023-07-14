@@ -359,29 +359,643 @@ void controller::bestCombinationForTrack(std::string track) {
     t = searchByMember(garageForController.TrackT, track);
     w = searchByMember(garageForController.TrackW, track);
     a = searchByMember(garageForController.TrackA, track);
-
-    // Terrain
     // Para cada carro, llanta y planeador se calcula la velocidad en los n metros tierra. Se devuelve la minima.
-    std::vector<std::string> bestCombination;  // Stores the best combination
-    int bestScore = 0;  // Score representing the best combination, initialize with appropriate value
+    
+    //triple for a carro, llantas, y planeador. Crear objeto temporal y sacar su velocidad con calcSpeed(t, w, a).
+    //Obtener nombres. con estos se recorreran los arboles.
+    std::vector<std::string> karts;
+    std::vector<std::string> bikes;
+    std::vector<std::string> atvs;
+    std::vector<std::string> tires;
+    std::vector<std::string> gliders;
 
-    RedBlackTree<double, std::vector<std::string>>::Iterator it = garageForController.KartsAceleration.begin();
-    while (it != garageForController.KartsAceleration.end()) {
-        if (it.getValue().size() > 0) {  // Ensure there is at least one combination for the speed value
-            double aceleration = it.getKey();
-            std::vector<std::string> currentCombination = it.getValue();
-
-            // Compare the current combination with the best combination based on additional criteria, if applicable
-
-            if (aceleration > bestScore) {
-                bestScore = aceleration;
-                bestCombination = currentCombination;
+    std::ifstream fPieces("data/pieces.csv");
+    std::string partLine;
+    while(std::getline(fPieces, partLine)){
+        std::string piece;
+        std::string ammount;
+        std::istringstream ss(partLine);
+        std::getline(ss, piece, ',');
+        std::getline(ss, ammount, ',');
+        int limit = std::stoi(ammount);
+        for(int i = 0; i < limit; i++){
+            std::string currentLine;
+            std::vector<std::string> fields;
+            std::getline(fPieces, currentLine);
+            std::istringstream ss2(currentLine);
+            if(piece == "Karts"){
+                std::string name, ac, speed;
+                std::getline(ss2, name, ',');
+                std::getline(ss2, ac, ',');
+                std::getline(ss2, speed, ',');
+                karts.push_back(name);
+            } else if(piece == "Tires"){
+                std::string name, speedT, speedW, speedA;
+                std::getline(ss2, name, ',');
+                std::getline(ss2, speedT, ',');
+                std::getline(ss2, speedW, ',');
+                std::getline(ss2, speedA, ',');
+                tires.push_back(name);
+            } else if(piece == "Bikes"){
+                std::string name, ac, speed;
+                std::getline(ss2, name, ',');
+                std::getline(ss2, ac, ',');
+                std::getline(ss2, speed, ',');
+                bikes.push_back(name);
+            }else if(piece == "ATVs"){
+                std::string name, ac, speed;
+                std::getline(ss2, name, ',');
+                std::getline(ss2, ac, ',');
+                std::getline(ss2, speed, ',');
+                atvs.push_back(name);
+            } else if(piece == "Gliders"){
+                std::string name, delay, speed;
+                std::getline(ss2, name, ',');
+                std::getline(ss2, delay, ',');
+                std::getline(ss2, speed, ',');
+                gliders.push_back(name);
             }
         }
-
-        ++it;  // Move to the next combination
+        std::string skipLine;
+        std::getline(fPieces, skipLine);
     }
+
+    //After names are gathered, cycle.
+    std::vector<std::string> bestCombination;
+    double minTime = 100000;
+
+    for(int i = 0; i < karts.size(); ++i){
+        for(int j = 0; j < tires.size(); ++j){
+            for(int k = 0; k < gliders.size(); ++k){
+                double kartAc = searchByMember(garageForController.KartsAceleration, karts.at(i));
+                int kartSpeed = searchByMember(garageForController.KartsSpeed, karts.at(i));
+
+                int tireT = searchByMember(garageForController.TiresTSpeed, tires.at(j));
+                int tireW = searchByMember(garageForController.TiresWSpeed, tires.at(j));
+                int tireA = searchByMember(garageForController.TiresASpeed, tires.at(j));
+
+                int gliderDelay = searchByMember(garageForController.glidersDelay, gliders.at(k));
+                int gliderSpeed = searchByMember(garageForController.glidersSpeed, gliders.at(k));
+
+                //terrain.
+                double terrainSpeed = ((0.5*t) * kartAc) + kartSpeed + (1.1 * tireT) - (0.5 * gliderDelay);
+                //water.
+                double waterSpeed = ((0.7*w) * kartAc) + kartSpeed + (1.2*tireW) - (0.7*gliderDelay);
+                //air.
+                double airSpeed = ((0.5*a) * kartAc) + kartSpeed - (0.9*tireA) + (0.7*gliderSpeed);
+                //return sum.
+                int returnNum = (terrainSpeed + waterSpeed + airSpeed); 
+
+                // Compare
+                if(minTime > returnNum){
+                    bestCombination.clear();
+                    minTime = returnNum;
+                    bestCombination.push_back(karts.at(i));
+                    bestCombination.push_back(tires.at(j));
+                    bestCombination.push_back(gliders.at(k));
+                }
+            }
+        }
+    }
+
+    for(int i = 0; i < bikes.size(); ++i){
+        for(int j = 0; j < tires.size(); ++j){
+            for(int k = 0; k < gliders.size(); ++k){
+                double kartAc = searchByMember(garageForController.BikesAceleration, bikes.at(i));
+                int kartSpeed = searchByMember(garageForController.BikesSpeed, bikes.at(i));
+
+                int tireT = searchByMember(garageForController.TiresTSpeed, tires.at(j));
+                int tireW = searchByMember(garageForController.TiresWSpeed, tires.at(j));
+                int tireA = searchByMember(garageForController.TiresASpeed, tires.at(j));
+
+                int gliderDelay = searchByMember(garageForController.glidersDelay, gliders.at(k));
+                int gliderSpeed = searchByMember(garageForController.glidersSpeed, gliders.at(k));
+
+                //terrain.
+                double terrainSpeed = ((0.5*t) * kartAc) + kartSpeed + (1.1 * tireT) - (0.5 * gliderDelay);
+                //water.
+                double waterSpeed = ((0.7*w) * kartAc) + kartSpeed + (1.2*tireW) - (0.7*gliderDelay);
+                //air.
+                double airSpeed = ((0.5*a) * kartAc) + kartSpeed - (0.9*tireA) + (0.7*gliderSpeed);
+                //return sum.
+                int returnNum = (terrainSpeed + waterSpeed + airSpeed); 
+
+                // Compare
+                if(minTime > returnNum){
+                    bestCombination.clear();
+                    minTime = returnNum;
+                    bestCombination.push_back(bikes.at(i));
+                    bestCombination.push_back(tires.at(j));
+                    bestCombination.push_back(gliders.at(k));
+                }
+            }
+        }
+    }
+
+    for(int i = 0; i < atvs.size(); ++i){
+        for(int j = 0; j < tires.size(); ++j){
+            for(int k = 0; k < gliders.size(); ++k){
+                double kartAc = searchByMember(garageForController.ATVsAceleration, atvs.at(i));
+                int kartSpeed = searchByMember(garageForController.ATVsSpeed, atvs.at(i));
+
+                int tireT = searchByMember(garageForController.TiresTSpeed, tires.at(j));
+                int tireW = searchByMember(garageForController.TiresWSpeed, tires.at(j));
+                int tireA = searchByMember(garageForController.TiresASpeed, tires.at(j));
+
+                int gliderDelay = searchByMember(garageForController.glidersDelay, gliders.at(k));
+                int gliderSpeed = searchByMember(garageForController.glidersSpeed, gliders.at(k));
+
+                //terrain.
+                double terrainSpeed = ((0.5*t) * kartAc) + kartSpeed + (1.1 * tireT) - (0.5 * gliderDelay);
+                //water.
+                double waterSpeed = ((0.7*w) * kartAc) + kartSpeed + (1.2*tireW) - (0.7*gliderDelay);
+                //air.
+                double airSpeed = ((0.5*a) * kartAc) + kartSpeed - (0.9*tireA) + (0.7*gliderSpeed);
+                //return sum.
+                int returnNum = (terrainSpeed + waterSpeed + airSpeed); 
+
+                // Compare
+                if(minTime > returnNum){
+                    bestCombination.clear();
+                    minTime = returnNum;
+                    bestCombination.push_back(atvs.at(i));
+                    bestCombination.push_back(tires.at(j));
+                    bestCombination.push_back(gliders.at(k));
+                }
+            }
+        }
+    }
+
+    //Print best combination.
+    std::cout << "The best combination is: " << bestCombination.at(0) << ", " <<bestCombination.at(1) 
+    << ", " << bestCombination.at(2) << std::endl;
+}
+
+void controller::bestCombinationForAllTracks(){
+    // Get the distances of the track.
+    int t = 0, w = 0, a = 0;
+    std::vector<std::string> tracks;
+    std::ifstream fPlayers("data/players.csv");
+    std::string line;
+
+    // Get the tracks.
+    while (std::getline(fPlayers, line)) {
+        trim(line);
+        if(line.empty()){
+            break;
+        }
+        std::istringstream ss(line);
+        std::string trackName;
+        std::string t, w, a;
+        tracks.push_back(trackName);
+    }
+
+    int avgT = 0, avgW = 0, avgA = 0;
+
+    for(int i = 0; i < tracks.size(); ++i){
+        int tt = searchByMember(garageForController.TrackT, tracks.at(i));
+        int wt = searchByMember(garageForController.TrackW, tracks.at(i));
+        int at = searchByMember(garageForController.TrackA, tracks.at(i));
+        avgT += tt;
+        avgW += wt;
+        avgA += at;
+    }
+
+    avgT /= tracks.size();
+    avgW /= tracks.size();
+    avgA /= tracks.size();
+    t = avgT;
+    w = avgW;
+    a = avgA;
+
+    // Para cada carro, llanta y planeador se calcula la velocidad en los n metros tierra. Se devuelve la minima.
     
+    //triple for a carro, llantas, y planeador. Crear objeto temporal y sacar su velocidad con calcSpeed(t, w, a).
+    //Obtener nombres. con estos se recorreran los arboles.
+    std::vector<std::string> karts;
+    std::vector<std::string> bikes;
+    std::vector<std::string> atvs;
+    std::vector<std::string> tires;
+    std::vector<std::string> gliders;
+
+    std::ifstream fPieces("data/pieces.csv");
+    std::string partLine;
+    while(std::getline(fPieces, partLine)){
+        std::string piece;
+        std::string ammount;
+        std::istringstream ss(partLine);
+        std::getline(ss, piece, ',');
+        std::getline(ss, ammount, ',');
+        int limit = std::stoi(ammount);
+        for(int i = 0; i < limit; i++){
+            std::string currentLine;
+            std::vector<std::string> fields;
+            std::getline(fPieces, currentLine);
+            std::istringstream ss2(currentLine);
+            if(piece == "Karts"){
+                std::string name, ac, speed;
+                std::getline(ss2, name, ',');
+                std::getline(ss2, ac, ',');
+                std::getline(ss2, speed, ',');
+                karts.push_back(name);
+            } else if(piece == "Tires"){
+                std::string name, speedT, speedW, speedA;
+                std::getline(ss2, name, ',');
+                std::getline(ss2, speedT, ',');
+                std::getline(ss2, speedW, ',');
+                std::getline(ss2, speedA, ',');
+                tires.push_back(name);
+            } else if(piece == "Bikes"){
+                std::string name, ac, speed;
+                std::getline(ss2, name, ',');
+                std::getline(ss2, ac, ',');
+                std::getline(ss2, speed, ',');
+                bikes.push_back(name);
+            }else if(piece == "ATVs"){
+                std::string name, ac, speed;
+                std::getline(ss2, name, ',');
+                std::getline(ss2, ac, ',');
+                std::getline(ss2, speed, ',');
+                atvs.push_back(name);
+            } else if(piece == "Gliders"){
+                std::string name, delay, speed;
+                std::getline(ss2, name, ',');
+                std::getline(ss2, delay, ',');
+                std::getline(ss2, speed, ',');
+                gliders.push_back(name);
+            }
+        }
+        std::string skipLine;
+        std::getline(fPieces, skipLine);
+    }
+
+    //After names are gathered, cycle.
+    std::vector<std::string> bestCombination;
+    double minTime = 100000;
+
+    for(int i = 0; i < karts.size(); ++i){
+        for(int j = 0; j < tires.size(); ++j){
+            for(int k = 0; k < gliders.size(); ++k){
+                double kartAc = searchByMember(garageForController.KartsAceleration, karts.at(i));
+                int kartSpeed = searchByMember(garageForController.KartsSpeed, karts.at(i));
+
+                int tireT = searchByMember(garageForController.TiresTSpeed, tires.at(j));
+                int tireW = searchByMember(garageForController.TiresWSpeed, tires.at(j));
+                int tireA = searchByMember(garageForController.TiresASpeed, tires.at(j));
+
+                int gliderDelay = searchByMember(garageForController.glidersDelay, gliders.at(k));
+                int gliderSpeed = searchByMember(garageForController.glidersSpeed, gliders.at(k));
+
+                //terrain.
+                double terrainSpeed = ((0.5*t) * kartAc) + kartSpeed + (1.1 * tireT) - (0.5 * gliderDelay);
+                //water.
+                double waterSpeed = ((0.7*w) * kartAc) + kartSpeed + (1.2*tireW) - (0.7*gliderDelay);
+                //air.
+                double airSpeed = ((0.5*a) * kartAc) + kartSpeed - (0.9*tireA) + (0.7*gliderSpeed);
+                //return sum.
+                int returnNum = (terrainSpeed + waterSpeed + airSpeed); 
+
+                // Compare
+                if(minTime > returnNum){
+                    bestCombination.clear();
+                    minTime = returnNum;
+                    bestCombination.push_back(karts.at(i));
+                    bestCombination.push_back(tires.at(j));
+                    bestCombination.push_back(gliders.at(k));
+                }
+            }
+        }
+    }
+
+    for(int i = 0; i < bikes.size(); ++i){
+        for(int j = 0; j < tires.size(); ++j){
+            for(int k = 0; k < gliders.size(); ++k){
+                double kartAc = searchByMember(garageForController.BikesAceleration, bikes.at(i));
+                int kartSpeed = searchByMember(garageForController.BikesSpeed, bikes.at(i));
+
+                int tireT = searchByMember(garageForController.TiresTSpeed, tires.at(j));
+                int tireW = searchByMember(garageForController.TiresWSpeed, tires.at(j));
+                int tireA = searchByMember(garageForController.TiresASpeed, tires.at(j));
+
+                int gliderDelay = searchByMember(garageForController.glidersDelay, gliders.at(k));
+                int gliderSpeed = searchByMember(garageForController.glidersSpeed, gliders.at(k));
+
+                //terrain.
+                double terrainSpeed = ((0.5*t) * kartAc) + kartSpeed + (1.1 * tireT) - (0.5 * gliderDelay);
+                //water.
+                double waterSpeed = ((0.7*w) * kartAc) + kartSpeed + (1.2*tireW) - (0.7*gliderDelay);
+                //air.
+                double airSpeed = ((0.5*a) * kartAc) + kartSpeed - (0.9*tireA) + (0.7*gliderSpeed);
+                //return sum.
+                int returnNum = (terrainSpeed + waterSpeed + airSpeed); 
+
+                // Compare
+                if(minTime > returnNum){
+                    bestCombination.clear();
+                    minTime = returnNum;
+                    bestCombination.push_back(bikes.at(i));
+                    bestCombination.push_back(tires.at(j));
+                    bestCombination.push_back(gliders.at(k));
+                }
+            }
+        }
+    }
+
+    for(int i = 0; i < atvs.size(); ++i){
+        for(int j = 0; j < tires.size(); ++j){
+            for(int k = 0; k < gliders.size(); ++k){
+                double kartAc = searchByMember(garageForController.ATVsAceleration, atvs.at(i));
+                int kartSpeed = searchByMember(garageForController.ATVsSpeed, atvs.at(i));
+
+                int tireT = searchByMember(garageForController.TiresTSpeed, tires.at(j));
+                int tireW = searchByMember(garageForController.TiresWSpeed, tires.at(j));
+                int tireA = searchByMember(garageForController.TiresASpeed, tires.at(j));
+
+                int gliderDelay = searchByMember(garageForController.glidersDelay, gliders.at(k));
+                int gliderSpeed = searchByMember(garageForController.glidersSpeed, gliders.at(k));
+
+                //terrain.
+                double terrainSpeed = ((0.5*t) * kartAc) + kartSpeed + (1.1 * tireT) - (0.5 * gliderDelay);
+                //water.
+                double waterSpeed = ((0.7*w) * kartAc) + kartSpeed + (1.2*tireW) - (0.7*gliderDelay);
+                //air.
+                double airSpeed = ((0.5*a) * kartAc) + kartSpeed - (0.9*tireA) + (0.7*gliderSpeed);
+                //return sum.
+                int returnNum = (terrainSpeed + waterSpeed + airSpeed); 
+
+                // Compare
+                if(minTime > returnNum){
+                    bestCombination.clear();
+                    minTime = returnNum;
+                    bestCombination.push_back(atvs.at(i));
+                    bestCombination.push_back(tires.at(j));
+                    bestCombination.push_back(gliders.at(k));
+                }
+            }
+        }
+    }
+
+    //Print best combination.
+    std::cout << "The best combination is: " << bestCombination.at(0) << ", " <<bestCombination.at(1) 
+    << ", " << bestCombination.at(2) << std::endl;
+}
+
+void controller::avgFinishingPos(std::string gamerTag){
+    // Get the distances of the track.
+    int t = 0, w = 0, a = 0;
+    std::vector<std::string> tracks;
+    std::ifstream fPlayers("data/players.csv");
+    std::string line;
+
+    // Get the tracks.
+    while (std::getline(fPlayers, line)) {
+        trim(line);
+        if(line.empty()){
+            break;
+        }
+        std::istringstream ss(line);
+        std::string trackName;
+        std::string t, w, a;
+        tracks.push_back(trackName);
+    }
+
+    int avgT = 0, avgW = 0, avgA = 0;
+
+    for(int i = 0; i < tracks.size(); ++i){
+        int tt = searchByMember(garageForController.TrackT, tracks.at(i));
+        int wt = searchByMember(garageForController.TrackW, tracks.at(i));
+        int at = searchByMember(garageForController.TrackA, tracks.at(i));
+        avgT += tt;
+        avgW += wt;
+        avgA += at;
+    }
+
+    avgT /= tracks.size();
+    avgW /= tracks.size();
+    avgA /= tracks.size();
+    t = avgT;
+    w = avgW;
+    a = avgA;
+
+    // create rbtree.
+
+    RedBlackTree<double, std::string> driverSpeed;
+
+    for(int i = 0; i < garageForController.DriverList.size(); ++i){
+        double speed = garageForController.DriverList.at(i)->calcSpeed(t, w, a);
+        driverSpeed.insert(speed, garageForController.DriverList.at(i)->gamerTag);
+    }
+
+    //find pos.
+    int counter = 1;
+    for(RedBlackTree<double, std::string>::Iterator itr = driverSpeed.begin(); itr != driverSpeed.end(); ++itr){
+        if(itr.getValue() == gamerTag){
+            break;
+        } else {
+            counter++;
+        }
+    }
+
+    // Print data.
+    std::cout << "Average finishing position of player " << gamerTag << " is: " << counter << std::endl;
+}
+
+void controller::bestCombinationForTracks(std::string track1, std::string track2, std::string track3, std::string track4){
+    // Distances.
+    int t = 0, w = 0, a = 0;
+    int tt1 = searchByMember(garageForController.TrackT, track1);
+    int wt1 = searchByMember(garageForController.TrackW, track1);
+    int at1 = searchByMember(garageForController.TrackA, track1);
+
+    int tt2 = searchByMember(garageForController.TrackT, track2);
+    int wt2 = searchByMember(garageForController.TrackW, track2);
+    int at2 = searchByMember(garageForController.TrackA, track2);
+    
+    int tt3 = searchByMember(garageForController.TrackT, track3);
+    int wt3 = searchByMember(garageForController.TrackW, track3);
+    int at3 = searchByMember(garageForController.TrackA, track3);
+    
+    int tt4 = searchByMember(garageForController.TrackT, track4);
+    int wt4 = searchByMember(garageForController.TrackW, track4);
+    int at4 = searchByMember(garageForController.TrackA, track4);
+
+    int avgt = (tt1 + tt2 + tt3 + tt4) / 4;
+    int avgw = (wt1 + wt2 + wt3 + wt4) / 4;
+    int avga = (at1 + at2 + at3 + at4) / 4;
+    t = avgt;
+    w = avgw;
+    a = avga;
+
+    //
+
+    //triple for a carro, llantas, y planeador. Crear objeto temporal y sacar su velocidad con calcSpeed(t, w, a).
+    //Obtener nombres. con estos se recorreran los arboles.
+    std::vector<std::string> karts;
+    std::vector<std::string> bikes;
+    std::vector<std::string> atvs;
+    std::vector<std::string> tires;
+    std::vector<std::string> gliders;
+
+    std::ifstream fPieces("data/pieces.csv");
+    std::string partLine;
+    while(std::getline(fPieces, partLine)){
+        std::string piece;
+        std::string ammount;
+        std::istringstream ss(partLine);
+        std::getline(ss, piece, ',');
+        std::getline(ss, ammount, ',');
+        int limit = std::stoi(ammount);
+        for(int i = 0; i < limit; i++){
+            std::string currentLine;
+            std::vector<std::string> fields;
+            std::getline(fPieces, currentLine);
+            std::istringstream ss2(currentLine);
+            if(piece == "Karts"){
+                std::string name, ac, speed;
+                std::getline(ss2, name, ',');
+                std::getline(ss2, ac, ',');
+                std::getline(ss2, speed, ',');
+                karts.push_back(name);
+            } else if(piece == "Tires"){
+                std::string name, speedT, speedW, speedA;
+                std::getline(ss2, name, ',');
+                std::getline(ss2, speedT, ',');
+                std::getline(ss2, speedW, ',');
+                std::getline(ss2, speedA, ',');
+                tires.push_back(name);
+            } else if(piece == "Bikes"){
+                std::string name, ac, speed;
+                std::getline(ss2, name, ',');
+                std::getline(ss2, ac, ',');
+                std::getline(ss2, speed, ',');
+                bikes.push_back(name);
+            }else if(piece == "ATVs"){
+                std::string name, ac, speed;
+                std::getline(ss2, name, ',');
+                std::getline(ss2, ac, ',');
+                std::getline(ss2, speed, ',');
+                atvs.push_back(name);
+            } else if(piece == "Gliders"){
+                std::string name, delay, speed;
+                std::getline(ss2, name, ',');
+                std::getline(ss2, delay, ',');
+                std::getline(ss2, speed, ',');
+                gliders.push_back(name);
+            }
+        }
+        std::string skipLine;
+        std::getline(fPieces, skipLine);
+    }
+
+    //After names are gathered, cycle.
+    std::vector<std::string> bestCombination;
+    double minTime = 100000;
+
+    for(int i = 0; i < karts.size(); ++i){
+        for(int j = 0; j < tires.size(); ++j){
+            for(int k = 0; k < gliders.size(); ++k){
+                double kartAc = searchByMember(garageForController.KartsAceleration, karts.at(i));
+                int kartSpeed = searchByMember(garageForController.KartsSpeed, karts.at(i));
+
+                int tireT = searchByMember(garageForController.TiresTSpeed, tires.at(j));
+                int tireW = searchByMember(garageForController.TiresWSpeed, tires.at(j));
+                int tireA = searchByMember(garageForController.TiresASpeed, tires.at(j));
+
+                int gliderDelay = searchByMember(garageForController.glidersDelay, gliders.at(k));
+                int gliderSpeed = searchByMember(garageForController.glidersSpeed, gliders.at(k));
+
+                //terrain.
+                double terrainSpeed = ((0.5*t) * kartAc) + kartSpeed + (1.1 * tireT) - (0.5 * gliderDelay);
+                //water.
+                double waterSpeed = ((0.7*w) * kartAc) + kartSpeed + (1.2*tireW) - (0.7*gliderDelay);
+                //air.
+                double airSpeed = ((0.5*a) * kartAc) + kartSpeed - (0.9*tireA) + (0.7*gliderSpeed);
+                //return sum.
+                int returnNum = (terrainSpeed + waterSpeed + airSpeed); 
+
+                // Compare
+                if(minTime > returnNum){
+                    bestCombination.clear();
+                    minTime = returnNum;
+                    bestCombination.push_back(karts.at(i));
+                    bestCombination.push_back(tires.at(j));
+                    bestCombination.push_back(gliders.at(k));
+                }
+            }
+        }
+    }
+
+    for(int i = 0; i < bikes.size(); ++i){
+        for(int j = 0; j < tires.size(); ++j){
+            for(int k = 0; k < gliders.size(); ++k){
+                double kartAc = searchByMember(garageForController.BikesAceleration, bikes.at(i));
+                int kartSpeed = searchByMember(garageForController.BikesSpeed, bikes.at(i));
+
+                int tireT = searchByMember(garageForController.TiresTSpeed, tires.at(j));
+                int tireW = searchByMember(garageForController.TiresWSpeed, tires.at(j));
+                int tireA = searchByMember(garageForController.TiresASpeed, tires.at(j));
+
+                int gliderDelay = searchByMember(garageForController.glidersDelay, gliders.at(k));
+                int gliderSpeed = searchByMember(garageForController.glidersSpeed, gliders.at(k));
+
+                //terrain.
+                double terrainSpeed = ((0.5*t) * kartAc) + kartSpeed + (1.1 * tireT) - (0.5 * gliderDelay);
+                //water.
+                double waterSpeed = ((0.7*w) * kartAc) + kartSpeed + (1.2*tireW) - (0.7*gliderDelay);
+                //air.
+                double airSpeed = ((0.5*a) * kartAc) + kartSpeed - (0.9*tireA) + (0.7*gliderSpeed);
+                //return sum.
+                int returnNum = (terrainSpeed + waterSpeed + airSpeed); 
+
+                // Compare
+                if(minTime > returnNum){
+                    bestCombination.clear();
+                    minTime = returnNum;
+                    bestCombination.push_back(bikes.at(i));
+                    bestCombination.push_back(tires.at(j));
+                    bestCombination.push_back(gliders.at(k));
+                }
+            }
+        }
+    }
+
+    for(int i = 0; i < atvs.size(); ++i){
+        for(int j = 0; j < tires.size(); ++j){
+            for(int k = 0; k < gliders.size(); ++k){
+                double kartAc = searchByMember(garageForController.ATVsAceleration, atvs.at(i));
+                int kartSpeed = searchByMember(garageForController.ATVsSpeed, atvs.at(i));
+
+                int tireT = searchByMember(garageForController.TiresTSpeed, tires.at(j));
+                int tireW = searchByMember(garageForController.TiresWSpeed, tires.at(j));
+                int tireA = searchByMember(garageForController.TiresASpeed, tires.at(j));
+
+                int gliderDelay = searchByMember(garageForController.glidersDelay, gliders.at(k));
+                int gliderSpeed = searchByMember(garageForController.glidersSpeed, gliders.at(k));
+
+                //terrain.
+                double terrainSpeed = ((0.5*t) * kartAc) + kartSpeed + (1.1 * tireT) - (0.5 * gliderDelay);
+                //water.
+                double waterSpeed = ((0.7*w) * kartAc) + kartSpeed + (1.2*tireW) - (0.7*gliderDelay);
+                //air.
+                double airSpeed = ((0.5*a) * kartAc) + kartSpeed - (0.9*tireA) + (0.7*gliderSpeed);
+                //return sum.
+                int returnNum = (terrainSpeed + waterSpeed + airSpeed); 
+
+                // Compare
+                if(minTime > returnNum){
+                    bestCombination.clear();
+                    minTime = returnNum;
+                    bestCombination.push_back(atvs.at(i));
+                    bestCombination.push_back(tires.at(j));
+                    bestCombination.push_back(gliders.at(k));
+                }
+            }
+        }
+    }
+
+    //Print best combination.
+    std::cout << "The best combination for the 4 tracks is: " << bestCombination.at(0) << ", " <<bestCombination.at(1) 
+    << ", " << bestCombination.at(2) << std::endl;
 }
 
 void controller::runMenu() {
@@ -422,6 +1036,7 @@ void controller::runMenu() {
             case 4: {
                 // Calculate Best Combination (All Tracks)
                 std::cout << "Calculating best combination for all tracks..." << std::endl;
+                bestCombinationForAllTracks();
                 break;
             }
             case 5: {
@@ -437,10 +1052,11 @@ void controller::runMenu() {
             case 6: {
                 // Calculate Average Finishing Position (Specific Player)
                 std::cout << "Enter the player name: ";
-                std::string playerName;
+                std::string gamerTag;
                 std::cin.ignore();  // Ignore the newline character from the previous input
-                std::getline(std::cin, playerName);
-                std::cout << "Calculating average finishing position for player: " << playerName << "..." << std::endl;
+                std::getline(std::cin, gamerTag);
+                std::cout << "Calculating average finishing position for player: " << gamerTag << "..." << std::endl;
+                avgFinishingPos(gamerTag);
                 break;
             }
             case 7: {
@@ -459,6 +1075,8 @@ void controller::runMenu() {
                 for (const std::string& trackName : trackNames) {
                     std::cout << "- " << trackName << std::endl;
                 }
+
+                bestCombinationForTracks(trackNames.at(0), trackNames.at(1), trackNames.at(2), trackNames.at(3));
 
                 break;
             }
