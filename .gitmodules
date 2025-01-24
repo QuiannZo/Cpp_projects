@@ -1,0 +1,6 @@
+[submodule "mario_kart_sim"]
+	path = mario_kart_sim
+	url = git@github.com:QuiannZo/Cpp_projects.git
+[submodule "evacuation_sim"]
+	path = evacuation_sim
+	url = git@github.com:QuiannZo/Cpp_projects.git
