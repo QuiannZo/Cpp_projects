@@ -1,0 +1,6 @@
+[submodule "mariokart_sim"]
+	path = mariokart_sim
+	url = https://git.ucr.ac.cr/ALEJANDRO.SOLORZANOBAUDRIT/proyecto-3-programacion-2-2023a.git
+[submodule "refugees_accommodation_sim"]
+	path = refugees_accommodation_sim
+	url = https://git.ucr.ac.cr/ALEJANDRO.SOLORZANOBAUDRIT/proyecto-1-programacion-2-2023a.git
